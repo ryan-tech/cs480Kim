@@ -1,0 +1,4 @@
+/home/ryan/CS480/PA0/cmake_build/CMakeFiles/rebuild_cache.dir
+/home/ryan/CS480/PA0/cmake_build/CMakeFiles/edit_cache.dir
+/home/ryan/CS480/PA0/cmake_build/CMakeFiles/Tutorial.dir
+/home/ryan/CS480/PA0/cmake_build/CMakeFiles/Tutorial_SUCCESSFUL.dir

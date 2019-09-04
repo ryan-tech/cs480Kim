@@ -2,6 +2,7 @@
 #define GRAPHICS_H
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 #include "graphics_headers.h"
@@ -13,6 +14,7 @@ class Graphics
 {
   public:
     Graphics();
+    Graphics(string fragment, string vertex);
     ~Graphics();
     bool Initialize(int width, int height);
     void Update(unsigned int dt);
@@ -29,6 +31,9 @@ class Graphics
     GLint m_modelMatrix;
 
     Object *m_cube;
+
+    string fragmentShader, vertexShader;
+
 };
 
 #endif /* GRAPHICS_H */

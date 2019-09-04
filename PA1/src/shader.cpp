@@ -5,6 +5,13 @@ Shader::Shader()
   m_shaderProg = 0;
 }
 
+Shader::Shader(std::string fragment, std::string vertex)
+{
+  m_shaderProg = 0;
+  fragmentShader = fragment;
+  vertexShader = vertex;
+}
+
 Shader::~Shader()
 {
   for (std::vector<GLuint>::iterator it = m_shaderObjList.begin() ; it != m_shaderObjList.end() ; it++)
@@ -23,7 +30,7 @@ bool Shader::Initialize()
 {
   m_shaderProg = glCreateProgram();
 
-  if (m_shaderProg == 0) 
+  if (m_shaderProg == 0)
   {
     std::cerr << "Error creating shader program\n";
     return false;
@@ -39,43 +46,19 @@ bool Shader::AddShader(GLenum ShaderType)
 
   if(ShaderType == GL_VERTEX_SHADER)
   {
-    s = "#version 330\n \
-          \
-          layout (location = 0) in vec3 v_position; \
-          layout (location = 1) in vec3 v_color; \
-          \
-          smooth out vec3 color; \
-          \
-          uniform mat4 projectionMatrix; \
-          uniform mat4 viewMatrix; \
-          uniform mat4 modelMatrix; \
-          \
-          void main(void) \
-          { \
-            vec4 v = vec4(v_position, 1.0); \
-            gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v; \
-            color = v_color; \
-          } \
-          ";
+    s = vertexShader;
+    //std::cout << "s: \"" << s << "\"" << std::endl;
+    //std::cout << "sh: \"" << sh << "\"" << std::endl;
   }
   else if(ShaderType == GL_FRAGMENT_SHADER)
   {
-    s = "#version 330\n \
-          \
-          smooth in vec3 color; \
-          \
-          out vec4 frag_color; \
-          \
-          void main(void) \
-          { \
-             frag_color = vec4(color.rgb, 1.0); \
-          } \
-          ";
+    s = fragmentShader;
+    std::cout << "shader: \"" << s << "\"" << std::endl;
   }
 
   GLuint ShaderObj = glCreateShader(ShaderType);
 
-  if (ShaderObj == 0) 
+  if (ShaderObj == 0)
   {
     std::cerr << "Error creating shader type " << ShaderType << std::endl;
     return false;
@@ -95,7 +78,7 @@ bool Shader::AddShader(GLenum ShaderType)
   GLint success;
   glGetShaderiv(ShaderObj, GL_COMPILE_STATUS, &success);
 
-  if (!success) 
+  if (!success)
   {
     GLchar InfoLog[1024];
     glGetShaderInfoLog(ShaderObj, 1024, NULL, InfoLog);

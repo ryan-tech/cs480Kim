@@ -6,11 +6,12 @@
 
 #include "window.h"
 #include "graphics.h"
+#include <string>
 
 class Engine
 {
   public:
-    Engine(string name, int width, int height);
+    Engine(string name, int width, int height, string fragment, string vertex);
     Engine(string name);
     ~Engine();
     bool Initialize();
@@ -18,15 +19,17 @@ class Engine
     void Keyboard();
     unsigned int getDT();
     long long GetCurrentTimeMillis();
-  
+
   private:
     // Window related variables
-    Window *m_window;    
+    Window *m_window;
     string m_WINDOW_NAME;
     int m_WINDOW_WIDTH;
     int m_WINDOW_HEIGHT;
     bool m_FULLSCREEN;
     SDL_Event m_event;
+
+    string vertexShader, fragmentShader;
 
     Graphics *m_graphics;
     unsigned int m_DT;

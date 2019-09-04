@@ -1,7 +1,7 @@
 #include "object.h"
 
 Object::Object()
-{  
+{
   /*
     # Blender File for a Cube
     o Cube
@@ -80,7 +80,15 @@ Object::~Object()
 void Object::Update(unsigned int dt)
 {
   angle += dt * M_PI/1000;
+  angle2 += (dt * M_PI/1000);
+  //float distance = dt * 3;
+  // rotate (object, angle of rotation, axis of rotation)
   model = glm::rotate(glm::mat4(1.0f), (angle), glm::vec3(0.0, 1.0, 0.0));
+  model *= glm::translate(model, glm::vec3(cos(angle)*2, 0, sin(angle)*2));
+
+  //model = glm::rotate(model, (angle2), glm::vec3(0.0, 1.0, 0.0));
+
+  //model *= glm::rotate(glm::mat4(6.0f), (angle), glm::vec3(0.0, 1.0, 0.0));
 }
 
 glm::mat4 Object::GetModel()
@@ -104,4 +112,3 @@ void Object::Render()
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);
 }
-

@@ -5,6 +5,12 @@ Graphics::Graphics()
 
 }
 
+Graphics::Graphics(string fragment, string vertex)
+{
+  fragmentShader = fragment;
+  vertexShader = vertex;
+}
+
 Graphics::~Graphics()
 {
 
@@ -48,7 +54,7 @@ bool Graphics::Initialize(int width, int height)
   m_cube = new Object();
 
   // Set up the shaders
-  m_shader = new Shader();
+  m_shader = new Shader(fragmentShader, vertexShader);
   if(!m_shader->Initialize())
   {
     printf("Shader Failed to Initialize\n");
@@ -78,7 +84,7 @@ bool Graphics::Initialize(int width, int height)
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_shader->GetUniformLocation("projectionMatrix");
-  if (m_projectionMatrix == INVALID_UNIFORM_LOCATION) 
+  if (m_projectionMatrix == INVALID_UNIFORM_LOCATION)
   {
     printf("m_projectionMatrix not found\n");
     return false;
@@ -86,7 +92,7 @@ bool Graphics::Initialize(int width, int height)
 
   // Locate the view matrix in the shader
   m_viewMatrix = m_shader->GetUniformLocation("viewMatrix");
-  if (m_viewMatrix == INVALID_UNIFORM_LOCATION) 
+  if (m_viewMatrix == INVALID_UNIFORM_LOCATION)
   {
     printf("m_viewMatrix not found\n");
     return false;
@@ -94,7 +100,7 @@ bool Graphics::Initialize(int width, int height)
 
   // Locate the model matrix in the shader
   m_modelMatrix = m_shader->GetUniformLocation("modelMatrix");
-  if (m_modelMatrix == INVALID_UNIFORM_LOCATION) 
+  if (m_modelMatrix == INVALID_UNIFORM_LOCATION)
   {
     printf("m_modelMatrix not found\n");
     return false;
@@ -123,8 +129,8 @@ void Graphics::Render()
   m_shader->Enable();
 
   // Send in the projection and view to the shader
-  glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
-  glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
+  glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection()));
+  glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
 
   // Render the object
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cube->GetModel()));
@@ -170,4 +176,3 @@ std::string Graphics::ErrorString(GLenum error)
     return "None";
   }
 }
-
