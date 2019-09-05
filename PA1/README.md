@@ -1,6 +1,9 @@
 PA1
+
 Name: Ryan Kim
+
 Date: 09/01/19
+
 Project Directions: Make the cube spin while orbiting the center. Also pass shaders in through command line arguments using -f and -v flags for "fragment" and "vertex", respectively.
 
 Description on changes:
@@ -10,7 +13,11 @@ Shader Files:
  The shaders are saved as .txt files in CS480/PA1/src/shaders and are loaded in main() and initialized to string variables. These string variables are then passed into the engine, graphics, and finally the shader class to be loaded when calling the addShader method.
 
 Instructions on compiling:
+
 In CS480/PA1$
+
   cd build/
+
   make clean
+  
   ./Tutorial -f ../src/shaders/fragment.txt -v ../src/shaders/vertex.txt
