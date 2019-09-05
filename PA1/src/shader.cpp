@@ -47,13 +47,10 @@ bool Shader::AddShader(GLenum ShaderType)
   if(ShaderType == GL_VERTEX_SHADER)
   {
     s = vertexShader;
-    //std::cout << "s: \"" << s << "\"" << std::endl;
-    //std::cout << "sh: \"" << sh << "\"" << std::endl;
   }
   else if(ShaderType == GL_FRAGMENT_SHADER)
   {
     s = fragmentShader;
-    std::cout << "shader: \"" << s << "\"" << std::endl;
   }
 
   GLuint ShaderObj = glCreateShader(ShaderType);
