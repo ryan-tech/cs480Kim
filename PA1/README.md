@@ -16,8 +16,12 @@ Instructions on compiling:
 
 In CS480/PA1$
 
+  mkdir build/
+
   cd build/
 
   make clean
+
+  make
   
   ./Tutorial -f ../src/shaders/fragment.txt -v ../src/shaders/vertex.txt
