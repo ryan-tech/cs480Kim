@@ -20,8 +20,10 @@ In CS480/PA1$
 
   cd build/
 
+  cp ../makefile .
+
   make clean
 
   make
-  
+
   ./Tutorial -f ../src/shaders/fragment.txt -v ../src/shaders/vertex.txt
