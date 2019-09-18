@@ -35,7 +35,9 @@ class Engine
     unsigned int m_DT;
     long long m_currentTimeMillis;
     bool m_running;
-    bool m_keypress;
+
+    int keyboardButton;
+
 };
 
 #endif // ENGINE_H

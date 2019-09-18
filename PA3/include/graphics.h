@@ -17,7 +17,7 @@ class Graphics
     Graphics(string fragment, string vertex);
     ~Graphics();
     bool Initialize(int width, int height);
-    void Update(unsigned int dt, bool flag);
+    void Update(unsigned int dt, int keyboardButton);
     void Render();
 
   private:
@@ -30,7 +30,9 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Object *m_cube;
+    //Added PA3: Two cubes, one's the planet and one's the moon
+    Object *m_planet;
+    Object *m_moon;
 
     string fragmentShader, vertexShader;
 

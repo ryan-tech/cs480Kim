@@ -1,6 +1,6 @@
 #ifndef GRAPHICS_HEADERS_H
 #define GRAPHICS_HEADERS_H
-
+#include <SDL2/SDL.h>
 #include <iostream>
 #define GLM_ENABLE_EXPERIMENTAL
 #define GL_DO_NOT_WARN_IF_MULTI_GL_VERSION_HEADERS_INCLUDED

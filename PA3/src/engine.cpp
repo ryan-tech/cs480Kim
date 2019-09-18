@@ -55,7 +55,7 @@ bool Engine::Initialize()
 void Engine::Run()
 {
   m_running = true;
-  m_keypress = false;
+
   while(m_running)
   {
     // Update the DT
@@ -68,7 +68,7 @@ void Engine::Run()
     }
 
     // Update and render the graphics
-    m_graphics->Update(m_DT, m_keypress);   //added m_keypress to parameters
+    m_graphics->Update(m_DT, keyboardButton);   //added m_keypress to parameters
     m_graphics->Render();
 
     // Swap to the Window
@@ -91,26 +91,10 @@ void Engine::Keyboard()
       m_running = false;
     }
     //PA2: Any other key was pressed.
-    m_keypress = (m_keypress) ? false : true;
-      std::cout << "Keyboard button was pressed, flag is now: " << m_keypress << std::endl;
-    
-
+    keyboardButton = m_event.key.keysym.sym;
   }
   //PA2: handle mouse click events here
-  else if (m_event.type == SDL_MOUSEBUTTONDOWN)
-  {
-    if(m_keypress)
-    {
-      m_keypress = false;
-    }
-    else
-    {
-      m_keypress = true;
-    }
-    //m_keypress = (m_keypress) ? false : true;
 
-    std::cout << "Mouse button was pressed, flag is now: " << m_keypress << std::endl;
-  }
 }
 
 unsigned int Engine::getDT()
