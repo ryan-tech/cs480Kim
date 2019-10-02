@@ -220,89 +220,36 @@ void Object::Render()
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);
 }
+
+
+//loads the vertices and faces into their respective vertices and indices vectors.
+//Each scene has a mesh, each mesh has a face, each face has aiVector3D of mVertices
+//Goal: load vertices and indices vertex.
+//PA5: Uses the assimp library
 void Object::loadObject()
 {
-  //Triangle_vertex tri;
-
-  //Vertex v;                          //buffer to push into the vertices vector
-  glm::vec2 vt;
-  glm::vec3 vn;
-
-  //for the vectors (2d and 3d)
-  char buf[256];
-  std::ifstream t(filePath);
-  std::string str;
-  std::string type;
-  double x=0,y=0,z=0;
-
-  //for the triangles
-  std::string delimiter = "/";
-  std::string token;
-
-  unsigned int index = 0;                        //holds the converted token
 
 
-  glm::vec3 face_vertex, face_texture, face_normal;
-  while(t.good()){
-    if(t.eof()) break;
-    t.getline(buf, 256);
-
-    str = buf;
-    std::istringstream line(str);
-
-    line >> type;
-
-    if(type == "v")//vertex
+  Assimp::Importer importer;
+  const aiScene *myScene = importer.ReadFile(filePath, aiProcess_Triangulate);    //Define aiScene pointer
+  //for each mesh in the scene
+  for(int i = 0; i < myScene->mNumMeshes; i++)
+  {
+    //for each face in the mesh
+    for(int j = 0; j < myScene->mMeshes[i]->mNumFaces; j++)
     {
-      line >> x >> y >> z;
-      Vertices.push_back( Vertex( glm::vec3(x,y,z), glm::vec3(0,255,0) ) );
-    }
-    else if(type == "vt")//texture
-    {
-      line >> x >> y;
-      vt = glm::vec2(x,y);
-      textureCoordinates.push_back(vt);
-    }
-    else if(type == "vn")//normal
-    {
-      line >> x >> y >> z;
-      vn = glm::vec3(x,y,z);
-      normalVectors.push_back(vn);
-    }
-    else if(type == "f")//triangle
-    {
-      vector<Triangle_vertex>  triangle_vertices;          //holds the triangle's vertices
-      //for the three vertices in a triangle
-      std::string face;
-
-      for(int i = 0; i < 3; i++)
+      //for each array of indices per face
+      for(int k = 0; k < myScene->mMeshes[i]->mFaces[j]->mIndices; k++)
       {
-        line >> face;
-        token = face.substr(0, face.find(delimiter));                             //first value (example: face = 1/2/3)
-        if(token == "") return;
-        index = stoi(token);
-        Indices.push_back(index);
-
-        /* The code below was used to push back the vertices and vectors indexed by the face indices
-        face = face.erase(0, face.find(delimiter) + delimiter.length());          //cuts string to next value (example: face = 2/3)
-        token = face.substr(0, face.find(delimiter));                             //token = second value
-        index = stoi(token);
-        //std::cout<<"second: " << token << " ";
-        //tri.texture = textureCoordinates.at(index-1);
-        //Indices.push_back(index);
-
-        face = face.erase(0, face.find(delimiter) + delimiter.length());          //face = 3
-        token = face;                                                             //token = third value
-        index = stoi(token);
-        */
-        //std::cout<<"third: " << token << endl;
-        //tri.normal = normalVectors.at(index-1);
-        //Indices.push_back(index);
-
-        //push back the triangle
-        //triangle_vertices.push_back(tri);
+        for(int l = 0; l < myScene->mMeshes[i]->mFaces[j]->mNumIndices; l++)
+        {
+          Indices.push_back(myScene->mMeshes[i]->mFaces[j]->mIndices[l]);
+        }
       }
     }
   }
-  return;
+
+
+
+
 }

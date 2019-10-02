@@ -42,16 +42,12 @@ class Object
     bool moon_clockwise_translation;
     bool moon_clockwise_rotation;
 
-    vector<Vertex> Vertices;           //holds the vertices (v)
+    vector<Vertex> Vertices;              //holds the vertices (v)
     vector<glm::vec2> textureCoordinates; //holds the texture coordinate (vt)
-    vector<glm::vec3> normalVectors;      //hodls the normal vectors (vn)
+    vector<glm::vec3> normalVectors;      //holds the normal vectors (vn)
+    vector<unsigned int> Indices;         //holds the faces (f)
 
-
-    vector<unsigned int> Indices;
-
-    //vector<vector<Triangle_vertex>> triangles;
-
-    std::string filePath;
+    std::string filePath;                 //object file path
 
 };
 
