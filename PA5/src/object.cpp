@@ -53,6 +53,7 @@ void Object::Update(unsigned int dt, int keyboardButton)
 {
   angle += dt * M_PI/10000;
   model = glm::translate(glm::mat4(1.0f), glm::vec3 (0.0f, 0.0f, 0.0f));
+  model = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 //A custom update function used by the planet
