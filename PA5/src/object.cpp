@@ -1,86 +1,20 @@
 #include "object.h"
 
+//The default constructor used to have the cube in it.
 Object::Object()
 {
-  /*
-    # Blender File for a Cube
-    o Cube
-    v 1.000000 -1.000000 -1.000000
-    v 1.000000 -1.000000 1.000000
-    v -1.000000 -1.000000 1.000000
-    v -1.000000 -1.000000 -1.000000
-    v 1.000000 1.000000 -0.999999
-    v 0.999999 1.000000 1.000001
-    v -1.000000 1.000000 1.000000
-    v -1.000000 1.000000 -1.000000
-    s off
-    f 2 3 4
-    f 8 7 6
-    f 1 5 6
-    f 2 6 7
-    f 7 8 4
-    f 1 4 8
-    f 1 2 4
-    f 5 8 6
-    f 2 1 6
-    f 3 2 7
-    f 3 7 4
-    f 5 1 8
-  */
-/*
-  Vertices = {
-    {{1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 0.0f}},
-    {{1.0f, -1.0f, 1.0f}, {1.0f, 0.0f, 0.0f}},
-    {{-1.0f, -1.0f, 1.0f}, {0.0f, 1.0f, 0.0f}},
-    {{-1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 1.0f}},
-    {{1.0f, 1.0f, -1.0f}, {1.0f, 1.0f, 0.0f}},
-    {{1.0f, 1.0f, 1.0f}, {1.0f, 0.0f, 1.0f}},
-    {{-1.0f, 1.0f, 1.0f}, {0.0f, 1.0f, 1.0f}},
-    {{-1.0f, 1.0f, -1.0f}, {1.0f, 1.0f, 1.0f}}
-  };
-
-  Indices = {
-    2, 3, 4,
-    8, 7, 6,
-    1, 5, 6,
-    2, 6, 7,
-    7, 8, 4,
-    1, 4, 8,
-    1, 2, 4,
-    5, 8, 6,
-    2, 1, 6,
-    3, 2, 7,
-    3, 7, 4,
-    5, 1, 8
-  };
-
-  // The index works at a 0th index
-  //for(unsigned int i = 0; i < Indices.size(); i++)
-  //{
-  //  Indices[i] = Indices[i] - 1;
-  //}
-
+  angle = 0.0f;
   planet_translation_angle = 0.0f;
   planet_rotation_angle = 0.0f;
   moon_translation_angle = 0.0f;
   moon_rotation_angle = 0.0f;
-
-  glGenBuffers(1, &VB);
-  glBindBuffer(GL_ARRAY_BUFFER, VB);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
-
-  glGenBuffers(1, &IB);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vector<int>) * indices.size(), &indices[0], GL_STATIC_DRAW);
-
-
   planet_clockwise_translation = true;
   planet_clockwise_rotation = true;
   moon_clockwise_translation = true;
   moon_clockwise_rotation = true;
-*/
 }
 
+//The parameterized constructor uses the path in the parameter to call loadObject()
 Object::Object(string path)
 {
   filePath = path;
@@ -100,17 +34,14 @@ Object::Object(string path)
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
 
   angle = 0.0f;
-
   planet_translation_angle = 0.0f;
   planet_rotation_angle = 0.0f;
   moon_translation_angle = 0.0f;
   moon_rotation_angle = 0.0f;
-
   planet_clockwise_translation = true;
   planet_clockwise_rotation = true;
   moon_clockwise_translation = true;
   moon_clockwise_rotation = true;
-
 }
 
 Object::~Object()
@@ -124,7 +55,7 @@ void Object::Update(unsigned int dt, int keyboardButton)
   model = glm::translate(glm::mat4(1.0f), glm::vec3 (0.0f, 0.0f, 0.0f));
 }
 
-
+//A custom update function used by the planet
 void Object::Update_planet(unsigned int dt, int keyboardButton)
 {
   planet_rotation_angle += dt * M_PI/1000;
@@ -182,7 +113,7 @@ void Object::Update_planet(unsigned int dt, int keyboardButton)
 }
 
 
-
+//A custom update function used by the moon
 void Object::Update_moon(unsigned int dt, int keyboardButton)
 {
   moon_translation_angle += dt * M_PI/800;
@@ -346,14 +277,12 @@ void Object::loadObject()
       for(int i = 0; i < 3; i++)
       {
         line >> face;
-        //std::cout << face << std::endl;
         token = face.substr(0, face.find(delimiter));                             //first value (example: face = 1/2/3)
         if(token == "") return;
         index = stoi(token);
-        //std::cout << index << " ";
         Indices.push_back(index);
 
-        /*
+        /* The code below was used to push back the vertices and vectors indexed by the face indices
         face = face.erase(0, face.find(delimiter) + delimiter.length());          //cuts string to next value (example: face = 2/3)
         token = face.substr(0, face.find(delimiter));                             //token = second value
         index = stoi(token);
@@ -372,7 +301,6 @@ void Object::loadObject()
         //push back the triangle
         //triangle_vertices.push_back(tri);
       }
-      //triangles.push_back(triangle_vertices);
     }
   }
   return;
