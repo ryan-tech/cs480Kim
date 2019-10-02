@@ -229,7 +229,6 @@ void Object::Render()
 void Object::loadObject()
 {
 
-
   Assimp::Importer importer;
   const aiScene *myScene = importer.ReadFile(filePath, aiProcess_Triangulate);    //Define aiScene pointer
   //for each mesh in the scene
@@ -239,17 +238,19 @@ void Object::loadObject()
     for(int j = 0; j < myScene->mMeshes[i]->mNumFaces; j++)
     {
       //for each array of indices per face
-      for(int k = 0; k < myScene->mMeshes[i]->mFaces[j]->mIndices; k++)
+      for(int k = 0; k < myScene->mMeshes[i]->mFaces[j].mNumIndices; k++)
       {
-        for(int l = 0; l < myScene->mMeshes[i]->mFaces[j]->mNumIndices; l++)
+        //for each index in the array of indices (3 indices)
+        for(int l = 0; l < myScene->mMeshes[i]->mFaces[j].mNumIndices; l++)
         {
-          Indices.push_back(myScene->mMeshes[i]->mFaces[j]->mIndices[l]);
+          Indices.push_back(myScene->mMeshes[i]->mFaces[j].mIndices[l]);
         }
       }
     }
   }
-
-
-
+  for(int x = 0; x < Indices.size(); x++)
+  {
+    std::cout << Indices.at(x) << " ";
+  }
 
 }
