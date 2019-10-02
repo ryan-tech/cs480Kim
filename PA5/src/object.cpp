@@ -20,9 +20,10 @@ Object::Object(string path)
   filePath = path;
   loadObject();
 
+  //unneeded for assimp
   for(unsigned int i = 0; i < Indices.size(); i++)
   {
-    Indices[i] = Indices[i] - 1;
+    //Indices[i] = Indices[i] - 1;
   }
 
   glGenBuffers(1, &VB);
@@ -221,14 +222,12 @@ void Object::Render()
   glDisableVertexAttribArray(1);
 }
 
-
 //loads the vertices and faces into their respective vertices and indices vectors.
 //Each scene has a mesh, each mesh has a face, each face has aiVector3D of mVertices
 //Goal: load vertices and indices vertex.
 //PA5: Uses the assimp library
 void Object::loadObject()
 {
-
   Assimp::Importer importer;
   const aiScene *myScene = importer.ReadFile(filePath, aiProcess_Triangulate);    //Define aiScene pointer
   //for each mesh in the scene
@@ -237,20 +236,21 @@ void Object::loadObject()
     //for each face in the mesh
     for(int j = 0; j < myScene->mMeshes[i]->mNumFaces; j++)
     {
-      //for each array of indices per face
+      //loads indices
       for(int k = 0; k < myScene->mMeshes[i]->mFaces[j].mNumIndices; k++)
       {
-        //for each index in the array of indices (3 indices)
-        for(int l = 0; l < myScene->mMeshes[i]->mFaces[j].mNumIndices; l++)
-        {
-          Indices.push_back(myScene->mMeshes[i]->mFaces[j].mIndices[l]);
-        }
+          Indices.push_back(myScene->mMeshes[i]->mFaces[j].mIndices[k]);
       }
     }
+    //for each vertex in the mesh
+    for(int j = 0; j < myScene->mMeshes[i]->mNumVertices; j++)
+    {
+      Vertices.push_back(
+        Vertex(
+          glm::vec3(myScene->mMeshes[i]->mVertices[j].x,myScene->mMeshes[i]->mVertices[j].y,myScene->mMeshes[i]->mVertices[j].z),
+          glm::vec3(myScene->mMeshes[i]->mVertices[j].x,myScene->mMeshes[i]->mVertices[j].y,myScene->mMeshes[i]->mVertices[j].z)
+        )
+      );
+    }
   }
-  for(int x = 0; x < Indices.size(); x++)
-  {
-    std::cout << Indices.at(x) << " ";
-  }
-
 }
