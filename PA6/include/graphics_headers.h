@@ -29,14 +29,14 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <cstdlib>
-using namespace std; 
+using namespace std;
 
 struct Vertex
 {
   glm::vec3 vertex;
   glm::vec3 color;
-
-  Vertex(glm::vec3 v, glm::vec3 c): vertex(v), color(c) {}
+  glm::vec2 texture;
+  Vertex(glm::vec3 v, glm::vec2 t, glm::vec3 c): vertex(v), texture(t), color(c){}
 };
 
 struct Triangle_vertex
@@ -49,14 +49,16 @@ struct Triangle_vertex
 struct Mesh
 {
 	GLuint VB;
-  GLuint IB;	
+  GLuint IB;
 
 	vector<Vertex> Vertices;              //holds the vertices (v)
   vector<glm::vec2> textureCoordinates; //holds the texture coordinate (vt)
   vector<glm::vec3> normalVectors;      //holds the normal vectors (vn)
   vector<unsigned int> Indices;         //holds the faces (f)
 
-	Mesh(){};
+  unsigned int MaterialIndex;
+
+  Mesh(){};
 };
 
 #endif /* GRAPHICS_HEADERS_H */
