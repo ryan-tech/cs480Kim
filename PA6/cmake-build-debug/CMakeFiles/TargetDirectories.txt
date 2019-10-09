@@ -1,4 +1,0 @@
-/home/ryan/CS480/PA6/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/ryan/CS480/PA6/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ryan/CS480/PA6/cmake-build-debug/CMakeFiles/PA5.dir
-/home/ryan/CS480/PA6/cmake-build-debug/CMakeFiles/PA5_SUCCESSFUL.dir
