@@ -20,20 +20,16 @@ Object::Object(string path)
   filePath = path;
   loadObject();
 
-  //unneeded for assimp
-  for(unsigned int i = 0; i < Indices.size(); i++)
-  {
-    //Indices[i] = Indices[i] - 1;
-  }
+	for(int i = 0; i < meshes.size(); i++)
+	{
+		glGenBuffers(1, &meshes[i].VB);
+		glBindBuffer(GL_ARRAY_BUFFER, meshes[i].VB);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * meshes[i].Vertices.size(), &meshes[i].Vertices[0], GL_STATIC_DRAW);
 
-  glGenBuffers(1, &VB);
-  glBindBuffer(GL_ARRAY_BUFFER, VB);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * Vertices.size(), &Vertices[0], GL_STATIC_DRAW);
-
-  glGenBuffers(1, &IB);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
-
+		glGenBuffers(1, &meshes[i].IB);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
+	}
   angle = 0.0f;
   planet_translation_angle = 0.0f;
   planet_rotation_angle = 0.0f;
@@ -47,8 +43,11 @@ Object::Object(string path)
 
 Object::~Object()
 {
-  Vertices.clear();
-  Indices.clear();
+	for(int i = 0; i < meshes.size(); i++)
+	{
+		meshes[i].Vertices.clear();
+		meshes[i].Indices.clear();
+	}
 }
 void Object::Update(unsigned int dt, int keyboardButton)
 {
@@ -207,19 +206,22 @@ glm::mat4 Object::GetModel()
 
 void Object::Render()
 {
-  glEnableVertexAttribArray(0);
-  glEnableVertexAttribArray(1);
+	for(int i = 0; i < meshes.size(); i++)
+	{
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
 
-  glBindBuffer(GL_ARRAY_BUFFER, VB);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,color));
+		glBindBuffer(GL_ARRAY_BUFFER, meshes[i].VB);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,color));
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
 
-  glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, meshes[i].Indices.size(), GL_UNSIGNED_INT, 0);
 
-  glDisableVertexAttribArray(0);
-  glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+	}
 }
 
 //loads the vertices and faces into their respective vertices and indices vectors.
@@ -230,27 +232,33 @@ void Object::loadObject()
 {
   Assimp::Importer importer;
   const aiScene *myScene = importer.ReadFile(filePath, aiProcess_Triangulate);    //Define aiScene pointer
-  //for each mesh in the scene
+
+	for(int i = 0; i < myScene->mNumMeshes; i++)
+  {
+		meshes.push_back(Mesh());
+	}  
+
+	//for each mesh in the scene
   for(int i = 0; i < myScene->mNumMeshes; i++)
   {
+		//for each vertex in the mesh
+    for(int j = 0; j < myScene->mMeshes[i]->mNumVertices; j++)
+    {
+      meshes[i].Vertices.push_back(
+        Vertex(
+          glm::vec3(myScene->mMeshes[i]->mVertices[j].x,myScene->mMeshes[i]->mVertices[j].y,myScene->mMeshes[i]->mVertices[j].z),
+          glm::vec3(myScene->mMeshes[i]->mVertices[j].x,myScene->mMeshes[i]->mVertices[j].y,myScene->mMeshes[i]->mVertices[j].z)
+        )
+      );
+    }
     //for each face in the mesh
     for(int j = 0; j < myScene->mMeshes[i]->mNumFaces; j++)
     {
       //loads indices
       for(int k = 0; k < myScene->mMeshes[i]->mFaces[j].mNumIndices; k++)
       {
-          Indices.push_back(myScene->mMeshes[i]->mFaces[j].mIndices[k]);
+				meshes[i].Indices.push_back(myScene->mMeshes[i]->mFaces[j].mIndices[k]);
       }
-    }
-    //for each vertex in the mesh
-    for(int j = 0; j < myScene->mMeshes[i]->mNumVertices; j++)
-    {
-      Vertices.push_back(
-        Vertex(
-          glm::vec3(myScene->mMeshes[i]->mVertices[j].x,myScene->mMeshes[i]->mVertices[j].y,myScene->mMeshes[i]->mVertices[j].z),
-          glm::vec3(myScene->mMeshes[i]->mVertices[j].x,myScene->mMeshes[i]->mVertices[j].y,myScene->mMeshes[i]->mVertices[j].z)
-        )
-      );
     }
   }
 }

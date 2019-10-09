@@ -25,10 +25,7 @@ class Object
 
   private:
     glm::mat4 model;
-    //std::vector<Vertex> Vertices;
-    //std::vector<unsigned int> Indices;
-    GLuint VB;
-    GLuint IB;
+		vector<Mesh> meshes;
 
     float angle;
 
@@ -41,11 +38,6 @@ class Object
     bool planet_clockwise_rotation;
     bool moon_clockwise_translation;
     bool moon_clockwise_rotation;
-
-    vector<Vertex> Vertices;              //holds the vertices (v)
-    vector<glm::vec2> textureCoordinates; //holds the texture coordinate (vt)
-    vector<glm::vec3> normalVectors;      //holds the normal vectors (vn)
-    vector<unsigned int> Indices;         //holds the faces (f)
 
     std::string filePath;                 //object file path
 
