@@ -31,7 +31,7 @@ class Object
   private:
     glm::mat4 model;
 		vector<Mesh> meshes;
-
+    Object* moon;
     float angle;
     std::string filePath;                 //object file path
 

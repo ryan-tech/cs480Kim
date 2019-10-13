@@ -4,14 +4,6 @@
 Object::Object()
 {
   angle = 0.0f;
-  planet_translation_angle = 0.0f;
-  planet_rotation_angle = 0.0f;
-  moon_translation_angle = 0.0f;
-  moon_rotation_angle = 0.0f;
-  planet_clockwise_translation = true;
-  planet_clockwise_rotation = true;
-  moon_clockwise_translation = true;
-  moon_clockwise_rotation = true;
 }
 
 //The parameterized constructor uses the path in the parameter to call loadObject()

@@ -30,9 +30,6 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    //Added PA3: Two cubes, one's the planet and one's the moon
-    Object *m_planet;
-    Object *m_moon;
     Object *m_board;
 
     string fragmentShader, vertexShader, objPath;
