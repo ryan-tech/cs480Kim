@@ -31,14 +31,7 @@ Object::Object(string path)
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
 	}
   angle = 0.0f;
-  planet_translation_angle = 0.0f;
-  planet_rotation_angle = 0.0f;
-  moon_translation_angle = 0.0f;
-  moon_rotation_angle = 0.0f;
-  planet_clockwise_translation = true;
-  planet_clockwise_rotation = true;
-  moon_clockwise_translation = true;
-  moon_clockwise_rotation = true;
+
 }
 
 Object::~Object()
@@ -59,96 +52,6 @@ void Object::Update(unsigned int dt, int keyboardButton)
   model = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-//A custom update function used by the planet -- PA6 deleted bc its in update moon. will make this into one update function in the next project (PA7)
-void Object::Update_planet(unsigned int dt, int keyboardButton)
-{
-}
-
-
-//A custom update function used by the moon
-void Object::Update_moon(unsigned int dt, int keyboardButton)
-{
-  moon_translation_angle += dt * M_PI/800;
-  moon_rotation_angle += dt * M_PI/800;
-  //--------Below is same as update_planet----------//
-  planet_rotation_angle += dt * M_PI/1000;
-  planet_translation_angle += dt * M_PI/1000;
-  //translation
-  switch(keyboardButton)
-  {
-    case SDLK_LEFT:
-      planet_clockwise_translation = true;
-      break;
-    case SDLK_RIGHT:
-      planet_clockwise_translation = false;
-      break;
-    case SDLK_UP:
-      planet_clockwise_rotation = true;
-      break;
-    case SDLK_DOWN:
-      planet_clockwise_rotation = false;
-      break;
-    case SDLK_a:
-      moon_clockwise_translation = true;
-      break;
-    case SDLK_s:
-      moon_clockwise_translation = false;
-      break;
-    case SDLK_d:
-      moon_clockwise_rotation = true;
-      break;
-    case SDLK_f:
-      moon_clockwise_rotation = false;
-      break;
-  }
-
-  if(planet_clockwise_translation)
-  {
-    planet_translation_angle += 0;
-  }
-  else
-  {
-    planet_translation_angle -= dt * M_PI/500;
-  }
-
-  if(planet_clockwise_rotation)
-  {
-    planet_rotation_angle += 0;
-  }
-  else
-  {
-    planet_rotation_angle -= dt * M_PI/500;
-  }
-
-  //translate first
-  model = glm::translate(glm::mat4(1.0f), glm::vec3(cos(planet_translation_angle)*3, 0, sin(planet_translation_angle)*3));
-  //rotate second
-  model = glm::rotate(model, (planet_rotation_angle), glm::vec3(0.0, 1.0, 0.0));
-
-  //--------Above is same as update_planet----------//
-
-  if(moon_clockwise_translation)
-  {
-    moon_translation_angle += 0;
-  }
-  else
-  {
-    moon_translation_angle -= dt * M_PI/400;
-  }
-
-  if(moon_clockwise_rotation)
-  {
-    moon_rotation_angle += 0;
-  }
-  else
-  {
-    moon_rotation_angle -= dt * M_PI/400;
-  }
-
-  model = glm::translate(glm::mat4(1.0f), glm::vec3(cos(moon_translation_angle)*3+cos(planet_translation_angle)*3, 0, sin(moon_translation_angle)*3+sin(planet_translation_angle)*3));
-  model = glm::rotate(model, (moon_rotation_angle), glm::vec3(0.0, 1.0, 0.0));
-
-}
 
 glm::mat4 Object::GetModel()
 {
