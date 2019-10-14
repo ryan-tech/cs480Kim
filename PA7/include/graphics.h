@@ -1,5 +1,6 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
+#define NUM_PLANETS 10
 
 #include <iostream>
 #include <string>
@@ -30,7 +31,7 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Object *m_board;
+    Object* m_board[NUM_PLANETS];    //1 sun, 8 planets, 1 pluto
 
     string fragmentShader, vertexShader, objPath;
 

@@ -1,0 +1,78 @@
+{
+  "Window": {
+    "Height": {},
+    "Width": {}
+  },
+  "Planets": {
+    "Sun": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "8"
+    },
+    "Mercury": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Venus": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Earth": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Mars": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Jupiter": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Saturn": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Uranus": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Neptune": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    },
+    "Pluto": {
+      "Size": "0",
+      "Rotation": "1",
+      "AxisTilt": "0",
+      "DistanceFromOrigin": "0",
+      "NumSatellites": "0"
+    }
+  }
+}
