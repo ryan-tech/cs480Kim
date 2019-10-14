@@ -51,12 +51,16 @@ bool Graphics::Initialize(int width, int height)
     return false;
   }
 
-  // Create the planet
-  //m_planet = new Object();
 
-  // Create the moon
-  //m_moon = new Object();
-  m_board = new Object(objPath);
+
+
+/*
+        LOADING PLANETS FROM JSON
+*/
+  
+
+  planets = new Object(objPath);
+
 
   // Set up the shaders
   m_shader = new Shader(fragmentShader, vertexShader);
@@ -121,7 +125,7 @@ bool Graphics::Initialize(int width, int height)
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
   // Update the object
-  m_board->Update(dt, keyboardButton);
+  planets->Update(dt, keyboardButton);
   //m_moon->Update_moon(dt, keyboardButton);
 }
 
@@ -139,8 +143,8 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
 
   // Render the object
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
-  m_board->Render();
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(planets->GetModel()));
+  planets->Render();
 
   // Get any errors from OpenGL
   auto error = glGetError();

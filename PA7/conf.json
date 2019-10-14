@@ -5,74 +5,134 @@
   },
   "Planets": {
     "Sun": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Sun.obj",
+      "Size": "10",
+      "RotationDirection": "1",
+      "OrbitSpeed": "0",
       "AxisTilt": "0",
       "DistanceFromOrigin": "0",
-      "NumSatellites": "8"
+      "NumSatellites": "8",
+      "Scaled": {
+        "Size": "864.0",
+        "DistanceFromOrigin": "0.39",
+      }
     },
     "Mercury": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Mercury.obj",
+      "Size": "2",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "1",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "3.0",
+        "DistanceFromOrigin": "0.39",
+      }
     },
     "Venus": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Venus.obj",
+      "Size": "4",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "2",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "7.5",
+        "DistanceFromOrigin": "0.723",
+      }
     },
     "Earth": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Earth.obj",
+      "Size": "5",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "3",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "7.9",
+        "DistanceFromOrigin": "1",
+      }
     },
     "Mars": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Mars.obj",
+      "Size": "3",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "4",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "4.2",
+        "DistanceFromOrigin": "1.54",
+      }
     },
     "Jupiter": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Jupiter.obj",
+      "Size": "9",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "5",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "88.7",
+        "DistanceFromOrigin": "5.203",
+      }
     },
     "Saturn": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Saturn.obj",
+      "Size": "8",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "6",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "74.6",
+        "DistanceFromOrigin": "9.539",
+      }
     },
     "Uranus": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Uranus.obj",
+      "Size": "7",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "7",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "32.6",
+        "DistanceFromOrigin": "19.18",
+      }
     },
     "Neptune": {
-      "Size": "0",
-      "Rotation": "1",
+      "Filepath": "Neptune.obj",
+      "Size": "6",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "8",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "30.2",
+        "DistanceFromOrigin": "30.06",
+      }
     },
     "Pluto": {
+      "Filepath": "Pluto.obj",
       "Size": "0",
-      "Rotation": "1",
+      "RotationDirection": "1",
+      "OrbitSpeed": "1",
       "AxisTilt": "0",
-      "DistanceFromOrigin": "0",
-      "NumSatellites": "0"
+      "DistanceFromOrigin": "9",
+      "NumSatellites": "0",
+      "Scaled": {
+        "Size": "1.4",
+        "DistanceFromOrigin": "39.53",
+      }
     }
   }
 }

@@ -31,7 +31,7 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Object* m_board[NUM_PLANETS];    //1 sun, 8 planets, 1 pluto
+    Object* planets[NUM_PLANETS];    //1 sun, 8 planets, 1 pluto
 
     string fragmentShader, vertexShader, objPath;
 
