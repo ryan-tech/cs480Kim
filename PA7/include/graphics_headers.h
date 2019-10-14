@@ -29,6 +29,9 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <cstdlib>
+
+#include "json.hpp"
+
 using namespace std;
 
 struct Vertex

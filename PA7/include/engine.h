@@ -11,7 +11,7 @@
 class Engine
 {
   public:
-    Engine(string name, int width, int height, string fragment, string vertex, string path);
+    Engine(string name, int width, int height, string fragment, string vertex);
     Engine(string name);
     ~Engine();
     bool Initialize();

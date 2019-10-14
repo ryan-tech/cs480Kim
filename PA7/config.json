@@ -1,7 +1,12 @@
 {
   "Window": {
-    "Height": {},
-    "Width": {}
+    "Height": "800",
+    "Width": "1600",
+    "Name": "PA7"
+  },
+  "Shader":{
+    "Vertex": "../shaders/vertex.txt",
+    "Fragment": "../shaders/fragment.txt"
   },
   "Planets": {
     "Sun": {
@@ -14,7 +19,7 @@
       "NumSatellites": "0",
       "Scaled": {
         "Size": "864.0",
-        "DistanceFromOrigin": "0.39",
+        "DistanceFromOrigin": "0.39"
       }
     },
     "Mercury": {
@@ -27,7 +32,7 @@
       "NumSatellites": "0",
       "Scaled": {
         "Size": "3.0",
-        "DistanceFromOrigin": "0.39",
+        "DistanceFromOrigin": "0.39"
       }
     },
     "Venus": {
@@ -40,7 +45,7 @@
       "NumSatellites": "0",
       "Scaled": {
         "Size": "7.5",
-        "DistanceFromOrigin": "0.723",
+        "DistanceFromOrigin": "0.723"
       }
     },
     "Earth": {
@@ -53,7 +58,7 @@
       "NumSatellites": "1",
       "Scaled": {
         "Size": "7.9",
-        "DistanceFromOrigin": "1",
+        "DistanceFromOrigin": "1"
       }
     },
     "Mars": {
@@ -66,7 +71,7 @@
       "NumSatellites": "2",
       "Scaled": {
         "Size": "4.2",
-        "DistanceFromOrigin": "1.54",
+        "DistanceFromOrigin": "1.54"
       }
     },
     "Jupiter": {
@@ -79,7 +84,7 @@
       "NumSatellites": "67",
       "Scaled": {
         "Size": "88.7",
-        "DistanceFromOrigin": "5.203",
+        "DistanceFromOrigin": "5.203"
       }
     },
     "Saturn": {
@@ -92,7 +97,7 @@
       "NumSatellites": "62",
       "Scaled": {
         "Size": "74.6",
-        "DistanceFromOrigin": "9.539",
+        "DistanceFromOrigin": "9.539"
       }
     },
     "Uranus": {
@@ -105,7 +110,7 @@
       "NumSatellites": "27",
       "Scaled": {
         "Size": "32.6",
-        "DistanceFromOrigin": "19.18",
+        "DistanceFromOrigin": "19.18"
       }
     },
     "Neptune": {
@@ -118,7 +123,7 @@
       "NumSatellites": "13",
       "Scaled": {
         "Size": "30.2",
-        "DistanceFromOrigin": "30.06",
+        "DistanceFromOrigin": "30.06"
       }
     },
     "Pluto": {
@@ -131,7 +136,7 @@
       "NumSatellites": "4",
       "Scaled": {
         "Size": "1.4",
-        "DistanceFromOrigin": "39.53",
+        "DistanceFromOrigin": "39.53"
       }
     }
   }

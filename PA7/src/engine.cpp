@@ -1,7 +1,7 @@
 
 #include "engine.h"
 
-Engine::Engine(string name, int width, int height, string fragment, string vertex, string path)
+Engine::Engine(string name, int width, int height, string fragment, string vertex)
 {
   m_WINDOW_NAME = name;
   m_WINDOW_WIDTH = width;
@@ -9,7 +9,6 @@ Engine::Engine(string name, int width, int height, string fragment, string verte
   fragmentShader = fragment;
   vertexShader =  vertex;
   m_FULLSCREEN = false;
-  m_path = path;
 }
 
 Engine::Engine(string name)
