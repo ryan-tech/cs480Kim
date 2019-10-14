@@ -50,7 +50,7 @@
       "OrbitSpeed": "1",
       "AxisTilt": "0",
       "DistanceFromOrigin": "3",
-      "NumSatellites": "0",
+      "NumSatellites": "1",
       "Scaled": {
         "Size": "7.9",
         "DistanceFromOrigin": "1",
@@ -63,7 +63,7 @@
       "OrbitSpeed": "1",
       "AxisTilt": "0",
       "DistanceFromOrigin": "4",
-      "NumSatellites": "0",
+      "NumSatellites": "2",
       "Scaled": {
         "Size": "4.2",
         "DistanceFromOrigin": "1.54",
@@ -76,7 +76,7 @@
       "OrbitSpeed": "1",
       "AxisTilt": "0",
       "DistanceFromOrigin": "5",
-      "NumSatellites": "0",
+      "NumSatellites": "67",
       "Scaled": {
         "Size": "88.7",
         "DistanceFromOrigin": "5.203",
@@ -89,7 +89,7 @@
       "OrbitSpeed": "1",
       "AxisTilt": "0",
       "DistanceFromOrigin": "6",
-      "NumSatellites": "0",
+      "NumSatellites": "62",
       "Scaled": {
         "Size": "74.6",
         "DistanceFromOrigin": "9.539",
@@ -102,7 +102,7 @@
       "OrbitSpeed": "1",
       "AxisTilt": "0",
       "DistanceFromOrigin": "7",
-      "NumSatellites": "0",
+      "NumSatellites": "27",
       "Scaled": {
         "Size": "32.6",
         "DistanceFromOrigin": "19.18",
@@ -115,7 +115,7 @@
       "OrbitSpeed": "1",
       "AxisTilt": "0",
       "DistanceFromOrigin": "8",
-      "NumSatellites": "0",
+      "NumSatellites": "13",
       "Scaled": {
         "Size": "30.2",
         "DistanceFromOrigin": "30.06",
@@ -128,7 +128,7 @@
       "OrbitSpeed": "1",
       "AxisTilt": "0",
       "DistanceFromOrigin": "9",
-      "NumSatellites": "0",
+      "NumSatellites": "4",
       "Scaled": {
         "Size": "1.4",
         "DistanceFromOrigin": "39.53",
