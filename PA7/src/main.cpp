@@ -48,13 +48,13 @@ int main(int argc, char **argv)
 
   //std::cout << configPath << std::endl;
 
-  std::ifstream config_stream(configPath);
-  nlohmann::json config_json;
-  config_stream >> config_json;
+  std::ifstream config(configPath);
+  nlohmann::json json_obj;
+  config >> json_obj;
 
-  if (config_json.find("Planets") != config_json.end()) {
+  if (json_obj.find("Planets") != json_obj.end()) {
   // there is an entry with key "foo"
-    std::cout << config_json["Planets"]["Sun"]["Filepath"] << std::endl;
+    std::cout << json_obj["Planets"]["Sun"]["Filepath"] << std::endl;
   }
 
 
