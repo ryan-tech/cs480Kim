@@ -30,14 +30,19 @@ class Object
     glm::mat4 model;
 		vector<Mesh> meshes;
     Object* moon;
-    float angle;
+
     string filePath;                 //object file path
+
+    nlohmann::json m_config;
     string name;
+
     vector<Texture*> m_Textures;
 
     float distanceFromOrigin;
+    float angle;
+    float size;
+    float scaled_size;
 
-    nlohmann::json m_config;
 };
 
 #endif /* OBJECT_H */
