@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <string>
+#include <fstream>
 
 #include "graphics_headers.h"
+
 
 class Shader
 {
@@ -17,6 +19,8 @@ class Shader
     bool AddShader(GLenum ShaderType);
     bool Finalize();
     GLint GetUniformLocation(const char* pUniformName);
+
+    string fileToString(string path);
 
   private:
     GLuint m_shaderProg;

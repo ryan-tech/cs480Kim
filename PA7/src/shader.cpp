@@ -5,11 +5,23 @@ Shader::Shader()
   m_shaderProg = 0;
 }
 
+string Shader::fileToString(string path){
+  char buf[256];
+  std::ifstream t(path);
+  std::string str;
+  while(t.good()){
+    t.getline(buf, 256);
+    str += buf;
+    str += '\n';
+  }
+  return str;
+}
+
 Shader::Shader(std::string fragment, std::string vertex)
 {
   m_shaderProg = 0;
-  fragmentShader = fragment;
-  vertexShader = vertex;
+  fragmentShader = fileToString(fragment);
+  vertexShader = fileToString(vertex);
 }
 
 Shader::~Shader()

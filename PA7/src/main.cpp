@@ -49,17 +49,3 @@ int main(int argc, char **argv)
 
   return 0;
 }
-
-//taken from stackoverflow
-string fileToString(string path){
-
-  char buf[256];
-  std::ifstream t(path);
-  std::string str;
-  while(t.good()){
-    t.getline(buf, 256);
-    str += buf;
-    str += '\n';
-  }
-  return str;
-}
