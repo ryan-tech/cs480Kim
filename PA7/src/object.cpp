@@ -12,6 +12,7 @@ Object::Object(nlohmann::json json_obj, string object_name)
   m_config = json_obj;
   name = object_name;
   filePath = m_config["Planets"][name]["Filepath"];
+
   loadObject();
   loadTextures();
 	for(int i = 0; i < meshes.size(); i++)
@@ -26,6 +27,7 @@ Object::Object(nlohmann::json json_obj, string object_name)
 	}
   angle = 0.0f;
   distanceFromOrigin = m_config["Planets"][name]["DistanceFromOrigin"];
+  std::cout << distanceFromOrigin << std::endl;
 }
 
 Object::~Object()
@@ -42,7 +44,7 @@ Object::~Object()
 void Object::Update(unsigned int dt, int keyboardButton)
 {
   angle += dt * M_PI/10000;
-  model = glm::translate(glm::mat4(1.0f), glm::vec3 (distanceFromOrigin, 0.0f, 0.0f));
+  model = glm::translate(glm::mat4(1.0f), glm::vec3 (distanceFromOrigin, distanceFromOrigin, 0.0f));
   model = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
