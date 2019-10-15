@@ -51,10 +51,12 @@ Object::~Object()
 void Object::Update(unsigned int dt, int keyboardButton)
 {
 
-  angle += dt * M_PI/10000;
-  model = glm::translate(glm::mat4(1.0f), glm::vec3 (distanceFromOrigin, 0.0f, 0.0f));
+  angle += dt * M_PI/1000;
+  //glm::mat4 m = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin, 0.0f, 0.0f));
+  model = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin, 0.0f, 0.0f));
   model = glm::scale(model, glm::vec3(size));
   model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
+  model = glm::translate(model, glm::vec3(cos(angle), 0.0f, sin(angle)));
 }
 
 
