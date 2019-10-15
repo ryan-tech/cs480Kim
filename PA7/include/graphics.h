@@ -15,7 +15,7 @@ class Graphics
 {
   public:
     Graphics();
-    Graphics(string fragment, string vertex, string path);
+    Graphics(nlohmann::json json_obj);
     ~Graphics();
     bool Initialize(int width, int height);
     void Update(unsigned int dt, int keyboardButton);
@@ -23,6 +23,8 @@ class Graphics
 
   private:
     std::string ErrorString(GLenum error);
+
+    nlohmann::json m_config;
 
     Camera *m_camera;
     Shader *m_shader;
@@ -33,8 +35,11 @@ class Graphics
 
     Object* planets[NUM_PLANETS];    //1 sun, 8 planets, 1 pluto
 
-    string fragmentShader, vertexShader, objPath;
-
+    string fragmentShader, vertexShader;
+    string planet_names[NUM_PLANETS] = {"Sun", "Mercury", "Venus",
+                                        "Earth", "Mars", "Jupiter",
+                                        "Saturn", "Uranus", "Neptune",
+                                        "Pluto"};
 };
 
 #endif /* GRAPHICS_H */

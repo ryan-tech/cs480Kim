@@ -6,12 +6,14 @@
 
 #include "window.h"
 #include "graphics.h"
+#include "graphics_headers.h"
+
 #include <string>
 
 class Engine
 {
   public:
-    Engine(string name, int width, int height, string fragment, string vertex);
+    Engine(nlohmann::json json_obj);
     Engine(string name);
     ~Engine();
     bool Initialize();
@@ -38,6 +40,8 @@ class Engine
     string m_path;
 
     int keyboardButton;
+
+    nlohmann::json m_config;
 
 };
 

@@ -17,16 +17,6 @@ int main(int argc, char **argv)
   if(argc > 1){
     for(int i = 0; i < argc; i++){
       string argument = argv[i];
-      // if(argument == "-f"){         //fragment shader flag
-      //   if( i+1 < argc ){           //makes sure i doesn't go out of bounds
-      //     fragPath = argv[i+1];     //filename is the argument after the flag
-      //   }
-      // }
-      // if(argument == "-v"){         //vertex shader flag
-      //   if( i+1 < argc ){
-      //     verPath = argv[i+1];
-      //   }
-      // }
       if(argument == "-c"){         //object obj file flag
         if( i+1 < argc ){
           configPath = argv[i+1];
@@ -35,32 +25,17 @@ int main(int argc, char **argv)
     }
   }
   else{
-    std::cerr << "ERROR: No shaders specified." << endl;
+    std::cerr << "ERROR: No config file specified." << endl;
     return 1;
   }
-  //if(fragPath == "" || verPath == ""){
-  //   std::cerr << "ERROR: Missing fragment or vertex shader." << endl;
-  //   return 1;
-  // }
-  //string fragmentShader, vertexShader;
-  //fragmentShader = fileToString(fragPath);
-  //vertexShader = fileToString(verPath);
-
-  //std::cout << configPath << std::endl;
 
   std::ifstream config(configPath);
   nlohmann::json json_obj;
   config >> json_obj;
 
-  if (json_obj.find("Planets") != json_obj.end()) {
-  // there is an entry with key "foo"
-    std::cout << json_obj["Planets"]["Sun"]["Filepath"] << std::endl;
-  }
 
-
-/*
   // Start an engine and run it then cleanup after
-  Engine *engine = new Engine("Ryan Kim", 800, 600, fragmentShader, vertexShader); //Added fragment shader and vertex shaders as parameters for the Engine constructor.
+  Engine *engine = new Engine(json_obj); //
   if(!engine->Initialize())
   {
     printf("The engine failed to start.\n");
@@ -71,7 +46,7 @@ int main(int argc, char **argv)
   engine->Run();
   delete engine;
   engine = NULL;
-*/
+
   return 0;
 }
 

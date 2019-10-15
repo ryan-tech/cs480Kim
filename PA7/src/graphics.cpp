@@ -1,15 +1,10 @@
 #include "graphics.h"
 
-Graphics::Graphics()
+Graphics::Graphics(nlohmann::json json_obj)
 {
-
-}
-
-Graphics::Graphics(string fragment, string vertex, string path)
-{
-  fragmentShader = fragment;
-  vertexShader = vertex;
-  objPath = path;
+  fragmentShader = json_obj["Shader"]["Fragment"];
+  vertexShader =  json_obj["Shader"]["Vertex"];
+  m_config = json_obj;
 }
 
 Graphics::~Graphics()
@@ -50,17 +45,14 @@ bool Graphics::Initialize(int width, int height)
     printf("Camera Failed to Initialize\n");
     return false;
   }
-
-
-
-
 /*
         LOADING PLANETS FROM JSON
 */
 
-
-  planets[0] = new Object(objPath);
-
+  for(int i = 0; i < NUM_PLANETS; i++)
+  {
+    planets[i] = new Object(m_config, planet_names[i]);
+  }
 
   // Set up the shaders
   m_shader = new Shader(fragmentShader, vertexShader);
@@ -125,7 +117,11 @@ bool Graphics::Initialize(int width, int height)
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
   // Update the object
-  planets[0]->Update(dt, keyboardButton);
+  for(int i = 0; i < NUM_PLANETS; i++)
+  {
+    planets[i]->Update(dt, keyboardButton);
+  }
+  //planets[0]->Update(dt, keyboardButton);
   //m_moon->Update_moon(dt, keyboardButton);
 }
 
@@ -143,8 +139,12 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
 
   // Render the object
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(planets[0]->GetModel()));
-  planets[0]->Render();
+  for(int i = 0; i < NUM_PLANETS; i++)
+  {
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(planets[i]->GetModel()));
+    planets[i]->Render();
+  }
+
 
   // Get any errors from OpenGL
   auto error = glGetError();

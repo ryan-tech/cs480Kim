@@ -11,16 +11,14 @@
 #include "graphics_headers.h"
 #include "texture.h"
 
-
 using namespace std;
-
 
 
 class Object
 {
   public:
     Object();
-    Object(string path);
+    Object(nlohmann::json json_obj, string object_name);
     ~Object();
     void Update(unsigned int dt, int keyboardButton);
     void Render();
@@ -33,9 +31,13 @@ class Object
 		vector<Mesh> meshes;
     Object* moon;
     float angle;
-    std::string filePath;                 //object file path
-
+    string filePath;                 //object file path
+    string name;
     vector<Texture*> m_Textures;
+
+    float distanceFromOrigin;
+
+    nlohmann::json m_config;
 };
 
 #endif /* OBJECT_H */

@@ -1,14 +1,13 @@
 
 #include "engine.h"
 
-Engine::Engine(string name, int width, int height, string fragment, string vertex)
+Engine::Engine(nlohmann::json json_obj)
 {
-  m_WINDOW_NAME = name;
-  m_WINDOW_WIDTH = width;
-  m_WINDOW_HEIGHT = height;
-  fragmentShader = fragment;
-  vertexShader =  vertex;
-  m_FULLSCREEN = false;
+  m_WINDOW_NAME = json_obj["Window"]["Name"];
+  m_WINDOW_WIDTH = json_obj["Window"]["Width"];
+  m_WINDOW_HEIGHT = json_obj["Window"]["Height"];
+  m_FULLSCREEN = json_obj["Window"]["Fullscreen"];
+  m_config = json_obj;
 }
 
 Engine::Engine(string name)
@@ -38,7 +37,7 @@ bool Engine::Initialize()
   }
 
   // Start the graphics
-  m_graphics = new Graphics(fragmentShader, vertexShader, m_path);
+  m_graphics = new Graphics(m_config);
   if(!m_graphics->Initialize(m_WINDOW_WIDTH, m_WINDOW_HEIGHT))
   {
     printf("The graphics failed to initialize.\n");

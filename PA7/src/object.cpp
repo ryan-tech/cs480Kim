@@ -7,9 +7,11 @@ Object::Object()
 }
 
 //The parameterized constructor uses the path in the parameter to call loadObject()
-Object::Object(string path)
+Object::Object(nlohmann::json json_obj, string object_name)
 {
-  filePath = path;
+  m_config = json_obj;
+  name = object_name;
+  filePath = m_config["Planets"][name]["Filepath"];
   loadObject();
   loadTextures();
 	for(int i = 0; i < meshes.size(); i++)
@@ -23,7 +25,7 @@ Object::Object(string path)
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
 	}
   angle = 0.0f;
-
+  distanceFromOrigin = m_config["Planets"][name]["DistanceFromOrigin"];
 }
 
 Object::~Object()
@@ -40,7 +42,7 @@ Object::~Object()
 void Object::Update(unsigned int dt, int keyboardButton)
 {
   angle += dt * M_PI/10000;
-  model = glm::translate(glm::mat4(1.0f), glm::vec3 (0.0f, 0.0f, 0.0f));
+  model = glm::translate(glm::mat4(1.0f), glm::vec3 (distanceFromOrigin, 0.0f, 0.0f));
   model = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
@@ -88,6 +90,13 @@ void Object::loadObject()
 {
   Assimp::Importer importer;
   //Define aiScene pointer
+  fstream fileStream;
+  fileStream.open(filePath);
+  if (fileStream.fail()) {
+
+    std::cout << "File: " << filePath << " could not be opened" << std::endl;
+    return;
+  }
   const aiScene *myScene = importer.ReadFile(filePath, aiProcess_Triangulate);
 
   //
@@ -138,6 +147,13 @@ void Object::loadTextures()
 {
   Assimp::Importer importer;
   //Define aiScene pointer
+  fstream fileStream;
+  fileStream.open(filePath);
+  if (fileStream.fail()) {
+
+    std::cout << "File: " << filePath << " could not be opened" << std::endl;
+    return;
+  }
   const aiScene *myScene = importer.ReadFile(filePath, aiProcess_Triangulate);
   m_Textures.resize(myScene->mNumMaterials);
   //
@@ -157,7 +173,7 @@ void Object::loadTextures()
   }
 
   // Initialize the materials
-  std::cout << myScene->mNumMaterials << std::endl;
+  //std::cout << myScene->mNumMaterials << std::endl;
   for (unsigned int i = 0 ; i < myScene->mNumMaterials ; i++) {
       const aiMaterial* pMaterial = myScene->mMaterials[i];
 
@@ -169,7 +185,7 @@ void Object::loadTextures()
           if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
               std::string FullPath = Dir + "/" + Path.data;
               m_Textures[i] = new Texture(GL_TEXTURE_2D, FullPath.c_str());
-              std::cout << FullPath.c_str() << std::endl;
+              //std::cout << FullPath.c_str() << std::endl;
 
               if (!m_Textures[i]->Load()) {
                   printf("Error loading texture '%s'\n", FullPath.c_str());
