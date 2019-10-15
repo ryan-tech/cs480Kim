@@ -29,8 +29,9 @@ Object::Object(nlohmann::json json_obj, string object_name)
   distanceFromOrigin = m_config["Planets"][name]["DistanceFromOrigin"];
   distanceFromOrigin *= 2;  //planets (if same size) are side by side. 2 is the perfect multiplier
   size = m_config["Planets"][name]["Size"];
-  size *= 100;
 
+  //size *= 100;
+std::cout << size << std::endl;
 
   //distanceFromOrigin;
   //std::cout << distanceFromOrigin << std::endl;
@@ -49,9 +50,10 @@ Object::~Object()
 }
 void Object::Update(unsigned int dt, int keyboardButton)
 {
-  model = glm::scale(model, glm::vec3(size));
+
   angle += dt * M_PI/10000;
   model = glm::translate(glm::mat4(1.0f), glm::vec3 (distanceFromOrigin, 0.0f, 0.0f));
+  model = glm::scale(model, glm::vec3(size));
   model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 

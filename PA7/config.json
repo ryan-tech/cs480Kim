@@ -129,7 +129,7 @@
     },
     "Pluto": {
       "Filepath": "../blender_object/Pluto.obj",
-      "Size": 0.05,
+      "Size": 0.1,
       "RotationDirection": 1,
       "OrbitSpeed": 1,
       "AxisTilt": 0,
