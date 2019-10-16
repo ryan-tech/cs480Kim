@@ -39,9 +39,12 @@ class Object
     vector<Texture*> m_Textures;
 
     float distanceFromOrigin;
-    float angle;
+    float orbit_angle;
+		float rotate_angle;
     float size;
     float scaled_size;
+		float orbit_speed;
+		float rotate_speed;
 
 };
 

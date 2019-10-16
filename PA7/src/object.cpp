@@ -3,7 +3,8 @@
 //The default constructor used to have the cube in it.
 Object::Object()
 {
-  angle = 0.0f;
+  orbit_angle = 0.0f;
+	rotate_angle = 0.0f;
 }
 
 //The parameterized constructor uses the path in the parameter to call loadObject()
@@ -25,10 +26,14 @@ Object::Object(nlohmann::json json_obj, string object_name)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
 	}
-  angle = 0.0f;
+  orbit_angle = 0.0f;
+	rotate_angle = 0.0f;
   distanceFromOrigin = m_config["Planets"][name]["DistanceFromOrigin"];
   distanceFromOrigin *= 2;  //planets (if same size) are side by side. 2 is the perfect multiplier
   size = m_config["Planets"][name]["Size"];
+	orbit_speed = m_config["Planets"][name]["OrbitSpeed"];
+	rotate_speed = m_config["Planets"][name]["RotateSpeed"];
+	rotate_speed *= 365.26;
 
   //size *= 100;
 std::cout << size << std::endl;
@@ -51,12 +56,12 @@ Object::~Object()
 void Object::Update(unsigned int dt, int keyboardButton)
 {
 
-  angle += dt * M_PI/1000;
+  orbit_angle += orbit_speed * dt * M_PI/1000;
+	rotate_angle += rotate_speed * dt * M_PI/1000;
   //glm::mat4 m = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin, 0.0f, 0.0f));
-  model = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin, 0.0f, 0.0f));
+  model = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin * cos(orbit_angle), 0.0f, distanceFromOrigin * sin(orbit_angle)));
   model = glm::scale(model, glm::vec3(size));
-  model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(cos(angle), 0.0f, sin(angle)));
+  model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 

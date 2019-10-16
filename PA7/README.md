@@ -27,4 +27,4 @@ In CS480/PA6$
 
   make
 
-  ./PA6 -f ../shaders/fragment.txt -v ../shaders/vertex.txt -o ../blender_object/buddha.obj
+  ./PA7 -f ../shaders/fragment.txt -v ../shaders/vertex.txt -c ../config.json
