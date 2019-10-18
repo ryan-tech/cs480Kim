@@ -61,4 +61,4 @@ In CS480/PA6$
 
   make
 
-  ./PA7 -f ../shaders/fragment.txt -v ../shaders/vertex.txt -c ../config.json
+  ./PA7 -c ../config.json
