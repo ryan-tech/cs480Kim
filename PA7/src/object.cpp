@@ -1,12 +1,21 @@
 #include "object.h"
 
 //The default constructor used to have the cube in it.
+/*  Function: Object()
+ *  Parameters: None
+ *  Return: None
+ *  Purpose: Initializes private/protected members
+ */
 Object::Object()
 {
   orbit_angle = 0.0f;
 	rotate_angle = 0.0f;
 }
-
+/*  Function: Object(nlohmann::json json_obj, string object_name)
+ *  Parameters: nlohmann::json json_obj, string object_name
+ *  Return: None
+ *  Purpose: Loads object variables, models, and textures
+ */
 //The parameterized constructor uses the path in the parameter to call loadObject()
 Object::Object(nlohmann::json json_obj, string object_name)
 {
@@ -37,13 +46,14 @@ Object::Object(nlohmann::json json_obj, string object_name)
 	counterClockwise = m_config["Planets"][name]["RotationDirection"];
 	numMoons = m_config["Planets"][name]["NumSatellites"];
 
-  //size *= 100;
-std::cout << size << std::endl;
-
-  //distanceFromOrigin;
-  //std::cout << distanceFromOrigin << std::endl;
 }
 
+/*
+ *  Function: Moon(nlohmann::json json_obj, Object* parent, int index)
+ *  Parameters: nlohmann::json json_obj, Object* parent, int index
+ *  Return: None
+ *  Purpose: Derived class constructor for the moons
+ */
 Moon::Moon(nlohmann::json json_obj, Object* parent, int index)
 {
 	m_planet = parent;
@@ -64,7 +74,6 @@ Moon::Moon(nlohmann::json json_obj, Object* parent, int index)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
 	}
-
   orbit_angle = 0.0f;
 	rotate_angle = 0.0f;
   distanceFromOrigin = m_config["Moon"]["DistanceFromOrigin"];
@@ -72,30 +81,36 @@ Moon::Moon(nlohmann::json json_obj, Object* parent, int index)
   size = m_config["Moon"]["Size"];
   size /= 10;
 	orbit_speed = m_config["Moon"]["OrbitSpeed"];
+  orbit_speed *= 31;
 	rotate_speed = m_config["Moon"]["RotateSpeed"];
 	rotate_speed *= 365.26;
 	counterClockwise = m_config["Moon"]["RotationDirection"];
 	int n = m_config["Planets"][m_planet->name]["NumSatellites"];
-	orbit_angle = 360 * index/n;
-	
-	
+	orbit_angle = 360 * float(index)/n;
 }
 
+/*
+ *  Function: Update(unsigned int dt, int keyboardButton)
+ *  Parameters: unsigned int dt, int keyboardButton
+ *  Return: void
+ *  Purpose: rotates, scales, and translates the moon to simulate rotation and orbit about its parent planet
+ */
 void Moon::Update(unsigned int dt, int keyboardButton)
 {
-	orbit_angle -= orbit_speed * dt *M_PI/10000;
-	rotate_angle -= rotate_speed * dt * M_PI/100000;
-
+	orbit_angle += orbit_speed * dt *M_PI/20000;
+	rotate_angle -= rotate_speed * dt * M_PI/200000;
 	model = glm::translate(m_planet->GetModel(), glm::vec3(distanceFromOrigin * cos(orbit_angle), 0.0f, distanceFromOrigin * sin(orbit_angle)));
-	//model = glm::translate(glm::mat4(1.0f), glm::vec3(m_planet->distanceFromOrigin * cos(m_planet->orbit_angle),0,m_planet->distanceFromOrigin * sin(m_planet->orbit_angle)));
-        //model = glm::translate(model, glm::vec3(distanceFromOrigin * cos(orbit_angle),0,distanceFromOrigin * sin(orbit_angle)));
 	model = glm::scale(model, glm::vec3(1/m_planet->size));
 	model = glm::scale(model, glm::vec3(size));
 	model = glm::rotate(model, glm::radians(rotate_angle), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-
-
+/*
+ *  Function: ~Object()
+ *  Parameters: None
+ *  Return: None
+ *  Purpose: rclears arrays and vectors used by the object
+ */
 Object::~Object()
 {
 	for(int i = 0; i < meshes.size(); i++)
@@ -111,32 +126,48 @@ Object::~Object()
 		delete moons[i];
 		moons[i] = NULL;
 	}
-	moons.clear();	
+	moons.clear();
 }
+
+/*
+ *  Function: Update(unsigned int dt, int keyboardButton)
+ *  Parameters: unsigned int dt, int keyboardButton
+ *  Return: void
+ *  Purpose: rotates, scales, and translates the planet to simulate rotation and orbit about the sun
+ */
 void Object::Update(unsigned int dt, int keyboardButton)
 {
-	orbit_angle -= orbit_speed * dt * M_PI/10000;
+	orbit_angle -= orbit_speed * dt * M_PI/20000;
 	if(counterClockwise)
 	{
-		rotate_angle -= rotate_speed * dt * M_PI/100000;
+		rotate_angle += rotate_speed * dt * M_PI/200000;
 	}
 	else
 	{
-		rotate_angle += rotate_speed * dt * M_PI/100000;
-	}		
-  //glm::mat4 m = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin, 0.0f, 0.0f));
-
+		rotate_angle -= rotate_speed * dt * M_PI/200000;
+	}
   model = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin * cos(orbit_angle), 0.0f, distanceFromOrigin * sin(orbit_angle)));
   model = glm::scale(model, glm::vec3(size));
   model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-
+/*
+ *  Function: GetModel()
+ *  Parameters: None
+ *  Return: glm::mat4
+ *  Purpose: Gets the 4x4 matrix representation of the model
+ */
 glm::mat4 Object::GetModel()
 {
   return model;
 }
 
+/*
+ *  Function: Render()
+ *  Parameters: None
+ *  Return: void
+ *  Purpose: passes the textures, colors, and position of each vertex to the shaders.
+ */
 void Object::Render()
 {
   glEnableVertexAttribArray(0);
@@ -167,12 +198,25 @@ void Object::Render()
   glDisableVertexAttribArray(2);
 }
 
+/*
+ *  Function: Render()
+ *  Parameters: None
+ *  Return: void
+ *  Purpose: Calls the render function from the base class
+ */
 void Moon::Render()
 {
 	Object::Render();
 }
 
-//loads the vertices and faces into their respective vertices and indices vectors.
+
+/*
+ *  Function: loadObject()
+ *  Parameters: None
+ *  Return: void
+ *  Purpose: loads the vertices and faces into their respective vertices and indices vectors
+ */
+//
 //Each scene has a mesh, each mesh has a face, each face has aiVector3D of mVertices
 //Goal: load vertices and indices vertex.
 //PA5: Uses the assimp library
@@ -231,8 +275,12 @@ void Object::loadObject()
   }
 }
 
-
-
+/*
+ *  Function: loadTextures()
+ *  Parameters: None
+ *  Return: void
+ *  Purpose: loads the textures from the aiScene and populates a texture array with texture objects.
+ */
 void Object::loadTextures()
 {
   Assimp::Importer importer;

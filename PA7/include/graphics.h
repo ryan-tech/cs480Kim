@@ -19,7 +19,7 @@ class Graphics
     ~Graphics();
     bool Initialize(int width, int height);
     void Update(unsigned int dt, int keyboardButton);
-    void Render(int keyboardButton);
+    void Render();
 
   private:
     std::string ErrorString(GLenum error);

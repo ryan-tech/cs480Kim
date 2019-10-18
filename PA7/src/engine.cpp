@@ -68,7 +68,7 @@ void Engine::Run()
 
     // Update and render the graphics
     m_graphics->Update(m_DT, keyboardButton);   //added m_keypress to parameters
-    m_graphics->Render(keyboardButton);
+    m_graphics->Render();
 
     // Swap to the Window
     m_window->Swap();
@@ -89,8 +89,11 @@ void Engine::Keyboard()
     {
       m_running = false;
     }
-    //PA2: Any other key was pressed.
     keyboardButton = m_event.key.keysym.sym;
+  }
+  else if (m_event.type == SDL_KEYUP)
+  {
+    keyboardButton = 0;
   }
   //PA2: handle mouse click events here
 

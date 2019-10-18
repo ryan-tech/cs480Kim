@@ -13,16 +13,11 @@
     "Sun": {
       "Filepath": "../blender_object/Sun.obj",
       "Size": 2,
-      "RotationDirection": false,
+      "RotationDirection": true,
       "OrbitSpeed": 0,
 			"RotateSpeed": 0.02,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 0,
-      "NumSatellites": 0,
-      "Scaled": {
-        "Size": 864.0,
-        "DistanceFromOrigin": 0.39
-      }
+      "NumSatellites": 0
     },
     "Mercury": {
       "Filepath": "../blender_object/Mercury.obj",
@@ -30,13 +25,8 @@
       "RotationDirection": true,
       "OrbitSpeed": 4.152,
 			"RotateSpeed": 0.01689,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 1,
-      "NumSatellites": 0,
-      "Scaled": {
-        "Size": 3.0,
-        "DistanceFromOrigin": 0.39
-      }
+      "NumSatellites": 0
     },
     "Venus": {
       "Filepath": "../blender_object/Venus.obj",
@@ -44,13 +34,8 @@
       "RotationDirection": false,
       "OrbitSpeed": 1.6255,
 			"RotateSpeed": 0.004,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 2,
-      "NumSatellites": 0,
-      "Scaled": {
-        "Size": 7.5,
-        "DistanceFromOrigin": 0.723
-      }
+      "NumSatellites": 0
     },
     "Earth": {
       "Filepath": "../blender_object/Earth.obj",
@@ -58,13 +43,8 @@
       "RotationDirection": true,
       "OrbitSpeed": 1,
 			"RotateSpeed": 1,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 3,
-      "NumSatellites": 1,
-      "Scaled": {
-        "Size": 7.9,
-        "DistanceFromOrigin": 1
-      }
+      "NumSatellites": 1
     },
     "Mars": {
       "Filepath": "../blender_object/Mars.obj",
@@ -72,13 +52,8 @@
       "RotationDirection": true,
       "OrbitSpeed": 0.5319,
 			"RotateSpeed": 0.9612,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 4,
-      "NumSatellites": 2,
-      "Scaled": {
-        "Size": 4.2,
-        "DistanceFromOrigin": 1.54
-      }
+      "NumSatellites": 2
     },
     "Jupiter": {
       "Filepath": "../blender_object/Jupiter.obj",
@@ -86,13 +61,8 @@
       "RotationDirection": true,
       "OrbitSpeed": 0.0843,
 			"RotateSpeed": 2.4146,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 5,
-      "NumSatellites": 67,
-      "Scaled": {
-        "Size": 88.7,
-        "DistanceFromOrigin": 5.203
-      }
+      "NumSatellites": 67
     },
     "Saturn": {
       "Filepath": "../blender_object/Saturn.obj",
@@ -100,13 +70,8 @@
       "RotationDirection": true,
       "OrbitSpeed": 0.0339,
 			"RotateSpeed": 2.2,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 6,
-      "NumSatellites": 62,
-      "Scaled": {
-        "Size": 74.6,
-        "DistanceFromOrigin": 9.539
-      }
+      "NumSatellites": 62
     },
     "Uranus": {
       "Filepath": "../blender_object/Uranus.obj",
@@ -114,13 +79,8 @@
       "RotationDirection": false,
       "OrbitSpeed": 0.0119,
 			"RotateSpeed": 1.375,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 7,
-      "NumSatellites": 27,
-      "Scaled": {
-        "Size": 32.6,
-        "DistanceFromOrigin": 19.18
-      }
+      "NumSatellites": 27
     },
     "Neptune": {
       "Filepath": "../blender_object/Neptune.obj",
@@ -128,29 +88,19 @@
       "RotationDirection": true,
       "OrbitSpeed": 0.006,
 			"RotateSpeed": 1.4776,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 8,
-      "NumSatellites": 13,
-      "Scaled": {
-        "Size": 30.2,
-        "DistanceFromOrigin": 30.06
-      }
+      "NumSatellites": 13
     },
     "Pluto": {
       "Filepath": "../blender_object/Pluto.obj",
       "Size": 0.1,
-      "RotationDirection": true,
+      "RotationDirection": false,
       "OrbitSpeed": 0.004,
 			"RotateSpeed": 0.1549,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 9,
-      "NumSatellites": 4,
-      "Scaled": {
-        "Size": 1.4,
-        "DistanceFromOrigin": 39.53
-      }
+      "NumSatellites": 4
     }
-   
+
   },
     "Moon": {
       "Filepath": "../blender_object/Moon.obj",
@@ -158,12 +108,7 @@
       "RotationDirection": true,
       "OrbitSpeed": 1,
 			"RotateSpeed": 12,
-      "AxisTilt": 0,
       "DistanceFromOrigin": 2,
-      "NumSatellites": 4,
-      "Scaled": {
-        "Size": 1.4,
-        "DistanceFromOrigin": 39.53
-      }
+      "NumSatellites": 4
     }
 }

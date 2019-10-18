@@ -27,13 +27,14 @@ class Object
     void loadObject();
     void loadTextures();
     glm::mat4 GetModel();
-	vector<Moon*> moons;
-	int numMoons;
+	  vector<Moon*> moons;
+	  int numMoons;
     float orbit_angle;
 		float rotate_angle;
-	float distanceFromOrigin;
-	string name;
-	    float size;
+	  float distanceFromOrigin;
+	  string name;
+	  float size;
+
 
   protected:
     glm::mat4 model;
