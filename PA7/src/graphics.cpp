@@ -52,6 +52,11 @@ bool Graphics::Initialize(int width, int height)
   for(int i = 0; i < NUM_PLANETS; i++)
   {
     planets[i] = new Object(m_config, planet_names[i]);
+    for( int j = 0; j < planets[i]->numMoons; j++)
+    {
+	Moon* m = new Moon(m_config, planets[i], j);
+	planets[i]->moons.push_back(m);
+    }
   }
 
   // Set up the shaders
@@ -120,6 +125,11 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   for(int i = 0; i < NUM_PLANETS; i++)
   {
     planets[i]->Update(dt, keyboardButton);
+    for( int j = 0; j < planets[i]->numMoons; j++)
+    {
+	planets[i]->moons[j]->Update(dt, keyboardButton);
+    }	
+	
   }
   //planets[0]->Update(dt, keyboardButton);
   //m_moon->Update_moon(dt, keyboardButton);
@@ -143,6 +153,11 @@ void Graphics::Render()
   {
     glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(planets[i]->GetModel()));
     planets[i]->Render();
+    for( int j = 0; j < planets[i]->numMoons; j++)
+    {
+    	glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(planets[i]->moons[j]->GetModel()));	
+	planets[i]->moons[j]->Render();
+    }
   }
 
 

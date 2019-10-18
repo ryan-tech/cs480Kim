@@ -29,11 +29,13 @@ Object::Object(nlohmann::json json_obj, string object_name)
   orbit_angle = 0.0f;
 	rotate_angle = 0.0f;
   distanceFromOrigin = m_config["Planets"][name]["DistanceFromOrigin"];
-  distanceFromOrigin *= 2;  //planets (if same size) are side by side. 2 is the perfect multiplier
+  distanceFromOrigin *= 3;  //planets (if same size) are side by side. 2 is the perfect multiplier
   size = m_config["Planets"][name]["Size"];
 	orbit_speed = m_config["Planets"][name]["OrbitSpeed"];
 	rotate_speed = m_config["Planets"][name]["RotateSpeed"];
 	rotate_speed *= 365.26;
+	counterClockwise = m_config["Planets"][name]["RotationDirection"];
+	numMoons = m_config["Planets"][name]["NumSatellites"];
 
   //size *= 100;
 std::cout << size << std::endl;
@@ -41,6 +43,58 @@ std::cout << size << std::endl;
   //distanceFromOrigin;
   //std::cout << distanceFromOrigin << std::endl;
 }
+
+Moon::Moon(nlohmann::json json_obj, Object* parent, int index)
+{
+	m_planet = parent;
+
+	m_config = json_obj;
+ 	 filePath = m_config["Moon"]["Filepath"];
+
+	loadObject();
+	loadTextures();
+
+	for(int i = 0; i < meshes.size(); i++)
+	{
+		glGenBuffers(1, &meshes[i].VB);
+		glBindBuffer(GL_ARRAY_BUFFER, meshes[i].VB);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * meshes[i].Vertices.size(), &meshes[i].Vertices[0], GL_STATIC_DRAW);
+
+		glGenBuffers(1, &meshes[i].IB);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
+	}
+
+  orbit_angle = 0.0f;
+	rotate_angle = 0.0f;
+  distanceFromOrigin = m_config["Moon"]["DistanceFromOrigin"];
+  distanceFromOrigin *= 1;  //planets (if same size) are side by side. 2 is the perfect multiplier
+  size = m_config["Moon"]["Size"];
+  size /= 10;
+	orbit_speed = m_config["Moon"]["OrbitSpeed"];
+	rotate_speed = m_config["Moon"]["RotateSpeed"];
+	rotate_speed *= 365.26;
+	counterClockwise = m_config["Moon"]["RotationDirection"];
+	int n = m_config["Planets"][m_planet->name]["NumSatellites"];
+	orbit_angle = 360 * index/n;
+	
+	
+}
+
+void Moon::Update(unsigned int dt, int keyboardButton)
+{
+	orbit_angle -= orbit_speed * dt *M_PI/10000;
+	rotate_angle -= rotate_speed * dt * M_PI/100000;
+
+	model = glm::translate(m_planet->GetModel(), glm::vec3(distanceFromOrigin * cos(orbit_angle), 0.0f, distanceFromOrigin * sin(orbit_angle)));
+	//model = glm::translate(glm::mat4(1.0f), glm::vec3(m_planet->distanceFromOrigin * cos(m_planet->orbit_angle),0,m_planet->distanceFromOrigin * sin(m_planet->orbit_angle)));
+        //model = glm::translate(model, glm::vec3(distanceFromOrigin * cos(orbit_angle),0,distanceFromOrigin * sin(orbit_angle)));
+	model = glm::scale(model, glm::vec3(1/m_planet->size));
+	model = glm::scale(model, glm::vec3(size));
+	model = glm::rotate(model, glm::radians(rotate_angle), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+
 
 Object::~Object()
 {
@@ -52,13 +106,26 @@ Object::~Object()
   for (unsigned int i = 0 ; i < m_Textures.size() ; i++) {
       m_Textures[i] = NULL;
   }
+	for(int i = 0; i < moons.size() ; i++)
+	{
+		delete moons[i];
+		moons[i] = NULL;
+	}
+	moons.clear();	
 }
 void Object::Update(unsigned int dt, int keyboardButton)
 {
-
-  orbit_angle += orbit_speed * dt * M_PI/1000;
-	rotate_angle += rotate_speed * dt * M_PI/1000;
+	orbit_angle -= orbit_speed * dt * M_PI/10000;
+	if(counterClockwise)
+	{
+		rotate_angle -= rotate_speed * dt * M_PI/100000;
+	}
+	else
+	{
+		rotate_angle += rotate_speed * dt * M_PI/100000;
+	}		
   //glm::mat4 m = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin, 0.0f, 0.0f));
+
   model = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin * cos(orbit_angle), 0.0f, distanceFromOrigin * sin(orbit_angle)));
   model = glm::scale(model, glm::vec3(size));
   model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -98,6 +165,11 @@ void Object::Render()
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);
   glDisableVertexAttribArray(2);
+}
+
+void Moon::Render()
+{
+	Object::Render();
 }
 
 //loads the vertices and faces into their respective vertices and indices vectors.

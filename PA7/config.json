@@ -12,10 +12,10 @@
   "Planets": {
     "Sun": {
       "Filepath": "../blender_object/Sun.obj",
-      "Size": 1.0,
-      "RotationDirection": 1,
+      "Size": 2,
+      "RotationDirection": false,
       "OrbitSpeed": 0,
-			"RotateSpeed": 0,
+			"RotateSpeed": 0.02,
       "AxisTilt": 0,
       "DistanceFromOrigin": 0,
       "NumSatellites": 0,
@@ -27,7 +27,7 @@
     "Mercury": {
       "Filepath": "../blender_object/Mercury.obj",
       "Size": 0.2,
-      "RotationDirection": 1,
+      "RotationDirection": true,
       "OrbitSpeed": 4.152,
 			"RotateSpeed": 0.01689,
       "AxisTilt": 0,
@@ -41,7 +41,7 @@
     "Venus": {
       "Filepath": "../blender_object/Venus.obj",
       "Size": 0.4,
-      "RotationDirection": 1,
+      "RotationDirection": false,
       "OrbitSpeed": 1.6255,
 			"RotateSpeed": 0.004,
       "AxisTilt": 0,
@@ -55,7 +55,7 @@
     "Earth": {
       "Filepath": "../blender_object/Earth.obj",
       "Size": 0.5,
-      "RotationDirection": 1,
+      "RotationDirection": true,
       "OrbitSpeed": 1,
 			"RotateSpeed": 1,
       "AxisTilt": 0,
@@ -69,7 +69,7 @@
     "Mars": {
       "Filepath": "../blender_object/Mars.obj",
       "Size": 0.3,
-      "RotationDirection": 1,
+      "RotationDirection": true,
       "OrbitSpeed": 0.5319,
 			"RotateSpeed": 0.9612,
       "AxisTilt": 0,
@@ -83,7 +83,7 @@
     "Jupiter": {
       "Filepath": "../blender_object/Jupiter.obj",
       "Size": 0.9,
-      "RotationDirection": 1,
+      "RotationDirection": true,
       "OrbitSpeed": 0.0843,
 			"RotateSpeed": 2.4146,
       "AxisTilt": 0,
@@ -97,7 +97,7 @@
     "Saturn": {
       "Filepath": "../blender_object/Saturn.obj",
       "Size": 0.8,
-      "RotationDirection": 1,
+      "RotationDirection": true,
       "OrbitSpeed": 0.0339,
 			"RotateSpeed": 2.2,
       "AxisTilt": 0,
@@ -111,7 +111,7 @@
     "Uranus": {
       "Filepath": "../blender_object/Uranus.obj",
       "Size": 0.7,
-      "RotationDirection": 1,
+      "RotationDirection": false,
       "OrbitSpeed": 0.0119,
 			"RotateSpeed": 1.375,
       "AxisTilt": 0,
@@ -125,7 +125,7 @@
     "Neptune": {
       "Filepath": "../blender_object/Neptune.obj",
       "Size": 0.6,
-      "RotationDirection": 1,
+      "RotationDirection": true,
       "OrbitSpeed": 0.006,
 			"RotateSpeed": 1.4776,
       "AxisTilt": 0,
@@ -139,7 +139,7 @@
     "Pluto": {
       "Filepath": "../blender_object/Pluto.obj",
       "Size": 0.1,
-      "RotationDirection": 1,
+      "RotationDirection": true,
       "OrbitSpeed": 0.004,
 			"RotateSpeed": 0.1549,
       "AxisTilt": 0,
@@ -150,5 +150,20 @@
         "DistanceFromOrigin": 39.53
       }
     }
-  }
+   
+  },
+    "Moon": {
+      "Filepath": "../blender_object/Moon.obj",
+      "Size": 0.5,
+      "RotationDirection": true,
+      "OrbitSpeed": 1,
+			"RotateSpeed": 12,
+      "AxisTilt": 0,
+      "DistanceFromOrigin": 2,
+      "NumSatellites": 4,
+      "Scaled": {
+        "Size": 1.4,
+        "DistanceFromOrigin": 39.53
+      }
+    }
 }
