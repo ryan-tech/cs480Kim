@@ -121,6 +121,7 @@ bool Graphics::Initialize(int width, int height)
 
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
+	//m_camera->Update(keyboardButton);
   // Update the object
   for(int i = 0; i < NUM_PLANETS; i++)
   {
@@ -135,7 +136,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   //m_moon->Update_moon(dt, keyboardButton);
 }
 
-void Graphics::Render()
+void Graphics::Render(int keyboardButton)
 {
   //clear the screen
   glClearColor(0.0, 0.0, 0.2, 1.0);
@@ -143,7 +144,7 @@ void Graphics::Render()
 
   // Start the correct program
   m_shader->Enable();
-
+		m_camera->Update(keyboardButton);
   // Send in the projection and view to the shader
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection()));
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));

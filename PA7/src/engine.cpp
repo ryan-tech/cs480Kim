@@ -68,7 +68,7 @@ void Engine::Run()
 
     // Update and render the graphics
     m_graphics->Update(m_DT, keyboardButton);   //added m_keypress to parameters
-    m_graphics->Render();
+    m_graphics->Render(keyboardButton);
 
     // Swap to the Window
     m_window->Swap();
