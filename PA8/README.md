@@ -7,7 +7,7 @@ Group Member Names:
 
 Date: 10/30/19
 
-Project Directions: We had to load a board, sphere, cube, and cylinder. We made the Cylinder Staic, the sphere dynamic, and the cube kinematic. We also loaded the board using triangle meshes.
+Project Directions: We had to load a board, sphere, cube, and cylinder. We made the Cylinder Static, the sphere dynamic, and the cube kinematic. We also loaded the board using triangle meshes.
 
 Description on changes:
   A Physics class was created in order to handle loading objects and rigidbodies into Bullet. We put the cylinder in the middle of the board to make it easier to collide with and make the cylinder static. Then we made the sphere a dynamic object so that forces applied to the sphere make the sphere move. The cube is a kinematic object that only moves when the controls are pressed and only collides with dynamic objects, therefore our cube currently clips through the board but does collide with the sphere and make it move.
