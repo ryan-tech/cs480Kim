@@ -1,114 +1,24 @@
 {
   "Window": {
-    "Name": "PA7",
-    "Height": 800,
-    "Width": 1920,
+    "Name": "PA8",
+    "Height": 900,
+    "Width": 1600,
     "Fullscreen": false
   },
   "Shader":{
     "Vertex": "../shaders/vertex.txt",
     "Fragment": "../shaders/fragment.txt"
   },
-  "Planets": {
-    "Sun": {
-      "Filepath": "../blender_object/Sun.obj",
-      "Size": 2,
-      "RotationDirection": true,
-      "OrbitSpeed": 0,
-			"RotateSpeed": 0.02,
-      "DistanceFromOrigin": 0,
-      "NumSatellites": 0
-    },
-    "Mercury": {
-      "Filepath": "../blender_object/Mercury.obj",
-      "Size": 0.2,
-      "RotationDirection": true,
-      "OrbitSpeed": 4.152,
-			"RotateSpeed": 0.01689,
-      "DistanceFromOrigin": 1,
-      "NumSatellites": 0
-    },
-    "Venus": {
-      "Filepath": "../blender_object/Venus.obj",
-      "Size": 0.4,
-      "RotationDirection": false,
-      "OrbitSpeed": 1.6255,
-			"RotateSpeed": 0.004,
-      "DistanceFromOrigin": 2,
-      "NumSatellites": 0
-    },
-    "Earth": {
-      "Filepath": "../blender_object/Earth.obj",
-      "Size": 0.5,
-      "RotationDirection": true,
-      "OrbitSpeed": 1,
-			"RotateSpeed": 1,
-      "DistanceFromOrigin": 3,
-      "NumSatellites": 1
-    },
-    "Mars": {
-      "Filepath": "../blender_object/Mars.obj",
-      "Size": 0.3,
-      "RotationDirection": true,
-      "OrbitSpeed": 0.5319,
-			"RotateSpeed": 0.9612,
-      "DistanceFromOrigin": 4,
-      "NumSatellites": 2
-    },
-    "Jupiter": {
-      "Filepath": "../blender_object/Jupiter.obj",
-      "Size": 0.9,
-      "RotationDirection": true,
-      "OrbitSpeed": 0.0843,
-			"RotateSpeed": 2.4146,
-      "DistanceFromOrigin": 5,
-      "NumSatellites": 67
-    },
-    "Saturn": {
-      "Filepath": "../blender_object/Saturn.obj",
-      "Size": 0.8,
-      "RotationDirection": true,
-      "OrbitSpeed": 0.0339,
-			"RotateSpeed": 2.2,
-      "DistanceFromOrigin": 6,
-      "NumSatellites": 62
-    },
-    "Uranus": {
-      "Filepath": "../blender_object/Uranus.obj",
-      "Size": 0.7,
-      "RotationDirection": false,
-      "OrbitSpeed": 0.0119,
-			"RotateSpeed": 1.375,
-      "DistanceFromOrigin": 7,
-      "NumSatellites": 27
-    },
-    "Neptune": {
-      "Filepath": "../blender_object/Neptune.obj",
-      "Size": 0.6,
-      "RotationDirection": true,
-      "OrbitSpeed": 0.006,
-			"RotateSpeed": 1.4776,
-      "DistanceFromOrigin": 8,
-      "NumSatellites": 13
-    },
-    "Pluto": {
-      "Filepath": "../blender_object/Pluto.obj",
-      "Size": 0.1,
-      "RotationDirection": false,
-      "OrbitSpeed": 0.004,
-			"RotateSpeed": 0.1549,
-      "DistanceFromOrigin": 9,
-      "NumSatellites": 4
-    }
-
+  "Board":{
+    "Path": "../blender_object/board.obj"
   },
-    "Moon": {
-      "Filepath": "../blender_object/Moon.obj",
-      "Size": 0.5,
-      "RotationDirection": true,
-      "OrbitSpeed": 1,
-			"RotateSpeed": 12,
-      "DistanceFromOrigin": 2,
-      "NumSatellites": 4
-    }
+  "Cube":{
+    "Path": "../blender_object/cube.obj"
+  },
+  "Sphere":{
+    "Path": "../blender_object/sphere.obj"
+  },
+  "Cylinder":{
+    "Path": "../blender_object/cylinder.obj"
+  }
 }

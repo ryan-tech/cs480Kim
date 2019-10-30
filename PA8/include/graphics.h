@@ -10,6 +10,7 @@ using namespace std;
 #include "camera.h"
 #include "shader.h"
 #include "object.h"
+#include "physics.h"
 
 class Graphics
 {
@@ -26,20 +27,19 @@ class Graphics
 
     nlohmann::json m_config;
 
+    Physics* m_world;
+
     Camera *m_camera;
     Shader *m_shader;
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
     GLint m_modelMatrix;
-
-    Object* planets[NUM_PLANETS];    //1 sun, 8 planets, 1 pluto
+    Object* m_object;
 
     string fragmentShader, vertexShader;
-    string planet_names[NUM_PLANETS] = {"Sun", "Mercury", "Venus",
-                                        "Earth", "Mars", "Jupiter",
-                                        "Saturn", "Uranus", "Neptune",
-                                        "Pluto"};
+
+
 };
 
 #endif /* GRAPHICS_H */

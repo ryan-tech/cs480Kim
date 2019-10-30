@@ -30,7 +30,12 @@
 #include <vector>
 #include <cstdlib>
 
+// JSON library
 #include "json.hpp"
+
+//Bullet Real Time Physics Library
+#include <btBulletDynamicsCommon.h>
+
 
 using namespace std;
 

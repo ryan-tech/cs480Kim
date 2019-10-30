@@ -8,22 +8,19 @@
  */
 Object::Object()
 {
-  orbit_angle = 0.0f;
-	rotate_angle = 0.0f;
 }
-/*  Function: Object(nlohmann::json json_obj, string object_name)
- *  Parameters: nlohmann::json json_obj, string object_name
+/*  Function: Object(nlohmann::json json_obj)
+ *  Parameters: nlohmann::json json_obj
  *  Return: None
  *  Purpose: Loads object variables, models, and textures
  */
 //The parameterized constructor uses the path in the parameter to call loadObject()
-Object::Object(nlohmann::json json_obj, string object_name)
+Object::Object(nlohmann::json json_obj, string name)
 {
   m_config = json_obj;
-  name = object_name;
-  filePath = m_config["Planets"][name]["Filepath"];
+  filePath = json_obj[name]["Path"];
 
-  loadObject();
+  loadObject();//objTriMesh);
   loadTextures();
 	for(int i = 0; i < meshes.size(); i++)
 	{
@@ -35,74 +32,6 @@ Object::Object(nlohmann::json json_obj, string object_name)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
 	}
-  orbit_angle = 0.0f;
-	rotate_angle = 0.0f;
-  distanceFromOrigin = m_config["Planets"][name]["DistanceFromOrigin"];
-  distanceFromOrigin *= 3;  //planets (if same size) are side by side. 2 is the perfect multiplier
-  size = m_config["Planets"][name]["Size"];
-	orbit_speed = m_config["Planets"][name]["OrbitSpeed"];
-	rotate_speed = m_config["Planets"][name]["RotateSpeed"];
-	rotate_speed *= 365.26;
-	counterClockwise = m_config["Planets"][name]["RotationDirection"];
-	numMoons = m_config["Planets"][name]["NumSatellites"];
-
-}
-
-/*
- *  Function: Moon(nlohmann::json json_obj, Object* parent, int index)
- *  Parameters: nlohmann::json json_obj, Object* parent, int index
- *  Return: None
- *  Purpose: Derived class constructor for the moons
- */
-Moon::Moon(nlohmann::json json_obj, Object* parent, int index)
-{
-	m_planet = parent;
-
-	m_config = json_obj;
- 	 filePath = m_config["Moon"]["Filepath"];
-
-	loadObject();
-	loadTextures();
-
-	for(int i = 0; i < meshes.size(); i++)
-	{
-		glGenBuffers(1, &meshes[i].VB);
-		glBindBuffer(GL_ARRAY_BUFFER, meshes[i].VB);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * meshes[i].Vertices.size(), &meshes[i].Vertices[0], GL_STATIC_DRAW);
-
-		glGenBuffers(1, &meshes[i].IB);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshes[i].Indices.size(), &meshes[i].Indices[0], GL_STATIC_DRAW);
-	}
-  orbit_angle = 0.0f;
-	rotate_angle = 0.0f;
-  distanceFromOrigin = m_config["Moon"]["DistanceFromOrigin"];
-  distanceFromOrigin *= 1;  //planets (if same size) are side by side. 2 is the perfect multiplier
-  size = m_config["Moon"]["Size"];
-  size /= 10;
-	orbit_speed = m_config["Moon"]["OrbitSpeed"];
-  orbit_speed *= 31;
-	rotate_speed = m_config["Moon"]["RotateSpeed"];
-	rotate_speed *= 365.26;
-	counterClockwise = m_config["Moon"]["RotationDirection"];
-	int n = m_config["Planets"][m_planet->name]["NumSatellites"];
-	orbit_angle = 360 * float(index)/n;
-}
-
-/*
- *  Function: Update(unsigned int dt, int keyboardButton)
- *  Parameters: unsigned int dt, int keyboardButton
- *  Return: void
- *  Purpose: rotates, scales, and translates the moon to simulate rotation and orbit about its parent planet
- */
-void Moon::Update(unsigned int dt, int keyboardButton)
-{
-	orbit_angle += orbit_speed * dt *M_PI/20000;
-	rotate_angle -= rotate_speed * dt * M_PI/200000;
-	model = glm::translate(m_planet->GetModel(), glm::vec3(distanceFromOrigin * cos(orbit_angle), 0.0f, distanceFromOrigin * sin(orbit_angle)));
-	model = glm::scale(model, glm::vec3(1/m_planet->size));
-	model = glm::scale(model, glm::vec3(size));
-	model = glm::rotate(model, glm::radians(rotate_angle), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 /*
@@ -121,12 +50,6 @@ Object::~Object()
   for (unsigned int i = 0 ; i < m_Textures.size() ; i++) {
       m_Textures[i] = NULL;
   }
-	for(int i = 0; i < moons.size() ; i++)
-	{
-		delete moons[i];
-		moons[i] = NULL;
-	}
-	moons.clear();
 }
 
 /*
@@ -137,18 +60,13 @@ Object::~Object()
  */
 void Object::Update(unsigned int dt, int keyboardButton)
 {
-	orbit_angle -= orbit_speed * dt * M_PI/20000;
-	if(counterClockwise)
-	{
-		rotate_angle += rotate_speed * dt * M_PI/200000;
-	}
-	else
-	{
-		rotate_angle -= rotate_speed * dt * M_PI/200000;
-	}
-  model = glm::translate(glm::mat4(1.0f), glm::vec3(distanceFromOrigin * cos(orbit_angle), 0.0f, distanceFromOrigin * sin(orbit_angle)));
-  model = glm::scale(model, glm::vec3(size));
-  model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+  //model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,0.0f,0.0f));
+  btTransform trans;
+  btScalar m[16];
+  world->dynamicsWorld->stepSimulation(dt, 10);
+  rigidBody->getMotionState()->getWorldTransform(trans);
+  trans.getOpenGLMatrix(m);
+  model = glm::make_mat4(m);
 }
 
 /*
@@ -198,17 +116,6 @@ void Object::Render()
   glDisableVertexAttribArray(2);
 }
 
-/*
- *  Function: Render()
- *  Parameters: None
- *  Return: void
- *  Purpose: Calls the render function from the base class
- */
-void Moon::Render()
-{
-	Object::Render();
-}
-
 
 /*
  *  Function: loadObject()
@@ -220,7 +127,7 @@ void Moon::Render()
 //Each scene has a mesh, each mesh has a face, each face has aiVector3D of mVertices
 //Goal: load vertices and indices vertex.
 //PA5: Uses the assimp library
-void Object::loadObject()
+void Object::loadObject()//btTriangleMesh*& t)
 {
   Assimp::Importer importer;
   //Define aiScene pointer
@@ -250,7 +157,13 @@ void Object::loadObject()
     for(int j = 0; j < myScene->mMeshes[i]->mNumVertices; j++)
     {
       glm::vec3 tmpvertices = glm::vec3(myScene->mMeshes[i]->mVertices[j].x,myScene->mMeshes[i]->mVertices[j].y,myScene->mMeshes[i]->mVertices[j].z);
+
+      /*btVector3 triArray[3];
+      aiVector3D position = tmpvertices;
+      triArray[j]*/
+
       glm::vec2 tmptexture = glm::vec2(0);
+
       if(myScene->mMeshes[i]->HasTextureCoords(0))
       {
         tmptexture = glm::vec2(float(myScene->mMeshes[i]->mTextureCoords[0][j].x), float(myScene->mMeshes[i]->mTextureCoords[0][j].y));
@@ -271,6 +184,29 @@ void Object::loadObject()
       {
 				meshes[i].Indices.push_back(myScene->mMeshes[i]->mFaces[j].mIndices[k]);
       }
+    }
+
+    if(filePath == "../blender_object/board.obj")
+    {
+      objTriMesh = new btTriangleMesh();
+      //std::cout << " go further " << std::endl;
+      btVector3 triArray[3];
+      for(int j = 0; j < myScene->mMeshes[i]->mNumFaces; j++)
+      {
+        //loads indices
+        for(int k = 0; k < myScene->mMeshes[i]->mFaces[j].mNumIndices; k++)
+        {
+          std::cout << myScene->mMeshes[i]->mFaces[j].mNumIndices << std::endl;
+    			aiVector3D position = myScene->mMeshes[i]->mVertices[ myScene->mMeshes[i]->mFaces[j].mIndices[k] ];
+
+          triArray[k] = btVector3(position.x, position.y, position.z);
+        }
+
+        objTriMesh->addTriangle(triArray[0], triArray[1], triArray[2]);
+      }
+      //std::cout << " go further " << std::endl;
+      collisionShape = new btBvhTriangleMeshShape(objTriMesh, true);
+      //std::cout << " go further " << std::endl;
     }
   }
 }

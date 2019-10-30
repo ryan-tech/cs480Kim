@@ -45,20 +45,12 @@ bool Graphics::Initialize(int width, int height)
     printf("Camera Failed to Initialize\n");
     return false;
   }
-/*
-        LOADING PLANETS FROM JSON
-*/
 
-  for(int i = 0; i < NUM_PLANETS; i++)
-  {
-    planets[i] = new Object(m_config, planet_names[i]);
-    for( int j = 0; j < planets[i]->numMoons; j++)
-    {
-	Moon* m = new Moon(m_config, planets[i], j);
-	planets[i]->moons.push_back(m);
-    }
-  }
+  //Create Objects here
+  //m_object = new Object(m_config); //board
 
+  m_world = new Physics(m_config);
+  m_world->createObject();
   // Set up the shaders
   m_shader = new Shader(fragmentShader, vertexShader);
   if(!m_shader->Initialize())
@@ -122,15 +114,7 @@ bool Graphics::Initialize(int width, int height)
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
   // Update the object
-  for(int i = 0; i < NUM_PLANETS; i++)
-  {
-    planets[i]->Update(dt, keyboardButton);
-    for( int j = 0; j < planets[i]->numMoons; j++)
-    {
-	     planets[i]->moons[j]->Update(dt, keyboardButton);
-    }
-  }
-
+  m_world->Update(dt, keyboardButton);
   m_camera->Update(keyboardButton, dt);
 }
 
@@ -146,18 +130,17 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection()));
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
 
-  // Render the object
-  for(int i = 0; i < NUM_PLANETS; i++)
-  {
-    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(planets[i]->GetModel()));
-    planets[i]->Render();
-    for( int j = 0; j < planets[i]->numMoons; j++)
-    {
-    	glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(planets[i]->moons[j]->GetModel()));
-	planets[i]->moons[j]->Render();
-    }
-  }
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));
+  m_world->board->Render();
 
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->sphere->GetModel()));
+  m_world->sphere->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder->GetModel()));
+  m_world->cylinder->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cube->GetModel()));
+  m_world->cube->Render();
 
   // Get any errors from OpenGL
   auto error = glGetError();
