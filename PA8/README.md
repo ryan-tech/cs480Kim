@@ -1,31 +1,19 @@
-Project Assignment: PA7
+Project Assignment: PA8
 
 Group Member Names:
   Maxwell Johnston
   Ryan Kim
   Ryan Poston
 
-Date: 10/18/19
+Date: 10/30/19
 
-Project Directions: The instructions for this project was to load and render a solar system.
+Project Directions: We had to load a board, sphere, cube, and cylinder. We made the Cylinder Staic, the sphere dynamic, and the cube kinematic. We also loaded the board using triangle meshes.
 
 Description on changes:
-  A Texture class was created through the texture.cpp and texture.h files. This texture class has a constructor which includes a filepath as a parameter, and has a load method
-  which loads the texture from the image specified by the filepath. The shader files were also modified to be able to pass the texture coordinates and render the textures.
-We created a subclass Moon which inherited from Objects which allowed us to create a vector of Satellites around each planet. We offset each moon so that they don't overlap
-in the same spot.
-We created a Camera::Update() function to help with camera control using a keyboard.
-Included obj and mtl files to load and texture all planets.
-
-config file controls:
-json_obj ["Planets"][nameOfPlanet]
-			["Filepath"] gives the path to the object file that needs to be loaded.
-			["Size"] gives the size in relation to the sun.
-			["RotationDirection"] is a Boolean that tells if the planet rotates clockwise or counter-clockwise.
-			["OrbitSpeed"] gives the speed that the planet orbits around the sun in relation to Earth.
-			["RotateSpeed"] gives the amount of time it takes to rotate once in relation to Earth.
-			["DistanceFromOrigin"] gives ranking of the planets for distance from the Sun.
-			["NumSatellites"] gives the number of moons a planet has.
+  A Physics class was created in order to handle loading objects and rigidbodies into Bullet. We put the cylinder in the middle of the board to make it easier to collide with and make the cylinder static. Then we made the sphere a dynamic object so that forces applied to the sphere make the sphere move. The cube is a kinematic object that only moves when the controls are pressed and only collides with dynamic objects, therefore our cube currently clips through the board but does collide with the sphere and make it move.
+  
+Extra Credit:
+We loaded the board using triangle meshes.
 
 
 
@@ -45,13 +33,27 @@ Use R to reset the view.
 
 Press Esc to exit.
 
+Cube Controls:
+
+Up Arrow: 	Move the cube forward on the z axis
+
+Down Arrow: 	Move the cube backwards on the z axis
+
+Left Arrow:	Move the cube Left
+
+Right Arrow:	Move the cube Right
+
+Enter:		Move the cube Up (y-axis)
+
+Right_Ctrl:	Move the cube Down (y-axis)
+
 
 
 Required Libraries:
-  sudo apt-get install g++ freeglut3-dev glew1.5-dev libmagick++-dev libassimp-dev libglfw3-dev
+  sudo apt-get install g++ freeglut3-dev glew1.5-dev libmagick++-dev libassimp-dev libglfw3-dev libbullet-dev
 
 Instructions on compiling:
-In CS480/PA6$
+In CS480/PA8$
 
   mkdir build/
 
@@ -61,4 +63,4 @@ In CS480/PA6$
 
   make
 
-  ./PA7 -f ../shaders/fragment.txt -v ../shaders/vertex.txt -c ../config.json
+  ./PA8 -c ../config.json
