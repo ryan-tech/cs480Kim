@@ -1,0 +1,24 @@
+{
+  "Window": {
+    "Name": "PA8",
+    "Height": 900,
+    "Width": 1600,
+    "Fullscreen": false
+  },
+  "Shader":{
+    "Vertex": "../shaders/vertex.txt",
+    "Fragment": "../shaders/fragment.txt"
+  },
+  "Board":{
+    "Path": "../blender_object/board.obj"
+  },
+  "Cube":{
+    "Path": "../blender_object/cube.obj"
+  },
+  "Sphere":{
+    "Path": "../blender_object/sphere.obj"
+  },
+  "Cylinder":{
+    "Path": "../blender_object/cylinder.obj"
+  }
+}
