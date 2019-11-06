@@ -24,11 +24,9 @@ class Graphics
 
   private:
     std::string ErrorString(GLenum error);
-
     nlohmann::json m_config;
 
     Physics* m_world;
-
     Camera *m_camera;
     Shader *m_shader;
 
@@ -37,9 +35,25 @@ class Graphics
     GLint m_modelMatrix;
     Object* m_object;
 
+    //per fragment shader variables
+
+    GLint m_ambientProd;
+    GLint m_diffuseProd;
+    GLint m_specularProd;
+
+    GLint m_lightPos;
+    GLint m_modelView;
+    GLint m_shininess;
+    GLint m_projection;
+
+
+
+    //values to be used for lighting variables
+    float ambientVal;
+    float diffuseVal;
+    float specularVal;
+
     string fragmentShader, vertexShader;
-
-
 };
 
 #endif /* GRAPHICS_H */

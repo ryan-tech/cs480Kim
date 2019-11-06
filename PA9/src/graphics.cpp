@@ -2,8 +2,6 @@
 
 Graphics::Graphics(nlohmann::json json_obj)
 {
-  fragmentShader = json_obj["Shader"]["Fragment"];
-  vertexShader =  json_obj["Shader"]["Vertex"];
   m_config = json_obj;
 }
 
@@ -50,8 +48,14 @@ bool Graphics::Initialize(int width, int height)
   //m_object = new Object(m_config); //board
 
   m_world = new Physics(m_config);
-  m_world->createObject();
+  m_world->loadBoard();
+  m_world->loadSphere();
+  m_world->loadCylinder();
+  m_world->loadCube();
+
   // Set up the shaders
+  fragmentShader = m_config["Shader"]["Fragment"];
+  vertexShader =  m_config["Shader"]["Vertex"];
   m_shader = new Shader(fragmentShader, vertexShader);
   if(!m_shader->Initialize())
   {

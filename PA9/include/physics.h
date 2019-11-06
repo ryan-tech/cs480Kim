@@ -28,6 +28,8 @@ public:
   btSequentialImpulseConstraintSolver *solver;
   btDiscreteDynamicsWorld *dynamicsWorld;
 
+  vector<Object*> objects;
+
   Object* board;
   Object* sphere;
   Object* cube;
