@@ -1,13 +1,20 @@
 #version 330
 
   // per fragment vertex shader
-  in vec4 vPosition;
-  in vec3 vNormal;
+  layout (location = 0) in vec3 v_position;
+  layout (location = 1) in vec2 v_texture;
+  layout (location = 2) in vec3 v_color;
+  layout (location = 3) in vec3 vNormal;
+
+  vec4 vPosition = vec4(v_position, 1.0);
+  
 
   // output values that will be interpolatated per-fragment
   out vec3 fN;
   out vec3 fE;
   out vec3 fL;
+
+  smooth out texture;
 
   uniform mat4 Model, View, Projection;
   uniform vec4 LightPosition;
@@ -21,5 +28,7 @@
       if( LightPosition.w != 0.0 ) {
   	    fL = LightPosition.xyz - vPosition.xyz;
       }
-      gl_Position = Projection * Model * View * vPosition;
+      gl_Position = Projection * View * Model * vPosition;
+
+      texture = v_texture;
   }

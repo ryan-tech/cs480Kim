@@ -44,6 +44,7 @@ struct Vertex
   glm::vec3 vertex;
   glm::vec3 color;
   glm::vec2 texture;
+  glm::vec3 normal;
   Vertex(glm::vec3 v, glm::vec2 t, glm::vec3 c): vertex(v), texture(t), color(c){}
 };
 

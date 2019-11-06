@@ -66,7 +66,7 @@ void Physics::loadCube()
   cube->shapeMotionState = NULL;
   cube->shapeMotionState = new btDefaultMotionState(btTransform(
     btQuaternion(0.0f, 0.0f, 0.0f, 1),
-    btVector3(-3.0f, -3.0f, -3.0f)
+    btVector3(-3.0f, -4.0f, -3.0f)
     ));
   btScalar mass(0);
   btVector3 inertia(1,1,1);
@@ -101,7 +101,7 @@ void Physics::loadSphere()
 
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI4(mass, sphere->shapeMotionState, sphere->collisionShape, inertia);
   sphere->rigidBody = new btRigidBody(shapeRigidBodyCI4);
-  
+
   dynamicsWorld->addRigidBody(sphere->rigidBody, 1, 1);
 
 

@@ -91,6 +91,7 @@ void Object::Render()
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
   glEnableVertexAttribArray(2);
+  glEnableVertexAttribArray(3);
 
 	for(int i = 0; i < meshes.size(); i++)
 	{
@@ -98,6 +99,7 @@ void Object::Render()
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,texture));
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,color));
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,normal));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
 
@@ -114,6 +116,7 @@ void Object::Render()
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);
   glDisableVertexAttribArray(2);
+  glDisableVertexAttribArray(3);
 }
 
 
@@ -161,7 +164,7 @@ void Object::loadObject()//btTriangleMesh*& t)
       /*btVector3 triArray[3];
       aiVector3D position = tmpvertices;
       triArray[j]*/
-
+      glm::vec3 tmpnorm = glm::vec3(myScene->mMeshes[i]->mNormals[j].x, myScene->mMeshes[i]->mNormals[j].y, myScene->mMeshes[i]->mNormals[j].z);
       glm::vec2 tmptexture = glm::vec2(0);
 
       if(myScene->mMeshes[i]->HasTextureCoords(0))
@@ -172,7 +175,8 @@ void Object::loadObject()//btTriangleMesh*& t)
         Vertex(
           tmpvertices,
           tmptexture,
-          tmpvertices
+          tmpvertices,
+          tmpnorm
         )
       );
     }

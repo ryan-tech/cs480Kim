@@ -90,6 +90,7 @@ void Engine::Keyboard()
       m_running = false;
     }
     keyboardButton = m_event.key.keysym.sym;
+
   }
   else if (m_event.type == SDL_KEYUP)
   {

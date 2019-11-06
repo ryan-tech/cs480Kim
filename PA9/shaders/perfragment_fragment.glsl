@@ -11,6 +11,9 @@
 
   uniform float Shininess;
 
+  smooth in vec2 texture;
+  uniform sampler2D gSampler;
+
   void main()
   {
       // Normalize the input lighting vectors
@@ -31,6 +34,6 @@
       if( dot(L, N) < 0.0 )
   	  specular = vec4(0.0, 0.0, 0.0, 1.0);
 
-      gl_FragColor = ambient + diffuse + specular;
+      gl_FragColor = texture2D(gSampler, texture.xy) * (ambient + diffuse + specular);
       gl_FragColor.a = 1.0;
     }

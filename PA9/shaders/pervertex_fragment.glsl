@@ -8,6 +8,6 @@
 
   void main(void)
   {
-     gl_FragColor = texture2D(gSampler, texture.xy);// + color;
-     //gl_FragColor.a = 1.0;
+     gl_FragColor = texture2D(gSampler, texture.xy) * color;
+     gl_FragColor.a = 1.0;
   }
