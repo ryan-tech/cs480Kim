@@ -11,6 +11,14 @@ Graphics::Graphics(nlohmann::json json_obj)
   diffuseVal = 0.64f;
   specularVal = 0.5f;
   shininess = 96.078431f;
+  sl_cutoff = 12.5f;
+/*
+  sl_ambientVal = 1.0f;
+  sl_diffuseVal = 0.64f;
+  sl_specularVal = 0.5f;
+  sl_shininess = 96.078431f;
+  sl_cutoff = 1.0f;
+  */
 }
 
 Graphics::~Graphics()
@@ -149,6 +157,32 @@ bool Graphics::Initialize()
     return false;
   }
 
+
+  //spotlight variables
+  m_sl_position = m_shader -> GetUniformLocation("slPosition");
+  if (m_sl_position == INVALID_UNIFORM_LOCATION)
+  {
+    printf("Spotlight position not found\n");
+    return false;
+  }
+
+  m_sl_direction = m_shader -> GetUniformLocation("slDirection");
+  if (m_sl_direction == INVALID_UNIFORM_LOCATION)
+  {
+    printf("Spotlight direction not found\n");
+    return false;
+  }
+
+  m_sl_cutoff = m_shader -> GetUniformLocation("slCutoff");
+  if (m_sl_cutoff == INVALID_UNIFORM_LOCATION)
+  {
+    printf("Spotlight cutoff not found\n");
+    return false;
+  }
+
+
+
+
   //enable depth testing
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
@@ -200,6 +234,9 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   if(keyboardButton == SDLK_o) shininess += 0.05f;
   if(keyboardButton == SDLK_l) shininess += 0.05f;
 
+  if(keyboardButton == SDLK_n) sl_cutoff += 0.1f;
+  if(keyboardButton == SDLK_m) sl_cutoff -= 0.1f;
+
   // Update the object
   m_world->Update(dt, keyboardButton);
   m_camera->Update(keyboardButton, dt);
@@ -217,11 +254,22 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection()));
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
 
-  glUniform4f(m_lightPos, 0.0f, 5.0f, 0.0f, 1.0f);
+  btTransform trans;
+  float x, y, z;
+  m_world->sphere->rigidBody->getMotionState()->getWorldTransform(trans);
+  x = trans.getOrigin().getX();
+  y = trans.getOrigin().getY();
+  z = trans.getOrigin().getZ();
+  glUniform4f(m_lightPos, x, y+10, z, 1.0f);
+  //glUniform4fv(m_lightPos, 1, glm::value_ptr(m_world->sphere->GetModel()));
   glUniform4f(m_ambientProd, ambientVal, ambientVal, ambientVal, 1.0f);
   glUniform4f(m_diffuseProd, diffuseVal, diffuseVal, diffuseVal, 1.0f);
   glUniform4f(m_specularProd, specularVal, specularVal, specularVal, 1.0f);
   glUniform1f(m_shininess, shininess);
+
+  glUniform3f(m_sl_direction, 0.0f, -1.0f, 0.0f);
+  glUniform1f(m_sl_cutoff, glm::cos(glm::radians(sl_cutoff)));
+
 
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));
   m_world->board->Render();

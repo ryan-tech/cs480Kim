@@ -12,6 +12,10 @@ using namespace std;
 #include "object.h"
 #include "physics.h"
 
+
+
+
+
 class Graphics
 {
   public:
@@ -51,6 +55,22 @@ class Graphics
     float diffuseVal;
     float specularVal;
     float shininess;
+
+    //spotlight values
+
+    GLint m_sl_position;
+    GLint m_sl_direction;
+    GLint m_sl_cutoff;
+
+    float sl_cutoff;
+    /*
+    float sl_ambientVal;
+    float sl_diffuseVal;
+    float sl_specularVal;
+    float sl_shininess;
+    float sl_cutoff;
+*/
+
 
     string fragmentShader, vertexShader;
 
