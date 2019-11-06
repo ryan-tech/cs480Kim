@@ -1,19 +1,17 @@
-Project Assignment: PA8
+Project Assignment: PA9
 
 Group Member Names:
   Maxwell Johnston
   Ryan Kim
   Ryan Poston
 
-Date: 10/30/19
+Date: 11/6/19
 
-Project Directions: We had to load a board, sphere, cube, and cylinder. We made the Cylinder Static, the sphere dynamic, and the cube kinematic. We also loaded the board using triangle meshes.
+Project Directions: We made 4 new shader files that handle per vertex and per fragment lighting. The shader also allows for checking for a spotlight, and changes the lighting model when the object is in the spotlight. 
 
 Description on changes:
-  A Physics class was created in order to handle loading objects and rigidbodies into Bullet. We put the cylinder in the middle of the board to make it easier to collide with and make the cylinder static. Then we made the sphere a dynamic object so that forces applied to the sphere make the sphere move. The cube is a kinematic object that only moves when the controls are pressed and only collides with dynamic objects, therefore our cube currently clips through the board but does collide with the sphere and make it move.
+  A per vertex_vertex shader and per vertex_fragment shader was created to do lighting on a model based on where the vertex is in the world. similarly, a perfragment_vertex shader and perfragment_fragment shader was created to show knowledge of both lighting models. As expected, banding can be seen on the perfragment shader models. keyboard functionality was implemented to change the values of different lighting products.
   
-Extra Credit:
-We loaded the board using triangle meshes.
 
 
 
@@ -24,8 +22,8 @@ Use W to move camera Forwards.
 Use S to move camera Backwards.
 Use A to strafe camera Left.
 Use D to strafe camera Right.
-Use Q to rotate camera Up.
-Use E to rotate camera Down.
+Use Q to zoom in
+Use E to zoom out
 Use Z to turn camera Left.
 Use X to turn camera Right.
 
@@ -47,6 +45,12 @@ Enter:		Move the cube Up (y-axis)
 
 Right_Ctrl:	Move the cube Down (y-axis)
 
+Lighting:
+Ambient: Y increases H decreases
+Diffuse: U increases J decreases
+Specular: I increase K decreases
+
+Spotlight size: N makes spotlight bigger, M makes spotlight smaller.
 
 
 Required Libraries:
@@ -63,4 +67,4 @@ In CS480/PA8$
 
   make
 
-  ./PA8 -c ../config.json
+  ./PA9 -c ../config.json
