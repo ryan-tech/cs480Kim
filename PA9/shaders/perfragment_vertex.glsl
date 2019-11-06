@@ -21,6 +21,5 @@
       if( LightPosition.w != 0.0 ) {
   	    fL = LightPosition.xyz - vPosition.xyz;
       }
-
       gl_Position = Projection * Model * View * vPosition;
   }

@@ -3,6 +3,14 @@
 Graphics::Graphics(nlohmann::json json_obj)
 {
   m_config = json_obj;
+  fragmentShader = m_config["Shader"]["PerVertexFragment"];
+  vertexShader =  m_config["Shader"]["PerVertexVertex"];
+  width = m_config["Window"]["Width"];
+  height = m_config["Window"]["Height"];
+  ambientVal = 1.0f;
+  diffuseVal = 0.64f;
+  specularVal = 0.5f;
+  shininess = 96.078431f;
 }
 
 Graphics::~Graphics()
@@ -10,7 +18,7 @@ Graphics::~Graphics()
 
 }
 
-bool Graphics::Initialize(int width, int height)
+bool Graphics::Initialize()
 {
   // Used for the linux OS
   #if !defined(__APPLE__) && !defined(MACOSX)
@@ -48,15 +56,8 @@ bool Graphics::Initialize(int width, int height)
   //m_object = new Object(m_config); //board
 
   m_world = new Physics(m_config);
-  m_world->loadBoard();
-  m_world->loadSphere();
-  m_world->loadCylinder();
-  m_world->loadCube();
-
+  m_world->createObject();
   // Set up the shaders
-  fragmentShader = m_config["Shader"]["Fragment"];
-  vertexShader =  m_config["Shader"]["Vertex"];
-  
   m_shader = new Shader(fragmentShader, vertexShader);
   if(!m_shader->Initialize())
   {
@@ -85,61 +86,68 @@ bool Graphics::Initialize(int width, int height)
     return false;
   }
 
-  // Locate the projection matrix in the shader
-  m_projectionMatrix = m_shader->GetUniformLocation("projectionMatrix");
-  if (m_projectionMatrix == INVALID_UNIFORM_LOCATION)
-  {
-    printf("m_projectionMatrix not found\n");
-    return false;
-  }
+    // Locate the projection matrix in the shader
+    m_projectionMatrix = m_shader->GetUniformLocation("Projection");
+    if (m_projectionMatrix == INVALID_UNIFORM_LOCATION)
+    {
+      printf("m_projectionMatrix not found\n");
+      return false;
+    }
 
-  // Locate the view matrix in the shader
-  m_viewMatrix = m_shader->GetUniformLocation("viewMatrix");
-  if (m_viewMatrix == INVALID_UNIFORM_LOCATION)
-  {
-    printf("m_viewMatrix not found\n");
-    return false;
-  }
+    // Locate the view matrix in the shader
+    m_viewMatrix = m_shader->GetUniformLocation("View");
+    if (m_viewMatrix == INVALID_UNIFORM_LOCATION)
+    {
+      printf("m_viewMatrix not found\n");
+      return false;
+    }
 
-  // Locate the model matrix in the shader
-  m_modelMatrix = m_shader->GetUniformLocation("modelMatrix");
-  if (m_modelMatrix == INVALID_UNIFORM_LOCATION)
-  {
-    printf("m_modelMatrix not found\n");
-    return false;
-  }
+    // Locate the model matrix in the shader
+    m_modelMatrix = m_shader->GetUniformLocation("Model");
+    if (m_modelMatrix == INVALID_UNIFORM_LOCATION)
+    {
+      printf("m_modelMatrix not found\n");
+      return false;
+    }
 
-  // Locate the light position in the shader
-  m_lightPos = m_shader -> GetUniformLocation("LightPosition");
-  if (m_lightPos == INVALID_UNIFORM_LOCATION)
-  {
-    printf("LightPosition not found\n");
-    return false;
-  }
+    // Locate the light position in the shader
+    m_lightPos = m_shader -> GetUniformLocation("LightPosition");
+    if (m_lightPos == INVALID_UNIFORM_LOCATION)
+    {
+      printf("LightPosition not found\n");
+      return false;
+    }
 
-  // Locate the ambient product in the shader
-  m_ambientProd = m_shader -> GetUniformLocation("AmbientProduct");
-  if (m_ambientProd == INVALID_UNIFORM_LOCATION)
-  {
-    printf("AmbientProduct not found\n");
-    return false;
-  }
+    // Locate the ambient product in the shader
+    m_ambientProd = m_shader -> GetUniformLocation("AmbientProduct");
+    if (m_ambientProd == INVALID_UNIFORM_LOCATION)
+    {
+      printf("AmbientProduct not found\n");
+      return false;
+    }
 
-  // Locate the diffuse product in the shader
-  m_diffuseProd = m_shader -> GetUniformLocation("DiffuseProduct");
-  if (m_diffuseProd == INVALID_UNIFORM_LOCATION)
-  {
-    printf("DiffuseProduct not found\n");
-    return false;
-  }
+    // Locate the diffuse product in the shader
+    m_diffuseProd = m_shader -> GetUniformLocation("DiffuseProduct");
+    if (m_diffuseProd == INVALID_UNIFORM_LOCATION)
+    {
+      printf("DiffuseProduct not found\n");
+      return false;
+    }
 
-  // Locate the specular product in the shader
-  m_specularProd = m_shader -> GetUniformLocation("SpecularProduct");
-  if (m_specularProd == INVALID_UNIFORM_LOCATION)
-  {
-    printf("SpecularProduct not found\n");
-    return false;
-  }
+    // Locate the specular product in the shader
+    m_specularProd = m_shader -> GetUniformLocation("SpecularProduct");
+    if (m_specularProd == INVALID_UNIFORM_LOCATION)
+    {
+      printf("SpecularProduct not found\n");
+      return false;
+    }
+
+    m_shininess = m_shader -> GetUniformLocation("Shininess");
+    if (m_specularProd == INVALID_UNIFORM_LOCATION)
+    {
+      printf("Shininess not found\n");
+      return false;
+    }
 
   //enable depth testing
   glEnable(GL_DEPTH_TEST);
@@ -150,6 +158,33 @@ bool Graphics::Initialize(int width, int height)
 
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
+  if(keyboardButton == SDLK_o)
+  {
+    //std::cout << " wtf " << std::endl;
+    // switch the flag
+    if(flag)
+    {
+      flag = false;
+    }
+    else
+    {
+      flag = true;
+    }
+
+    // switch the shader
+    if(!flag)
+    {
+      fragmentShader = m_config["Shader"]["PerFragmentFragment"];
+      vertexShader = m_config["Shader"]["PerFragmentVertex"];
+      Initialize();
+    }
+    else
+    {
+      fragmentShader = m_config["Shader"]["PerVertexFragment"];
+      vertexShader = m_config["Shader"]["PerVertexVertex"];
+      Initialize();
+    }
+  }
   // Update the object
   m_world->Update(dt, keyboardButton);
   m_camera->Update(keyboardButton, dt);
@@ -166,6 +201,12 @@ void Graphics::Render()
   // Send in the projection and view to the shader
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection()));
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
+
+  glUniform3f(m_lightPos, 0.0f, 5.0f, 0.0f);
+  glUniform4f(m_ambientProd, ambientVal, ambientVal, ambientVal, 1.0f);
+  glUniform4f(m_diffuseProd, diffuseVal, diffuseVal, diffuseVal, 1.0f);
+  glUniform4f(m_specularProd, specularVal, specularVal, specularVal, 1.0f);
+  glUniform1f(m_shininess, shininess);
 
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));
   m_world->board->Render();

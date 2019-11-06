@@ -8,7 +8,7 @@
   in vec3 fE;
 
   uniform vec4 AmbientProduct, DiffuseProduct, SpecularProduct;
-  uniform vec4 LightPosition;
+
   uniform float Shininess;
 
   void main()

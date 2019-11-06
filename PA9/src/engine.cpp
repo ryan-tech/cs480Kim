@@ -38,7 +38,7 @@ bool Engine::Initialize()
 
   // Start the graphics
   m_graphics = new Graphics(m_config);
-  if(!m_graphics->Initialize(m_WINDOW_WIDTH, m_WINDOW_HEIGHT))
+  if(!m_graphics->Initialize())
   {
     printf("The graphics failed to initialize.\n");
     return false;

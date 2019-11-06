@@ -101,7 +101,7 @@ void Physics::loadSphere()
 
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI4(mass, sphere->shapeMotionState, sphere->collisionShape, inertia);
   sphere->rigidBody = new btRigidBody(shapeRigidBodyCI4);
-
+  
   dynamicsWorld->addRigidBody(sphere->rigidBody, 1, 1);
 
 

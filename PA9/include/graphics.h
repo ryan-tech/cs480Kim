@@ -18,43 +18,42 @@ class Graphics
     Graphics();
     Graphics(nlohmann::json json_obj);
     ~Graphics();
-    bool Initialize(int width, int height);
+    bool Initialize();
     void Update(unsigned int dt, int keyboardButton);
     void Render();
 
   private:
     std::string ErrorString(GLenum error);
     nlohmann::json m_config;
-
     Physics* m_world;
     Camera *m_camera;
     Shader *m_shader;
-    Object* m_object;
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
     GLint m_modelMatrix;
-
 
     //per fragment shader variables
 
     GLint m_ambientProd;
     GLint m_diffuseProd;
     GLint m_specularProd;
-
     GLint m_lightPos;
-    GLint m_modelView;
     GLint m_shininess;
-    GLint m_projection;
 
+    bool flag = true; //flag = true : per vertex lighting
+                      //flag = false: per fragment lighting
 
+    int width, height;
 
     //values to be used for lighting variables
     float ambientVal;
     float diffuseVal;
     float specularVal;
+    float shininess;
 
     string fragmentShader, vertexShader;
+
 };
 
 #endif /* GRAPHICS_H */
