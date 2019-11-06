@@ -45,7 +45,7 @@ struct Vertex
   glm::vec3 color;
   glm::vec2 texture;
   glm::vec3 normal;
-  Vertex(glm::vec3 v, glm::vec2 t, glm::vec3 c): vertex(v), texture(t), color(c){}
+  Vertex(glm::vec3 v, glm::vec2 t, glm::vec3 c, glm::vec3 n): vertex(v), texture(t), color(c), normal(n){}
 };
 
 struct Triangle_vertex

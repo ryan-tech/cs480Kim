@@ -171,17 +171,23 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
       flag = true;
     }
     // switch the shader
-    if(flag)   //by default the flag is true, so it will switch it to per fragment instead of per vertex (per vertex is default)
+    // by default the shader is per vertex and the flag is true, so when f is pressed it switches it to false.
+    if(!flag)
     {
+
       fragmentShader = m_config["Shader"]["PerFragmentFragment"];
       vertexShader = m_config["Shader"]["PerFragmentVertex"];
       Initialize();
+      cout << "Current shader: per fragment shader" << endl;
     }
     else
     {
+      //cout << "Switching the per vertex shader" << endl;
       fragmentShader = m_config["Shader"]["PerVertexFragment"];
       vertexShader = m_config["Shader"]["PerVertexVertex"];
       Initialize();
+      cout << "Current shader: per vertex shader" << endl;
+
     }
   }
   // controls to change the lighting values
