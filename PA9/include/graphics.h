@@ -29,6 +29,8 @@ class Graphics
     Physics* m_world;
     Camera *m_camera;
     Shader *m_shader;
+		Shader *m_pVshader;
+		Shader *m_pFshader;
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
@@ -53,7 +55,11 @@ class Graphics
     float diffuseVal;
     float specularVal;
 
-    string fragmentShader, vertexShader;
+    string fragmentShader, vertexShader,
+			perVertexFragmentShader,
+			perVertexVertexShader,
+			perFragmentFragmentShader,
+  		perFragmentVertexShader;
 };
 
 #endif /* GRAPHICS_H */

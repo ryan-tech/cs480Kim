@@ -1,13 +1,17 @@
 {
   "Window": {
-    "Name": "PA8",
+    "Name": "PA9",
     "Height": 900,
     "Width": 1600,
     "Fullscreen": false
   },
   "Shader":{
     "Vertex": "../shaders/vertex.txt",
-    "Fragment": "../shaders/fragment.txt"
+		"PerVertexVertex": "../shaders/pervertex_vertex.glsl",
+		"PerVertexFragment": "../shaders/pervertex_fragment.glsl",
+    "Fragment": "../shaders/fragment.txt",
+		"PerFragmentVertex": "../shaders/perfragment_vertex.glsl",
+		"PerFragmentFragment": "../shaders/perfragment_fragment.glsl"
   },
   "Board":{
     "Path": "../blender_object/board.obj"
@@ -16,7 +20,7 @@
     "Path": "../blender_object/cube.obj"
   },
   "Sphere":{
-    "Path": "../blender_object/sphere.obj"
+    "Path": "../blender_object/Earth.obj"
   },
   "Cylinder":{
     "Path": "../blender_object/cylinder.obj"
