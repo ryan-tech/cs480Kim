@@ -1,4 +1,4 @@
-Project Assignment: PA7
+Project Assignment: PA9
 
 Group Member Names:
   Maxwell Johnston
@@ -61,4 +61,4 @@ In CS480/PA6$
 
   make
 
-  ./PA7 -f ../shaders/fragment.txt -v ../shaders/vertex.txt -c ../config.json
+  ./PA9 -c ../config.json

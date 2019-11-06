@@ -1,6 +1,6 @@
 #version 330
   //per vertex fragment shader
-  in vec3 color;
+  in vec4 color;
 
   void main(void)
   {
