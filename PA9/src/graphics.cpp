@@ -56,6 +56,7 @@ bool Graphics::Initialize(int width, int height)
   // Set up the shaders
   fragmentShader = m_config["Shader"]["Fragment"];
   vertexShader =  m_config["Shader"]["Vertex"];
+  
   m_shader = new Shader(fragmentShader, vertexShader);
   if(!m_shader->Initialize())
   {
@@ -105,6 +106,38 @@ bool Graphics::Initialize(int width, int height)
   if (m_modelMatrix == INVALID_UNIFORM_LOCATION)
   {
     printf("m_modelMatrix not found\n");
+    return false;
+  }
+
+  // Locate the light position in the shader
+  m_lightPos = m_shader -> GetUniformLocation("LightPosition");
+  if (m_lightPos == INVALID_UNIFORM_LOCATION)
+  {
+    printf("LightPosition not found\n");
+    return false;
+  }
+
+  // Locate the ambient product in the shader
+  m_ambientProd = m_shader -> GetUniformLocation("AmbientProduct");
+  if (m_ambientProd == INVALID_UNIFORM_LOCATION)
+  {
+    printf("AmbientProduct not found\n");
+    return false;
+  }
+
+  // Locate the diffuse product in the shader
+  m_diffuseProd = m_shader -> GetUniformLocation("DiffuseProduct");
+  if (m_diffuseProd == INVALID_UNIFORM_LOCATION)
+  {
+    printf("DiffuseProduct not found\n");
+    return false;
+  }
+
+  // Locate the specular product in the shader
+  m_specularProd = m_shader -> GetUniformLocation("SpecularProduct");
+  if (m_specularProd == INVALID_UNIFORM_LOCATION)
+  {
+    printf("SpecularProduct not found\n");
     return false;
   }
 

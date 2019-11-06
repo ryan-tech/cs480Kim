@@ -29,11 +29,12 @@ class Graphics
     Physics* m_world;
     Camera *m_camera;
     Shader *m_shader;
+    Object* m_object;
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
     GLint m_modelMatrix;
-    Object* m_object;
+
 
     //per fragment shader variables
 
