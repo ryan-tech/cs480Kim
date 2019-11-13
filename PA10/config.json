@@ -1,0 +1,34 @@
+{
+  "Window": {
+    "Name": "PA10",
+    "Height": 900,
+    "Width": 1600,
+    "Fullscreen": false
+  },
+  "Shader":{
+    "Vertex": "../shaders/vertex.txt",
+		"PerVertexVertex": "../shaders/pervertex_vertex.glsl",
+		"PerVertexFragment": "../shaders/pervertex_fragment.glsl",
+    "Fragment": "../shaders/fragment.txt",
+		"PerFragmentVertex": "../shaders/perfragment_vertex.glsl",
+		"PerFragmentFragment": "../shaders/perfragment_fragment.glsl"
+  },
+  "Board":{
+    "Path": "../blender_object/pusher.obj"
+  },
+  "Cube":{
+    "Path": "../blender_object/cube.obj"
+  },
+  "Sphere":{
+    "Path": "../blender_object/Earth.obj"
+  },
+  "Plunger":{
+    "Path": "../blender_object/plunger.obj"
+  },
+	"LeftBumper":{
+    "Path": "../blender_object/leftBumber.obj"
+  },
+	"RightBumper":{
+    "Path": "../blender_object/rightBumber.obj"
+  }
+}
