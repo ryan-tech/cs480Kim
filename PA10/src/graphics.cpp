@@ -195,6 +195,16 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   x = trans.getOrigin().getX();
   y = trans.getOrigin().getY();
   z = trans.getOrigin().getZ();
+  // cylinder1 coords = 0.0f, -15.0f, 2.0f
+  // cylinder2 coords = (4.0f, -15.0f, 6.0f)
+  // cylinder 3 coords = -4.0f, -15.0f, 6.0f
+  if( ((x < 0.5f && x > -0.5f) && (y < -14.5f && y > -15.5f) && (z < 2.5f && z > 1.5f))
+    || ((x < 4.5f && x > 3.5f) && (y < -14.5f && y > -15.5f) && (z < 6.5f && z > 5.5f))
+    || ((x < -3.5f && x > -4.5f) && (y < -14.5f && y > -15.5f) && (z < 6.5f && z > 5.5f)) )
+  {
+    score += 100;
+    cout << "Your score is now: " << score << endl;
+  }
   if( z < -27.0f and x > -19 and !died)
   {
     died = true;
@@ -211,6 +221,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   if(num_balls == 0)
   {
     cout << "Game Over!!!" << endl;
+    cout << "Your score was " << score << endl;
     cout << "Press t to play again" << endl;
   }
   // press f to pay respects and change the shader

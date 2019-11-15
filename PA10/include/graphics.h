@@ -53,6 +53,7 @@ class Graphics
     int width, height;
     int num_balls = 4;
     int num_plunger = 0;
+    int score = 0;
     //values to be used for lighting variables
     float ambientVal;
     float diffuseVal;

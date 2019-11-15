@@ -10,7 +10,7 @@ Physics::Physics(nlohmann::json j)
   solver = new btSequentialImpulseConstraintSolver;
   //creating physics world
   dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-  dynamicsWorld->setGravity(btVector3(0, -.8, -1)); // sets gravity
+  dynamicsWorld->setGravity(btVector3(0, -.5, -.6)); // sets gravity
     //std::cout << "go further" << std::endl;
 }
 
@@ -121,7 +121,7 @@ void Physics::loadBoardCover()
   boardCover->shapeMotionState = NULL;
   boardCover->shapeMotionState = new btDefaultMotionState(btTransform(
     btQuaternion(0.0f, 0.0f, 0.0f, 1),
-    btVector3(0.0f, -13.0f, 0.0f)
+    btVector3(0.0f, -14.5f, 0.0f)
     ));
   btScalar mass(0);
   btVector3 inertia(0,0,0);
