@@ -60,10 +60,9 @@ Object::~Object()
  */
 void Object::Update(unsigned int dt, int keyboardButton)
 {
-  //model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,0.0f,0.0f));
   btTransform trans;
   btScalar m[16];
-  world->dynamicsWorld->stepSimulation(dt, 10);
+  world->dynamicsWorld->stepSimulation(dt, 1);
   rigidBody->getMotionState()->getWorldTransform(trans);
   trans.getOpenGLMatrix(m);
   model = glm::make_mat4(m);

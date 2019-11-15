@@ -11,7 +11,7 @@ Graphics::Graphics(nlohmann::json json_obj)
   diffuseVal = 0.64f;
   specularVal = 0.5f;
   shininess = 96.078431f;
-  sl_cutoff = 12.5f;
+  sl_cutoff = 100.0f;
 /*
   sl_ambientVal = 1.0f;
   sl_diffuseVal = 0.64f;
@@ -180,9 +180,6 @@ bool Graphics::Initialize()
     return false;
   }
 
-
-
-
   //enable depth testing
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
@@ -221,7 +218,6 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
       vertexShader = m_config["Shader"]["PerVertexVertex"];
       Initialize();
       cout << "Current shader: per vertex shader" << endl;
-
     }
   }
   // controls to change the lighting values
@@ -254,14 +250,14 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection()));
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
 
-  /* Spot Light
+  // spot light
   btTransform trans;
   float x, y, z;
   m_world->sphere->rigidBody->getMotionState()->getWorldTransform(trans);
   x = trans.getOrigin().getX();
   y = trans.getOrigin().getY();
   z = trans.getOrigin().getZ();
-  */
+
   glUniform4f(m_lightPos, 0, 10, 0, 1.0f);
 
   //glUniform4fv(m_lightPos, 1, glm::value_ptr(m_world->sphere->GetModel()));
@@ -275,9 +271,28 @@ void Graphics::Render()
 
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));
   m_world->board->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->sphere->GetModel()));
+  m_world->sphere->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->plunger->GetModel()));
+  m_world->plunger->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->leftBumper->GetModel()));
+  m_world->leftBumper->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->rightBumper->GetModel()));
+  m_world->rightBumper->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder1->GetModel()));
+  m_world->cylinder1->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder2->GetModel()));
+  m_world->cylinder2->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder3->GetModel()));
+  m_world->cylinder3->Render();
 /* load the model matrix and render it
-
-
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->sphere->GetModel()));
   m_world->sphere->Render();
 

@@ -19,10 +19,11 @@ public:
   void loadBoard();
   void loadSphere();
   void loadPlunger();
-  void loadCube();
 	void loadLeftBumpers();
 	void loadRightBumpers();
-  void loadCylinder();
+  void loadCylinder1();
+  void loadCylinder2();
+  void loadCylinder3();
 
   nlohmann::json json_obj;
   btBroadphaseInterface *broadphase;
@@ -33,11 +34,12 @@ public:
 
   Object* board;
   Object* sphere;
-  Object* cube;
   Object* plunger;
 	Object* leftBumper;
 	Object* rightBumper;
-  Object* cylinder;
+  Object* cylinder1;
+  Object* cylinder2;
+  Object* cylinder3;
 
 
 	float cubeMove;
