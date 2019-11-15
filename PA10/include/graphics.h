@@ -48,8 +48,11 @@ class Graphics
     bool flag = true; //flag = true : per vertex lighting
                       //flag = false: per fragment lighting
 
+    bool plungerReleased = false;
+    bool died = false;
     int width, height;
-
+    int num_balls = 4;
+    int num_plunger = 0;
     //values to be used for lighting variables
     float ambientVal;
     float diffuseVal;

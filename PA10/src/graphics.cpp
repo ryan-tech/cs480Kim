@@ -189,6 +189,30 @@ bool Graphics::Initialize()
 
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
+  btTransform trans;
+  float x, y, z;
+  m_world->sphere->rigidBody->getMotionState()->getWorldTransform(trans);
+  x = trans.getOrigin().getX();
+  y = trans.getOrigin().getY();
+  z = trans.getOrigin().getZ();
+  if( z < -27.0f and x > -19 and !died)
+  {
+    died = true;
+    cout << "You died!" << endl;
+    num_balls--;
+  }
+
+  if(keyboardButton == SDLK_t)
+  {
+    num_balls = 3;
+    plungerReleased = false;
+    Initialize();
+  }
+  if(num_balls == 0)
+  {
+    cout << "Game Over!!!" << endl;
+    cout << "Press t to play again" << endl;
+  }
   // press f to pay respects and change the shader
   if(keyboardButton == SDLK_f)
   {
@@ -205,11 +229,11 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
     // by default the shader is per vertex and the flag is true, so when f is pressed it switches it to false.
     if(!flag)
     {
-
       fragmentShader = m_config["Shader"]["PerFragmentFragment"];
       vertexShader = m_config["Shader"]["PerFragmentVertex"];
       Initialize();
       cout << "Current shader: per fragment shader" << endl;
+      plungerReleased = false;
     }
     else
     {
@@ -218,8 +242,26 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
       vertexShader = m_config["Shader"]["PerVertexVertex"];
       Initialize();
       cout << "Current shader: per vertex shader" << endl;
+      plungerReleased = false;
     }
   }
+
+  if(keyboardButton == SDLK_SLASH && num_balls > 0)
+  {//restarts
+    num_balls--;
+    cout << "You have " << num_balls << " balls left." << endl;
+    Initialize();
+    num_plunger++;
+    died = false;
+    plungerReleased = false;
+  }
+
+  if(keyboardButton == SDLK_UP and !plungerReleased)
+  {
+    plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,100), btVector3(0,0,0));
+  }
+
   // controls to change the lighting values
   if(keyboardButton == SDLK_y) ambientVal += 0.05f;
   if(keyboardButton == SDLK_h) ambientVal -= 0.05f;

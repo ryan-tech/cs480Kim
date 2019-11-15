@@ -24,6 +24,7 @@ public:
   void loadCylinder1();
   void loadCylinder2();
   void loadCylinder3();
+  void loadBoardCover();
 
   nlohmann::json json_obj;
   btBroadphaseInterface *broadphase;
@@ -40,11 +41,15 @@ public:
   Object* cylinder1;
   Object* cylinder2;
   Object* cylinder3;
-
+  Object* boardCover;
 
 	float cubeMove;
 	float cubeMoveVal;
 	int cubeMoveDir;
+
+
+  float leftBumperAngle = 2.5f;
+  float rightBumperAngle = 0.6f;
 };
 
 #endif

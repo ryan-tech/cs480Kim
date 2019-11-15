@@ -10,7 +10,7 @@ Physics::Physics(nlohmann::json j)
   solver = new btSequentialImpulseConstraintSolver;
   //creating physics world
   dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-  dynamicsWorld->setGravity(btVector3(0, -.8, -.1)); // sets gravity
+  dynamicsWorld->setGravity(btVector3(0, -.8, -1)); // sets gravity
     //std::cout << "go further" << std::endl;
 }
 
@@ -31,6 +31,7 @@ Physics::~Physics()
 void Physics::createObject()
 {
   loadBoard();
+  loadBoardCover();
   loadSphere();
   loadPlunger();
   loadLeftBumpers();
@@ -52,10 +53,42 @@ void Physics::Update(unsigned int dt, int keyboardButton)
   cylinder1->Update(dt, keyboardButton);
   cylinder2->Update(dt, keyboardButton);
   cylinder3->Update(dt, keyboardButton);
-  if(keyboardButton == SDLK_UP)
+
+  if(keyboardButton == SDLK_COMMA) //left bumper
   {
-    cout << "up was pressed" << endl;
-    sphere->rigidBody->applyImpulse(btVector3(0,0,10), btVector3(0,0,0));
+    glm::mat4 leftBumper_t = leftBumper->GetModel();
+    glm::vec3 leftBumper_m = glm::vec3(leftBumper_t[3]);
+
+
+    btScalar scalarMatrix[16];
+    btTransform transform;
+    btQuaternion quaternion;
+
+    leftBumperAngle += 0.2f;
+    leftBumper->rigidBody->getMotionState()->getWorldTransform(transform);
+    quaternion.setEuler(leftBumperAngle, 0.0, 0.0);
+		transform.setRotation(quaternion);
+	  transform.getOpenGLMatrix(scalarMatrix);
+	  leftBumper->rigidBody->getMotionState()->setWorldTransform(transform);
+		leftBumper->rigidBody->setMotionState(leftBumper->rigidBody->getMotionState());
+  }
+  if(keyboardButton == SDLK_PERIOD) //left bumper
+  {
+    glm::mat4 rightBumper_t = rightBumper->GetModel();
+    glm::vec3 rightBumper_m = glm::vec3(rightBumper_t[3]);
+
+
+    btScalar scalarMatrix[16];
+    btTransform transform;
+    btQuaternion quaternion;
+
+    rightBumperAngle -= 0.2f;
+    rightBumper->rigidBody->getMotionState()->getWorldTransform(transform);
+    quaternion.setEuler(rightBumperAngle, 0.0, 0.0);
+		transform.setRotation(quaternion);
+	  transform.getOpenGLMatrix(scalarMatrix);
+	  rightBumper->rigidBody->getMotionState()->setWorldTransform(transform);
+		rightBumper->rigidBody->setMotionState(rightBumper->rigidBody->getMotionState());
   }
 
 }
@@ -81,6 +114,26 @@ void Physics::loadBoard()
   //board->model = glm::scale(board->model, glm::vec3(5,5,5));
 }
 
+void Physics::loadBoardCover()
+{
+  boardCover = new Object(json_obj, "Board");
+  boardCover->world = this;
+  boardCover->shapeMotionState = NULL;
+  boardCover->shapeMotionState = new btDefaultMotionState(btTransform(
+    btQuaternion(0.0f, 0.0f, 0.0f, 1),
+    btVector3(0.0f, -13.0f, 0.0f)
+    ));
+  btScalar mass(0);
+  btVector3 inertia(0,0,0);
+  boardCover->collisionShape->calculateLocalInertia(mass, inertia);
+
+  btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI(mass, boardCover->shapeMotionState, boardCover->collisionShape, inertia);
+  boardCover->rigidBody = new btRigidBody(shapeRigidBodyCI);
+  //rigidBody->setLinearFactor(btVector3(0,0,0));
+  dynamicsWorld->addRigidBody(boardCover->rigidBody, 1, 1);
+  //board->model = glm::scale(board->model, glm::vec3(5,5,5));
+}
+
 
 void Physics::loadSphere()
 {
@@ -102,6 +155,7 @@ void Physics::loadSphere()
   sphere->rigidBody = new btRigidBody(shapeRigidBodyCI4);
 
   dynamicsWorld->addRigidBody(sphere->rigidBody, 1, 1);
+  sphere->rigidBody->setActivationState( DISABLE_DEACTIVATION );
 }
 
 void Physics::loadPlunger()
@@ -146,6 +200,11 @@ void Physics::loadLeftBumpers()
   //board->model = glm::scale(board->model, glm::vec3(5,5,5));
   leftBumper->rigidBody->setCollisionFlags(leftBumper->rigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
   leftBumper->rigidBody->setActivationState( DISABLE_DEACTIVATION );
+  btHingeConstraint* leftBumperHinge = new btHingeConstraint(*leftBumper->rigidBody, btVector3(4.5f, -15.0f, -28.0f), btVector3(0, 1, 0), true );
+//btHingeConstraint* hinge = new btHingeConstraint(*body0, pivotInA, axisInA);
+  leftBumperHinge->setLimit(0, SIMD_HALF_PI);
+  dynamicsWorld->addConstraint(leftBumperHinge);
+
 }
 
 void Physics::loadRightBumpers()
@@ -171,6 +230,9 @@ void Physics::loadRightBumpers()
   //board->model = glm::scale(board->model, glm::vec3(5,5,5));
   rightBumper->rigidBody->setCollisionFlags(rightBumper->rigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
   rightBumper->rigidBody->setActivationState( DISABLE_DEACTIVATION );
+  btHingeConstraint* rightBumperHinge = new btHingeConstraint(*rightBumper->rigidBody, btVector3(-4.5f, -15.0f, -28.0f), btVector3(0.0f, 1.0f, 0.0f), true);
+  rightBumperHinge->setLimit(0, SIMD_HALF_PI);
+  dynamicsWorld->addConstraint(rightBumperHinge);
 }
 
 
