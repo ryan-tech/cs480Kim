@@ -22,6 +22,7 @@ public:
   void loadCube();
 	void loadLeftBumpers();
 	void loadRightBumpers();
+  void loadCylinder();
 
   nlohmann::json json_obj;
   btBroadphaseInterface *broadphase;
@@ -36,6 +37,7 @@ public:
   Object* plunger;
 	Object* leftBumper;
 	Object* rightBumper;
+  Object* cylinder;
 
 
 	float cubeMove;

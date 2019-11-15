@@ -239,7 +239,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
   // Update the object
   m_world->Update(dt, keyboardButton);
-  m_camera->Update(keyboardButton, dt);
+  m_camera->Update(dt, keyboardButton);
 }
 
 void Graphics::Render()
@@ -254,13 +254,16 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection()));
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView()));
 
+  /* Spot Light
   btTransform trans;
   float x, y, z;
   m_world->sphere->rigidBody->getMotionState()->getWorldTransform(trans);
   x = trans.getOrigin().getX();
   y = trans.getOrigin().getY();
   z = trans.getOrigin().getZ();
-  glUniform4f(m_lightPos, x, y+10, z, 1.0f);
+  */
+  glUniform4f(m_lightPos, 0, 10, 0, 1.0f);
+
   //glUniform4fv(m_lightPos, 1, glm::value_ptr(m_world->sphere->GetModel()));
   glUniform4f(m_ambientProd, ambientVal, ambientVal, ambientVal, 1.0f);
   glUniform4f(m_diffuseProd, diffuseVal, diffuseVal, diffuseVal, 1.0f);
@@ -270,26 +273,20 @@ void Graphics::Render()
   glUniform3f(m_sl_direction, 0.0f, -1.0f, 0.0f);
   glUniform1f(m_sl_cutoff, glm::cos(glm::radians(sl_cutoff)));
 
-
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));
   m_world->board->Render();
+/* load the model matrix and render it
+
 
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->sphere->GetModel()));
   m_world->sphere->Render();
 
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->plunger->GetModel()));
-  m_world->plunger->Render();
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder->GetModel()));
+  m_world->cylinder->Render();
 
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cube->GetModel()));
   m_world->cube->Render();
-
-	glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->leftBumper->GetModel()));
-  m_world->leftBumper->Render();
-
-	glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->rightBumper->GetModel()));
-  m_world->rightBumper->Render();
-
-
+*/
   // Get any errors from OpenGL
   auto error = glGetError();
   if ( error != GL_NO_ERROR )

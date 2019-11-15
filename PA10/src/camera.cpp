@@ -32,12 +32,12 @@ bool Camera::Initialize(int w, int h)
 
 
 /*
- *  Function: Update(int keyPress, unsigned int dt)
+ *  Function: Update(unsigned int dt, int keyPress)
  *  Parameters: int keyPress, unsigned int dt
  *  Return: void
  *  Purpose: Implements keyboard presses and camera interaction.
  */
-void Camera::Update(int keyPress, unsigned int dt)
+void Camera::Update(unsigned int dt, int keyPress)
 {
 	float cameraSpeed = 2.5f * dt/1000;
 

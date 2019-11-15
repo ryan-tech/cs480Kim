@@ -14,16 +14,19 @@
 		"PerFragmentFragment": "../shaders/perfragment_fragment.glsl"
   },
   "Board":{
-    "Path": "../blender_object/pusher.obj"
+    "Path": "../blender_object/board.obj"
   },
   "Cube":{
     "Path": "../blender_object/cube.obj"
   },
   "Sphere":{
-    "Path": "../blender_object/Earth.obj"
+    "Path": "../blender_object/sphere.obj"
   },
   "Plunger":{
     "Path": "../blender_object/plunger.obj"
+  },
+  "Cylinder":{
+    "Path": "../blender_object/cylinder.obj"
   },
 	"LeftBumper":{
     "Path": "../blender_object/leftBumber.obj"
