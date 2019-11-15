@@ -270,7 +270,7 @@ void Object::loadTextures()
                   m_Textures[i] = NULL;
               }
               else {
-                  printf("Loaded texture '%s'\n", FullPath.c_str());
+                  //printf("Loaded texture '%s'\n", FullPath.c_str());
               }
 
           }

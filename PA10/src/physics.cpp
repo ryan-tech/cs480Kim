@@ -34,11 +34,14 @@ void Physics::createObject()
   loadBoardCover();
   loadSphere();
   loadPlunger();
+  loadLeftHinge();
   loadLeftBumpers();
   loadRightBumpers();
+
   loadCylinder1();
   loadCylinder2();
   loadCylinder3();
+  loadCylinder4();
 }
 
 void Physics::Update(unsigned int dt, int keyboardButton)
@@ -49,21 +52,21 @@ void Physics::Update(unsigned int dt, int keyboardButton)
   plunger->Update(dt, keyboardButton);
   leftBumper->Update(dt, keyboardButton);
   rightBumper->Update(dt, keyboardButton);
+  leftHinge->Update(dt, keyboardButton);
 
   cylinder1->Update(dt, keyboardButton);
   cylinder2->Update(dt, keyboardButton);
   cylinder3->Update(dt, keyboardButton);
+  cylinder4->Update(dt, keyboardButton);
 
   if(keyboardButton == SDLK_COMMA) //left bumper
   {
     glm::mat4 leftBumper_t = leftBumper->GetModel();
     glm::vec3 leftBumper_m = glm::vec3(leftBumper_t[3]);
 
-
     btScalar scalarMatrix[16];
     btTransform transform;
     btQuaternion quaternion;
-
     leftBumperAngle += 0.2f;
     leftBumper->rigidBody->getMotionState()->getWorldTransform(transform);
     quaternion.setEuler(leftBumperAngle, 0.0, 0.0);
@@ -167,7 +170,7 @@ void Physics::loadPlunger()
   plunger->shapeMotionState = NULL;
   plunger->shapeMotionState = new btDefaultMotionState(btTransform(
     btQuaternion(0.0f, 45.0f, 45.0f, 1),
-    btVector3(-21.0f, -15.0f, -33.0f)
+    btVector3(-21.0f, -15.0f, -34.0f)
     ));
   btScalar mass(0);
   btVector3 inertia(1,1,1);
@@ -200,11 +203,12 @@ void Physics::loadLeftBumpers()
   //board->model = glm::scale(board->model, glm::vec3(5,5,5));
   leftBumper->rigidBody->setCollisionFlags(leftBumper->rigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
   leftBumper->rigidBody->setActivationState( DISABLE_DEACTIVATION );
-  btHingeConstraint* leftBumperHinge = new btHingeConstraint(*leftBumper->rigidBody, btVector3(4.5f, -15.0f, -28.0f), btVector3(0, 1, 0), true );
+  btTypedConstraint* p2p = new btPoint2PointConstraint(*leftBumper->rigidBody, *leftHinge->rigidBody, btVector3(4.5f, -15.0f, -28.0f), btVector3(4.5f, -15.0f, -28.0f) );
+  //btTypedConstraint* p2p = new btPoint2PointConstraint(*body0,*body1,pivotInA,pivotInB);
+  //btHingeConstraint* leftBumperHinge = new btHingeConstraint(*leftBumper->rigidBody, btVector3(4.5f, -15.0f, -28.0f), btVector3(0, 1, 0));
 //btHingeConstraint* hinge = new btHingeConstraint(*body0, pivotInA, axisInA);
-  leftBumperHinge->setLimit(0, SIMD_HALF_PI);
-  dynamicsWorld->addConstraint(leftBumperHinge);
-
+  //leftBumperHinge->setLimit(0, SIMD_HALF_PI);
+  dynamicsWorld->addConstraint(p2p);
 }
 
 void Physics::loadRightBumpers()
@@ -230,17 +234,40 @@ void Physics::loadRightBumpers()
   //board->model = glm::scale(board->model, glm::vec3(5,5,5));
   rightBumper->rigidBody->setCollisionFlags(rightBumper->rigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
   rightBumper->rigidBody->setActivationState( DISABLE_DEACTIVATION );
-  btHingeConstraint* rightBumperHinge = new btHingeConstraint(*rightBumper->rigidBody, btVector3(-4.5f, -15.0f, -28.0f), btVector3(0.0f, 1.0f, 0.0f), true);
+  btHingeConstraint* rightBumperHinge = new btHingeConstraint(*rightBumper->rigidBody, btVector3(-4.5f, -15.0f, -28.0f), btVector3(0.0f, 1.0f, 0.0f));
   rightBumperHinge->setLimit(0, SIMD_HALF_PI);
   dynamicsWorld->addConstraint(rightBumperHinge);
 }
+
+void Physics::loadLeftHinge()
+{
+  leftHinge = new Object(json_obj, "Cube");
+  leftHinge->world = this;
+
+  leftHinge->collisionShape = new btBoxShape(btVector3(1,1,1));
+
+  leftHinge->shapeMotionState = NULL;
+  leftHinge->shapeMotionState = new btDefaultMotionState(btTransform(
+    btQuaternion(0.0f, 0.0f, 0.0f, 1),
+    btVector3(4.5f, -15.0f, -28.0f)
+    ));
+  btScalar mass(0);
+  btVector3 inertia(1,1,1);
+  leftHinge->collisionShape->calculateLocalInertia(mass, inertia);
+
+  btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI4(mass, leftHinge->shapeMotionState, leftHinge->collisionShape, inertia);
+  leftHinge->rigidBody = new btRigidBody(shapeRigidBodyCI4);
+  dynamicsWorld->addRigidBody(leftHinge->rigidBody, 1, 1);
+}
+
+
 
 
 void Physics::loadCylinder1()
 {
   cylinder1 = new Object(json_obj, "Cylinder");
   cylinder1->world = this;
-  cylinder1->collisionShape = new btCylinderShape(btVector3(1, 1, 1));
+  cylinder1->collisionShape = new btCylinderShape(btVector3(2, 2, 2));
 
   cylinder1->shapeMotionState = NULL;
   cylinder1->shapeMotionState = new btDefaultMotionState(btTransform(
@@ -260,12 +287,12 @@ void Physics::loadCylinder2()
 {
   cylinder2 = new Object(json_obj, "Cylinder");
   cylinder2->world = this;
-  cylinder2->collisionShape = new btCylinderShape(btVector3(1, 1, 1));
+  cylinder2->collisionShape = new btCylinderShape(btVector3(2, 2, 2));
 
   cylinder2->shapeMotionState = NULL;
   cylinder2->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(4.0f, -15.0f, 6.0f)
+		btVector3(6.0f, -15.0f, 8.0f)
 		));
   btScalar mass(0);
   btVector3 inertia(1,1,1);
@@ -280,12 +307,12 @@ void Physics::loadCylinder3()
 {
   cylinder3 = new Object(json_obj, "Cylinder");
   cylinder3->world = this;
-  cylinder3->collisionShape = new btCylinderShape(btVector3(1, 1, 1));
+  cylinder3->collisionShape = new btCylinderShape(btVector3(2, 2, 2));
 
   cylinder3->shapeMotionState = NULL;
   cylinder3->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-4.0f, -15.0f, 6.0f)
+		btVector3(-6.0f, -15.0f, 8.0f)
 		));
   btScalar mass(0);
   btVector3 inertia(1,1,1);
@@ -294,4 +321,24 @@ void Physics::loadCylinder3()
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI(mass, cylinder3->shapeMotionState, cylinder3->collisionShape, inertia);
   cylinder3->rigidBody = new btRigidBody(shapeRigidBodyCI);
   dynamicsWorld->addRigidBody(cylinder3->rigidBody, 1, 1);
+}
+
+void Physics::loadCylinder4()
+{
+  cylinder4 = new Object(json_obj, "Cylinder");
+  cylinder4->world = this;
+  cylinder4->collisionShape = new btCylinderShape(btVector3(2, 2, 2));
+
+  cylinder4->shapeMotionState = NULL;
+  cylinder4->shapeMotionState = new btDefaultMotionState(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(0.0f, -15.0f, 14.0f)
+		));
+  btScalar mass(0);
+  btVector3 inertia(1,1,1);
+  cylinder4->collisionShape->calculateLocalInertia(mass, inertia);
+
+  btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI(mass, cylinder4->shapeMotionState, cylinder4->collisionShape, inertia);
+  cylinder4->rigidBody = new btRigidBody(shapeRigidBodyCI);
+  dynamicsWorld->addRigidBody(cylinder4->rigidBody, 1, 1);
 }

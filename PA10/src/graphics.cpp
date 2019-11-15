@@ -205,11 +205,14 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
     score += 100;
     cout << "Your score is now: " << score << endl;
   }
-  if( z < -27.0f and x > -19 and !died)
+  if( z < -28.0f && x > -19 )
   {
-    died = true;
     cout << "You died!" << endl;
     num_balls--;
+    cout << "You have " << num_balls << " balls left." << endl;
+    Initialize();
+    num_plunger++;
+    plungerReleased = false;
   }
 
   if(keyboardButton == SDLK_t)
@@ -259,12 +262,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
   if(keyboardButton == SDLK_SLASH && num_balls > 0)
   {//restarts
-    num_balls--;
-    cout << "You have " << num_balls << " balls left." << endl;
-    Initialize();
-    num_plunger++;
-    died = false;
-    plungerReleased = false;
+
   }
 
   if(keyboardButton == SDLK_UP and !plungerReleased)
@@ -283,8 +281,8 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   if(keyboardButton == SDLK_o) shininess += 0.05f;
   if(keyboardButton == SDLK_l) shininess += 0.05f;
 
-  if(keyboardButton == SDLK_n) sl_cutoff += 0.1f;
-  if(keyboardButton == SDLK_m) sl_cutoff -= 0.1f;
+  if(keyboardButton == SDLK_n) sl_cutoff += 1.0f;
+  if(keyboardButton == SDLK_m) sl_cutoff -= 1.0f;
 
   // Update the object
   m_world->Update(dt, keyboardButton);
@@ -345,6 +343,9 @@ void Graphics::Render()
 
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder3->GetModel()));
   m_world->cylinder3->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder4->GetModel()));
+  m_world->cylinder4->Render();
 /* load the model matrix and render it
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->sphere->GetModel()));
   m_world->sphere->Render();
