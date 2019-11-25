@@ -58,7 +58,7 @@ void Physics::Update(unsigned int dt, int keyboardButton)
   sphere->Update(dt, keyboardButton);
 
   cylinder1->Update(dt, keyboardButton);
-  cylinder2->Update(dt, keyboardButton);
+  /*cylinder2->Update(dt, keyboardButton);
   cylinder3->Update(dt, keyboardButton);
   cylinder4->Update(dt, keyboardButton);
 	cylinder5->Update(dt, keyboardButton);
@@ -67,7 +67,7 @@ void Physics::Update(unsigned int dt, int keyboardButton)
 	cylinder8->Update(dt, keyboardButton);
   cylinder9->Update(dt, keyboardButton);
   cylinder10->Update(dt, keyboardButton);
-
+*/
 }
 
 

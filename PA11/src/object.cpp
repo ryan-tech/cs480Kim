@@ -189,7 +189,7 @@ void Object::loadObject()//btTriangleMesh*& t)
       }
     }
 
-    if(filePath == "../blender_object/board.obj")
+    if(filePath == "../blender_object/Lane.obj")
     {
       objTriMesh = new btTriangleMesh();
       //std::cout << " go further " << std::endl;

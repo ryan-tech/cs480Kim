@@ -193,6 +193,8 @@ bool Graphics::Initialize()
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
 
+	cout << "graphics intialized \n";
+
   return true;
 }
 
@@ -204,6 +206,8 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   x = trans.getOrigin().getX();
   y = trans.getOrigin().getY();
   z = trans.getOrigin().getZ();
+
+	cout << "got sphere physics \n";
   // cylinder1 coords = 0.0f, -15.0f, 2.0f
   // cylinder2 coords = (4.0f, -15.0f, 6.0f)
   // cylinder 3 coords = -4.0f, -15.0f, 6.0f
@@ -295,7 +299,11 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
   // Update the object
   m_world->Update(dt, keyboardButton);
+	cout << "world updated \n";
+
   m_camera->Update(dt, keyboardButton);
+	cout << "camera updated \n";
+
 }
 
 void Graphics::Render()
