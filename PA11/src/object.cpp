@@ -192,24 +192,18 @@ void Object::loadObject()//btTriangleMesh*& t)
     if(filePath == "../blender_object/Lane.obj")
     {
       objTriMesh = new btTriangleMesh();
-      //std::cout << " go further " << std::endl;
       btVector3 triArray[3];
       for(int j = 0; j < myScene->mMeshes[i]->mNumFaces; j++)
       {
         //loads indices
         for(int k = 0; k < myScene->mMeshes[i]->mFaces[j].mNumIndices; k++)
         {
-          //std::cout << myScene->mMeshes[i]->mFaces[j].mNumIndices << std::endl;
     			aiVector3D position = myScene->mMeshes[i]->mVertices[ myScene->mMeshes[i]->mFaces[j].mIndices[k] ];
-
           triArray[k] = btVector3(position.x, position.y, position.z);
         }
-
         objTriMesh->addTriangle(triArray[0], triArray[1], triArray[2]);
       }
-      //std::cout << " go further " << std::endl;
       collisionShape = new btBvhTriangleMeshShape(objTriMesh, true);
-      //std::cout << " go further " << std::endl;
     }
   }
 }
@@ -253,26 +247,17 @@ void Object::loadTextures()
   //std::cout << myScene->mNumMaterials << std::endl;
   for (unsigned int i = 0 ; i < myScene->mNumMaterials ; i++) {
       const aiMaterial* pMaterial = myScene->mMaterials[i];
-
       m_Textures[i] = NULL;
-
       if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
           aiString Path;
-
           if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
               std::string FullPath = Dir + "/" + Path.data;
               m_Textures[i] = new Texture(GL_TEXTURE_2D, FullPath.c_str());
-              //std::cout << FullPath.c_str() << std::endl;
-
               if (!m_Textures[i]->Load()) {
                   printf("Error loading texture '%s'\n", FullPath.c_str());
                   delete m_Textures[i];
                   m_Textures[i] = NULL;
               }
-              else {
-                  //printf("Loaded texture '%s'\n", FullPath.c_str());
-              }
-
           }
       }
   }

@@ -10,7 +10,7 @@ Physics::Physics(nlohmann::json j)
   solver = new btSequentialImpulseConstraintSolver;
   //creating physics world
   dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-  dynamicsWorld->setGravity(btVector3(0, -.5, -.6)); // sets gravity
+  dynamicsWorld->setGravity(btVector3(0, -2, 0)); // sets gravity
     //std::cout << "go further" << std::endl;
 
 	std:cout << "bullet stuff loaded \n";
@@ -36,11 +36,11 @@ void Physics::createObject()
 
   loadBoard();
 	cout << "got through board \n";
-	
+
   loadSphere();
 	cout << "got through sphere \n";
 
-  loadCylinder1();
+  //loadCylinder1();
   /*loadCylinder2();
   loadCylinder3();
   loadCylinder4();
@@ -57,7 +57,7 @@ void Physics::Update(unsigned int dt, int keyboardButton)
   board->Update(dt, keyboardButton);
   sphere->Update(dt, keyboardButton);
 
-  cylinder1->Update(dt, keyboardButton);
+  //cylinder1->Update(dt, keyboardButton);
   /*cylinder2->Update(dt, keyboardButton);
   cylinder3->Update(dt, keyboardButton);
   cylinder4->Update(dt, keyboardButton);
@@ -74,36 +74,21 @@ void Physics::Update(unsigned int dt, int keyboardButton)
 void Physics::loadBoard()
 {
   board = new Object(json_obj, "Board");
-
-	cout << "got board \n";
-	
   board->world = this;
-
-	cout << "board world \n";
-
   board->shapeMotionState = NULL;
   board->shapeMotionState = new btDefaultMotionState(btTransform(
-    btQuaternion(0.0f, 0.0f, 0.0f, 1),
-    btVector3(0.0f, -15.0f, 0.0f)
+    btQuaternion(0.0f, 180.0f, 0.0f, 1),
+    btVector3(0.0f, 0.0f, -1.0f)
     ));
-
-	cout << "board shape motion state \n";
-
   btScalar mass(0);
-	cout << "board mass \n";
   btVector3 inertia(0,0,0);
-	cout << "board inertia \n";
   board->collisionShape->calculateLocalInertia(mass, inertia);
-
-	cout << "board collison shape \n";
 
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI(mass, board->shapeMotionState, board->collisionShape, inertia);
   board->rigidBody = new btRigidBody(shapeRigidBodyCI);
   //rigidBody->setLinearFactor(btVector3(0,0,0));
   dynamicsWorld->addRigidBody(board->rigidBody, 1, 1);
   //board->model = glm::scale(board->model, glm::vec3(5,5,5));
-
-	std:cout << "board loaded \n";
 }
 
 
@@ -117,10 +102,10 @@ void Physics::loadSphere()
   sphere->shapeMotionState = NULL;
   sphere->shapeMotionState = new btDefaultMotionState(btTransform(
     btQuaternion(0.0f, 0.0f, 0.0f, 1),
-    btVector3(-20.0f, -13.5f, -27.0f)
+    btVector3(0.0f, 1.0f, 0.0f)
     ));
   btScalar mass(5);
-  btVector3 inertia(1,1,1);
+  btVector3 inertia(1, 1, 1);
   sphere->collisionShape->calculateLocalInertia(mass, inertia);
 
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI4(mass, sphere->shapeMotionState, sphere->collisionShape, inertia);
@@ -239,5 +224,3 @@ void Physics::loadCylinder10()
 {
 
 }
-
-

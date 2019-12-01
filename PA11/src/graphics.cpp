@@ -5,7 +5,7 @@ Graphics::Graphics(nlohmann::json json_obj)
   m_config = json_obj;
   fragmentShader = m_config["Shader"]["PerVertexFragment"];
 
-	cout << "file path: " << fragmentShader << "\n";	
+	cout << "file path: " << fragmentShader << "\n";
 
   vertexShader =  m_config["Shader"]["PerVertexVertex"];
   width = m_config["Window"]["Width"];
@@ -67,7 +67,7 @@ bool Graphics::Initialize()
   //m_object = new Object(m_config); //board
 
 	std:cout << "about to make physics \n";
-  
+
 	m_world = new Physics(m_config);
   m_world->createObject();
   // Set up the shaders
@@ -193,7 +193,7 @@ bool Graphics::Initialize()
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
 
-	cout << "graphics intialized \n";
+	cout << "graphics initialized \n";
 
   return true;
 }
@@ -211,6 +211,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   // cylinder1 coords = 0.0f, -15.0f, 2.0f
   // cylinder2 coords = (4.0f, -15.0f, 6.0f)
   // cylinder 3 coords = -4.0f, -15.0f, 6.0f
+  /*
   if( ((x < 0.5f && x > -0.5f) && (y < -14.5f && y > -15.5f) && (z < 2.5f && z > 1.5f))
     || ((x < 4.5f && x > 3.5f) && (y < -14.5f && y > -15.5f) && (z < 6.5f && z > 5.5f))
     || ((x < -3.5f && x > -4.5f) && (y < -14.5f && y > -15.5f) && (z < 6.5f && z > 5.5f)) )
@@ -240,6 +241,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
     cout << "Your score was " << score << endl;
     cout << "Press t to play again" << endl;
   }
+  */
   // press f to pay respects and change the shader
   if(keyboardButton == SDLK_f)
   {
@@ -278,10 +280,26 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
   }
 
-  if(keyboardButton == SDLK_UP and !plungerReleased)
+  //DEBUG controls
+  if(keyboardButton == SDLK_UP)// && !plungerReleased)
   {
-    plungerReleased = true;
-    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,100), btVector3(0,0,0));
+    //plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,5), btVector3(0,0,0));
+  }
+  if(keyboardButton == SDLK_DOWN)// && !plungerReleased)
+  {
+    //plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,-5), btVector3(0,0,0));
+  }
+  if(keyboardButton == SDLK_LEFT)// && !plungerReleased)
+  {
+    //plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(5,0,0), btVector3(0,0,0));
+  }
+  if(keyboardButton == SDLK_RIGHT)// && !plungerReleased)
+  {
+    //plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,0), btVector3(0,0,0));
   }
 
   // controls to change the lighting values
@@ -344,8 +362,8 @@ void Graphics::Render()
   m_world->sphere->Render();
 
 
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder1->GetModel()));
-  m_world->cylinder1->Render();
+  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder1->GetModel()));
+  //m_world->cylinder1->Render();
 
   // Get any errors from OpenGL
   auto error = glGetError();

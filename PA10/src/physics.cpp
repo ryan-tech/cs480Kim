@@ -109,7 +109,6 @@ void Physics::loadBoard()
   btScalar mass(0);
   btVector3 inertia(0,0,0);
   board->collisionShape->calculateLocalInertia(mass, inertia);
-
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI(mass, board->shapeMotionState, board->collisionShape, inertia);
   board->rigidBody = new btRigidBody(shapeRigidBodyCI);
   //rigidBody->setLinearFactor(btVector3(0,0,0));

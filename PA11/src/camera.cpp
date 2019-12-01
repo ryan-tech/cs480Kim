@@ -2,8 +2,8 @@
 
 Camera::Camera()
 {
-	cameraPos   = glm::vec3(0.0f, 35.0f, -40.0f);
-	cameraFront = glm::vec3(0.0f, -15.0f, 10.0f);
+	cameraPos   = glm::vec3(0.0f, 5.0f, -2.5f);
+	cameraFront = glm::vec3(0.0f, -7.5f, 10.0f);
 	cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
@@ -42,38 +42,40 @@ void Camera::Update(unsigned int dt, int keyPress)
 	float cameraSpeed = 2.5f * dt/1000;
 
 	if(keyPress == SDLK_w)	//move forward
-			cameraPos += glm::vec3(0.0f, 0.0f, cameraSpeed*10);
+			cameraPos += glm::vec3(0.0f, 0.0f, cameraSpeed*5);
 	if(keyPress == SDLK_s)	//move backward
-			cameraPos -= glm::vec3(0.0f, 0.0f, cameraSpeed*10);
+			cameraPos -= glm::vec3(0.0f, 0.0f, cameraSpeed*5);
 	if(keyPress == SDLK_a)	//strafe left
-			cameraPos -= glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*10));
+			cameraPos -= glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*5));
 	if(keyPress == SDLK_d)
-			cameraPos += glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*10));
+			cameraPos += glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*5));
 	if(keyPress == SDLK_q)//go up
-			cameraPos += cameraSpeed * cameraFront;
+			cameraPos += cameraSpeed/2 * cameraFront;
 	if(keyPress == SDLK_e)//go down
-			cameraPos -= cameraSpeed * cameraFront;
+			cameraPos -= cameraSpeed/2 * cameraFront;
 	if(keyPress == SDLK_z)//turn left
-			cameraFront -= glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*10));
-	if(keyPress == SDLK_x)//turn right
-			cameraFront += glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*10));
-	if(keyPress == SDLK_c)//look up
-			cameraFront += glm::vec3(0.0f, cameraSpeed*10, 0.0f);
-	if(keyPress == SDLK_v)//turn down
-			cameraFront -= glm::vec3(0.0f, cameraSpeed*10, 0.0f);
+			cameraFront -= glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*5));
+	if(keyPress == SDLK_v)//turn right
+			cameraFront += glm::vec3(glm::normalize(glm::cross(cameraFront, cameraUp)) * (cameraSpeed*5));
+	if(keyPress == SDLK_x)//look up
+			cameraFront += glm::vec3(0.0f, cameraSpeed*5, 0.0f);
+	if(keyPress == SDLK_c)//turn down
+			cameraFront -= glm::vec3(0.0f, cameraSpeed*5, 0.0f);
 
 //	if(keyPress == SDLK_e)//look down
 //			cameraFront -= glm::vec3(0.0f, 0.0f, cameraSpeed*10);
 	if(keyPress == SDLK_r)
 	{
-		cameraPos   = glm::vec3(0.0f, 35.0f, -40.0f);
-		cameraFront = glm::vec3(0.0f, -15.0f, 10.0f);
+		cameraPos   = glm::vec3(0.0f, 5.0f, -2.5f);
+		cameraFront = glm::vec3(0.0f, -7.5f, 10.0f);
 		cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 	view = glm::lookAt( cameraPos, //Eye Position
 											cameraPos + cameraFront, //Focus point
 											cameraUp); //Positive Y is up
 
+	std::cout<<"CameraPos:" << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << std::endl;
+	std::cout<<"CameraFront:" << cameraFront.x << " " << cameraFront.y << " " << cameraFront.z << std::endl;
 
 }
 

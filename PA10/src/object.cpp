@@ -62,7 +62,7 @@ void Object::Update(unsigned int dt, int keyboardButton)
 {
   btTransform trans;
   btScalar m[16];
-  world->dynamicsWorld->stepSimulation(1 / 120.f, 10);
+  world->dynamicsWorld->stepSimulation(1 / 150.0f, 10);
   rigidBody->getMotionState()->getWorldTransform(trans);
   trans.getOpenGLMatrix(m);
   model = glm::make_mat4(m);
