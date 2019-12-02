@@ -41,15 +41,22 @@ void Physics::createObject()
 	cout << "got through sphere \n";
 
   loadCylinder1();
+  	cout << "got through cylinder 1\n";
   loadCylinder2();
   loadCylinder3();
   loadCylinder4();
 	loadCylinder5();
+  	cout << "got through cylinder 5\n";
 	loadCylinder6();
+  	cout << "got through cylinder 6\n";
 	loadCylinder7();
+  	cout << "got through cylinder 7\n";
 	loadCylinder8();
+  	cout << "got through cylinder 8\n";
 	loadCylinder9();
+  	cout << "got through cylinder 9\n";
 	loadCylinder10();
+  	cout << "got through cylinder 10\n";
 }
 
 void Physics::Update(unsigned int dt, int keyboardButton)
@@ -77,7 +84,7 @@ void Physics::loadBoard()
   board->shapeMotionState = NULL;
   board->shapeMotionState = new btDefaultMotionState(btTransform(
     btQuaternion(0.0f, 180.0f, 0.0f, 1),
-    btVector3(0.0f, 0.0f, 1.0f)
+    btVector3(1.0f, 0.0f, 1.0f)
     ));
   btScalar mass(0);
   btVector3 inertia(0,0,0);
@@ -141,7 +148,7 @@ void Physics::loadCylinder2()
   cylinder2->shapeMotionState = NULL;
   cylinder2->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.5f, 1.0f, 114.5f)
+		btVector3(0.5f, 1.0f, 114.5f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
@@ -159,7 +166,7 @@ void Physics::loadCylinder3()
   cylinder3->shapeMotionState = NULL;
   cylinder3->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.5f, 1.0f, 114.5f)
+		btVector3(-0.5f, 1.0f, 114.5f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
@@ -177,7 +184,7 @@ void Physics::loadCylinder4()
   cylinder4->shapeMotionState = NULL;
   cylinder4->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(3.0f, 1.0f, 116.0f)
+		btVector3(1.0f, 1.0f, 116.0f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
@@ -216,14 +223,14 @@ void Physics::loadCylinder6()
   cylinder6->shapeMotionState = NULL;
   cylinder6->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-3.0f, 1.0f, 116.0f)
+		btVector3(-1.0f, 1.0f, 116.0f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder6->collisionShape->calculateLocalInertia(mass, inertia);
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI(mass, cylinder6->shapeMotionState, cylinder6->collisionShape, inertia);
   cylinder6->rigidBody = new btRigidBody(shapeRigidBodyCI);
-  dynamicsWorld->addRigidBody(cylinder3->rigidBody, 1, 1);
+  dynamicsWorld->addRigidBody(cylinder6->rigidBody, 1, 1);
 }
 
 
@@ -235,7 +242,7 @@ void Physics::loadCylinder7()
   cylinder7->shapeMotionState = NULL;
   cylinder7->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(4.5f, 1.0f, 117.5f)
+		btVector3(1.5f, 1.0f, 117.5f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
@@ -254,7 +261,7 @@ void Physics::loadCylinder8()
   cylinder8->shapeMotionState = NULL;
   cylinder8->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.5f, 1.0f, 117.5f)
+		btVector3(0.5f, 1.0f, 117.5f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
@@ -273,7 +280,7 @@ void Physics::loadCylinder9()
   cylinder9->shapeMotionState = NULL;
   cylinder9->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.5f, 1.0f, 117.5f)
+		btVector3(-0.5f, 1.0f, 117.5f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
@@ -292,12 +299,12 @@ void Physics::loadCylinder10()
   cylinder10->shapeMotionState = NULL;
   cylinder10->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-4.5f, 1.0f, 117.5f)
+		btVector3(-1.5f, 1.0f, 117.5f)
 		));
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder10->collisionShape->calculateLocalInertia(mass, inertia);
   btRigidBody::btRigidBodyConstructionInfo shapeRigidBodyCI(mass, cylinder10->shapeMotionState, cylinder10->collisionShape, inertia);
   cylinder10->rigidBody = new btRigidBody(shapeRigidBodyCI);
-  dynamicsWorld->addRigidBody(cylinder7->rigidBody, 1, 1);
+  dynamicsWorld->addRigidBody(cylinder10->rigidBody, 1, 1);
 }

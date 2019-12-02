@@ -189,7 +189,7 @@ void Object::loadObject()//btTriangleMesh*& t)
       }
     }
 
-    if(filePath == "../blender_object/Lane.obj")
+    if(filePath == "../blender_object/Lane.obj" )
     {
       objTriMesh = new btTriangleMesh();
       btVector3 triArray[3];

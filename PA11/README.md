@@ -12,20 +12,31 @@ User Manual:
 Game Controls:
 
 
-Camera movement:
-Camera: Use W to move camera Forwards.
-Use S to move camera Backwards. Use A to strafe camera Left.
-Use D to strafe camera Right. Use Q to zoom in
-Use E to zoom out
-Use Z to turn camera Left.
- Use X to turn camera Right.
-Use R to reset the view.
-Press Esc to exit.
+q - zoom in
+e - zoom out
+w - move camera up
+a - move camera left
+s - move camera down
+d - move camera right
+z - rotate camera left
+x - rotate camera up
+c - rotate camera down
+v - rotate camera right
+
+
+/ - restarts game
+
+
 Lighting:
-Lighting: Ambient: Y increases H decreases
+Ambient: Y increases H decreases
 Diffuse: U increases J decreases
 Specular: I increase K decreases
-Spotlight size: N makes spotlight bigger; M makes spotlight smaller.
+Spotlight size: N makes spotlight bigger, M makes spotlight smaller.
+f switches between per vertex and per fragment (per vertex is the default)
+
+up - shoots ball forward
+
+
 
 
 Code Documentation:
