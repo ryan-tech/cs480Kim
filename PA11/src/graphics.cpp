@@ -208,40 +208,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   z = trans.getOrigin().getZ();
 
 	cout << "got sphere physics \n";
-  // cylinder1 coords = 0.0f, -15.0f, 2.0f
-  // cylinder2 coords = (4.0f, -15.0f, 6.0f)
-  // cylinder 3 coords = -4.0f, -15.0f, 6.0f
-  /*
-  if( ((x < 0.5f && x > -0.5f) && (y < -14.5f && y > -15.5f) && (z < 2.5f && z > 1.5f))
-    || ((x < 4.5f && x > 3.5f) && (y < -14.5f && y > -15.5f) && (z < 6.5f && z > 5.5f))
-    || ((x < -3.5f && x > -4.5f) && (y < -14.5f && y > -15.5f) && (z < 6.5f && z > 5.5f)) )
-  {
-    score += 100;
-    cout << "Your score is now: " << score << endl;
-  }
-  if( z < -28.0f && x > -19 )
-  {
-    cout << "You died!" << endl;
-    num_balls--;
-    cout << "You have " << num_balls << " balls left." << endl;
-    Initialize();
-    num_plunger++;
-    plungerReleased = false;
-  }
 
-  if(keyboardButton == SDLK_t)
-  {
-    num_balls = 3;
-    plungerReleased = false;
-    Initialize();
-  }
-  if(num_balls == 0)
-  {
-    cout << "Game Over!!!" << endl;
-    cout << "Your score was " << score << endl;
-    cout << "Press t to play again" << endl;
-  }
-  */
   // press f to pay respects and change the shader
   if(keyboardButton == SDLK_f)
   {
@@ -284,22 +251,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   if(keyboardButton == SDLK_UP)// && !plungerReleased)
   {
     //plungerReleased = true;
-    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,5), btVector3(0,0,0));
-  }
-  if(keyboardButton == SDLK_DOWN)// && !plungerReleased)
-  {
-    //plungerReleased = true;
-    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,-5), btVector3(0,0,0));
-  }
-  if(keyboardButton == SDLK_LEFT)// && !plungerReleased)
-  {
-    //plungerReleased = true;
-    m_world->sphere->rigidBody->applyImpulse(btVector3(5,0,0), btVector3(0,0,0));
-  }
-  if(keyboardButton == SDLK_RIGHT)// && !plungerReleased)
-  {
-    //plungerReleased = true;
-    m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,0), btVector3(0,0,0));
+    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,10), btVector3(0,0,0));
   }
 
   // controls to change the lighting values
@@ -355,15 +307,19 @@ void Graphics::Render()
   glUniform3f(m_sl_direction, 0.0f, -1.0f, 0.0f);
   glUniform1f(m_sl_cutoff, glm::cos(glm::radians(sl_cutoff)));
 
+
+  //board
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));
   m_world->board->Render();
 
+  //ball
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->sphere->GetModel()));
   m_world->sphere->Render();
 
 
-  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder1->GetModel()));
-  //m_world->cylinder1->Render();
+  //10 pins 
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder1->GetModel()));
+  m_world->cylinder1->Render();
 
   // Get any errors from OpenGL
   auto error = glGetError();

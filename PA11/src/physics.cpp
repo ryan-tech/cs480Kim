@@ -10,7 +10,7 @@ Physics::Physics(nlohmann::json j)
   solver = new btSequentialImpulseConstraintSolver;
   //creating physics world
   dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-  dynamicsWorld->setGravity(btVector3(0, -2, 0)); // sets gravity
+  dynamicsWorld->setGravity(btVector3(0, -10, 0)); // sets gravity
     //std::cout << "go further" << std::endl;
 
 	std:cout << "bullet stuff loaded \n";
@@ -40,7 +40,7 @@ void Physics::createObject()
   loadSphere();
 	cout << "got through sphere \n";
 
-  //loadCylinder1();
+  loadCylinder1();
   /*loadCylinder2();
   loadCylinder3();
   loadCylinder4();
@@ -57,7 +57,7 @@ void Physics::Update(unsigned int dt, int keyboardButton)
   board->Update(dt, keyboardButton);
   sphere->Update(dt, keyboardButton);
 
-  //cylinder1->Update(dt, keyboardButton);
+  cylinder1->Update(dt, keyboardButton);
   /*cylinder2->Update(dt, keyboardButton);
   cylinder3->Update(dt, keyboardButton);
   cylinder4->Update(dt, keyboardButton);
@@ -78,7 +78,7 @@ void Physics::loadBoard()
   board->shapeMotionState = NULL;
   board->shapeMotionState = new btDefaultMotionState(btTransform(
     btQuaternion(0.0f, 180.0f, 0.0f, 1),
-    btVector3(0.0f, 0.0f, -1.0f)
+    btVector3(0.0f, 0.0f, 1.0f)
     ));
   btScalar mass(0);
   btVector3 inertia(0,0,0);
@@ -102,9 +102,9 @@ void Physics::loadSphere()
   sphere->shapeMotionState = NULL;
   sphere->shapeMotionState = new btDefaultMotionState(btTransform(
     btQuaternion(0.0f, 0.0f, 0.0f, 1),
-    btVector3(0.0f, 1.0f, 0.0f)
+    btVector3(0.0f, 2.0f, 0.0f)
     ));
-  btScalar mass(5);
+  btScalar mass(15);
   btVector3 inertia(1, 1, 1);
   sphere->collisionShape->calculateLocalInertia(mass, inertia);
 
@@ -113,20 +113,21 @@ void Physics::loadSphere()
 
   dynamicsWorld->addRigidBody(sphere->rigidBody, 1, 1);
   sphere->rigidBody->setActivationState( DISABLE_DEACTIVATION );
+  sphere->model = glm::scale(sphere->model, glm::vec3(5, 5, 5));
 }
 
 void Physics::loadCylinder1()
 {
   cylinder1 = new Object(json_obj, "Cylinder");
   cylinder1->world = this;
-  cylinder1->collisionShape = new btCylinderShape(btVector3(2, 2, 2));
+  cylinder1->collisionShape = new btCylinderShape(btVector3(.25f, .25f, 1));
 
   cylinder1->shapeMotionState = NULL;
   cylinder1->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(0.0f, -15.0f, 2.0f)
 		));
-  btScalar mass(0);
+  btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder1->collisionShape->calculateLocalInertia(mass, inertia);
 
