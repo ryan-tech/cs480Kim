@@ -242,16 +242,31 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
     }
   }
 
-  if(keyboardButton == SDLK_SLASH && num_balls > 0)
+  if(keyboardButton == SDLK_SLASH)
   {//restarts
-
+    Initialize();
   }
 
   //DEBUG controls
   if(keyboardButton == SDLK_UP)// && !plungerReleased)
   {
     //plungerReleased = true;
-    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,10), btVector3(0,0,0));
+    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,60), btVector3(0,0,0));
+  }
+  if(keyboardButton == SDLK_DOWN)// && !plungerReleased)
+  {
+    //plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,-5), btVector3(0,0,0));
+  }
+  if(keyboardButton == SDLK_LEFT)// && !plungerReleased)
+  {
+    //plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(5,0,0), btVector3(0,0,0));
+  }
+  if(keyboardButton == SDLK_RIGHT)// && !plungerReleased)
+  {
+    //plungerReleased = true;
+    m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,10), btVector3(0,0,0));
   }
 
   // controls to change the lighting values
@@ -320,6 +335,34 @@ void Graphics::Render()
   //10 pins
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder1->GetModel()));
   m_world->cylinder1->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder2->GetModel()));
+  m_world->cylinder2->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder3->GetModel()));
+  m_world->cylinder3->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder4->GetModel()));
+  m_world->cylinder4->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder5->GetModel()));
+  m_world->cylinder5->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder6->GetModel()));
+  m_world->cylinder6->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder7->GetModel()));
+  m_world->cylinder7->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder8->GetModel()));
+  m_world->cylinder8->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder9->GetModel()));
+  m_world->cylinder9->Render();
+
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->cylinder10->GetModel()));
+  m_world->cylinder10->Render();
+
 
   // Get any errors from OpenGL
   auto error = glGetError();

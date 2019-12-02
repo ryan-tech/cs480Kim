@@ -2,7 +2,7 @@
 
 Camera::Camera()
 {
-	cameraPos   = glm::vec3(0.0f, 19.0f, -21.0f);
+	cameraPos   = glm::vec3(0.0f, 19.0f, 90.0f);
 	cameraFront = glm::vec3(0.0f, -5.5f, 10.0f);
 	cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
 }
