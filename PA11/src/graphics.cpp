@@ -1,5 +1,5 @@
 #include "graphics.h"
-#include <math.h> 
+#include <math.h>
 #include <cmath>
 
 Graphics::Graphics(nlohmann::json json_obj)
@@ -28,7 +28,7 @@ Graphics::Graphics(nlohmann::json json_obj)
 	pins_remaining = 10;
 	reset_initial_postion = false;
 	updates_passed = 0;
-	
+
 /*
   sl_ambientVal = 1.0f;
   sl_diffuseVal = 0.64f;
@@ -93,7 +93,7 @@ bool Graphics::Initialize()
     return false;
   }
 
-	cout << "shqaders initialized \n";
+	cout << "shaders initialized \n";
 
   // Add the vertex shader
   if(!m_shader->AddShader(GL_VERTEX_SHADER))
@@ -116,7 +116,7 @@ bool Graphics::Initialize()
     return false;
   }
 
-	cout << "shqaders loaded \n";
+	cout << "shaders loaded \n";
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_shader->GetUniformLocation("Projection");
@@ -219,7 +219,7 @@ void Graphics::Display()
 	cout << "| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|\n";
 	cout << "+---+---+---+---+---+---+---+---+---+---+\n";
 	cout << "|";
-	
+
 	for(int i=0; i<10; i++)
 	{
 		if(score[i] < 10)
@@ -244,61 +244,61 @@ void Graphics::resetPins()
 		//pin 1
 		m_world->pin[1]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(0.0f, 1.0f, 113.0f)
+		btVector3(0.00354227f, -0.0635913f, 112.992f)
 		));
 
 		//pin 2
 		m_world->pin[2]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.0f, 1.0f, 114.5f)
+		btVector3(1.09498f, -0.0635751f, 114.424f)
 		));
 
 		//pin 3
 		m_world->pin[3]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.0f, 1.0f, 114.5f)
+		btVector3(-1.05537f, -0.063575f, 114.504f)
 		));
 
 		//pin 4
 		m_world->pin[4]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(2.25f, 1.0f, 116.0f)
+		btVector3(1.95825f, -0.0635753f, 116.072f)
 		));
-		
+
 		//pin 5
 		m_world->pin[5]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(0.0f, 1.0f, 116.0f)
+		btVector3(-0.0101327f, -0.0635751f, 115.942f)
 		));
 
 		//pin 6
 		m_world->pin[6]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-2.25f, 1.0f, 116.0f)
+		btVector3(-2.32198f, -0.0635752f, 115.957f)
 		));
 
 		//pin 7
 		m_world->pin[7]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(3.0f, 1.0f, 117.5f)
+		btVector3(3.0601f, -0.0635755f, 117.509f)
 		));
 
 		//pin 8
 		m_world->pin[8]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.0f, 1.0f, 117.5f)
+		btVector3(.996307f, -0.0635752f, 117.42f)
 		));
 
 		//pin 9
 		m_world->pin[9]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.0f, 1.0f, 117.5f)
+		btVector3(-1.2551f, -0.0635754f, 117.592f)
 		));
 
 		//pin 10
 		m_world->pin[10]->rigidBody->setWorldTransform(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-3.0f, 1.0f, 117.5f)
+		btVector3(-3.0135f, -0.0635751f, 117.573f)
 		));
 
 		btTransform trans;
@@ -309,7 +309,7 @@ void Graphics::resetPins()
 			x = m_world->pin[i]->intial_postion.getOrigin().getX();
 			y = m_world->pin[i]->intial_postion.getOrigin().getY();
 			z = m_world->pin[i]->intial_postion.getOrigin().getZ();
-			
+
 			cout << "pin " << i << " start: " << x << " " << y << " " << z << "\n";
 		}
 /*
@@ -327,7 +327,7 @@ void Graphics::resetPins()
 			x = trans.getOrigin().getX();
 			y = trans.getOrigin().getY();
 			z = trans.getOrigin().getZ();
-			
+
 			cout << "pin " << i << " reset to: " << x << " " << y << " " << z << "\n";
 		}
 
@@ -343,6 +343,18 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
 	pins_remaining = 10;
 
+  /*for(int i = 1; i <= 10; i++)
+  {
+    m_world->pin[i]->rigidBody->getMotionState()->getWorldTransform(trans);
+
+    x = trans.getOrigin().getX();
+    y = trans.getOrigin().getY();
+    z = trans.getOrigin().getZ();
+    cout << "Pin #" << i << ": x: " << x << " y: " << y << " z: " << z << endl;
+  }
+*/
+
+  /*
 	if(updates_passed <=50 )
 	{
 		for(int i = 1; i <= 10; i++)
@@ -352,18 +364,18 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 			x = trans.getOrigin().getX();
 			y = trans.getOrigin().getY();
 			z = trans.getOrigin().getZ();
-			
+
 			m_world->pin[i]->check_postion = btTransform(
 			btQuaternion(0.0f, 0.0f, 0.0f, 1),
 			btVector3(x, y, z)
 			);
-			
+
 			//cout << "pin " << i << " start: " << x << " " << y << " " << z << "\n";
 		}
 
-	}	
+	}
 
-	updates_passed++;	
+	updates_passed++;
 
 	m_world->sphere->rigidBody->getMotionState()->getWorldTransform(trans);
   x = trans.getOrigin().getX();
@@ -373,7 +385,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 	if((y < -5))
 	{
 		//cout << "enter reset\n";
-		
+
 		m_world->sphere->rigidBody->setWorldTransform(m_world->sphere->intial_postion);
 		m_world->sphere->rigidBody->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 		m_world->sphere->rigidBody->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
@@ -396,7 +408,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
 			glm::vec3 temp = pos - ipos;
 			distSqr = dot(temp, temp);
-	
+
 
 			if (distSqr > 0.01f)
 			{
@@ -432,7 +444,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 			if(frame > 0)
 			{
 				if(result[frame-1] == '/')
-				{	
+				{
 					if(roll == 1)
 					{
 						score[frame-1] = 10 + (10 - pins_remaining);
@@ -456,16 +468,17 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 				score[frame] += score[frame-1];
 			}
 		}
-		
+
 		roll++;
 		if(roll > 2)
 		{
 			resetPins();
 			frame++;
 		}
+    */
+  if(keyboardButton == SDLK_1) resetPins();
+  //Display();
 
-		Display();
-	}
 
   // press f to pay respects and change the shader
   if(keyboardButton == SDLK_f)

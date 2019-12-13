@@ -98,8 +98,8 @@ void Object::Render()
 		glBindBuffer(GL_ARRAY_BUFFER, meshes[i].VB);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,texture));
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,color));
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,normal));
+    //glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,color));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,normal));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i].IB);
 
@@ -209,7 +209,7 @@ void Object::loadObject()//btTriangleMesh*& t)
     }
 		/*if(filePath == "../blender_object/SPin.obj" )
     {
-			
+
 			collisionShape = new btConvexHullShape(0,0, sizeof(btVector3));
 			for(int i=0; i < sizeof(vertexes);i ++)
 			{

@@ -6,10 +6,11 @@
   in vec3 fN;
   in vec3 fL;
   in vec3 fE;
-  in vec3 lightdir;
+
+  //in vec3 lightdir;
 
   uniform vec4 AmbientProduct, DiffuseProduct, SpecularProduct;
-
+  uniform vec4 LightPosition;
   uniform float Shininess;
 
   smooth in vec2 texture;
@@ -42,14 +43,16 @@
   	  specular = vec4(0.0, 0.0, 0.0, 1.0);
 
 
-      float theta = dot(lightdir, normalize(-slDirection));
+      //float theta = dot(lightdir, normalize(-slDirection));
 
-      if(theta > slCutoff)
-      {
-        gl_FragColor = texture2D(gSampler, texture.xy) * (ambient + diffuse + specular);
-        gl_FragColor.a = 1.0;
-      }
-      else  // else, use ambient light so scene isn't completely dark outside the spotlight.
-        gl_FragColor = texture2D(gSampler, texture.xy) * (ambient);
-        gl_FragColor.a = 1.0;
+      //if(theta > slCutoff)
+      //{
+
+      gl_FragColor = texture2D(gSampler, texture.xy) * (ambient + diffuse + specular);
+      gl_FragColor.a = 1.0;
+
+      //}
+      //else  // else, use ambient light so scene isn't completely dark outside the spotlight.
+      //  gl_FragColor = texture2D(gSampler, texture.xy) * (ambient);
+      //  gl_FragColor.a = 1.0;
   }
