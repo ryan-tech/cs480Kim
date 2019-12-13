@@ -31,8 +31,11 @@ class Object
     void loadObject();//btTriangleMesh*& t);
     void loadTextures();
 
+		btTransform intial_postion;
+		btTransform check_postion;
 
   //protected:
+		vector<glm::vec3> vertexes;
 
     Physics* world;
 

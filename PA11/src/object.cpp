@@ -1,5 +1,6 @@
 #include "object.h"
 
+
 //The default constructor used to have the cube in it.
 /*  Function: Object()
  *  Parameters: None
@@ -178,6 +179,7 @@ void Object::loadObject()//btTriangleMesh*& t)
           tmpnorm
         )
       );
+			vertexes.push_back(tmpvertices);
     }
     //for each face in the mesh
     for(int j = 0; j < myScene->mMeshes[i]->mNumFaces; j++)
@@ -189,7 +191,7 @@ void Object::loadObject()//btTriangleMesh*& t)
       }
     }
 
-    if(filePath == "../blender_object/Lane.obj" )
+    if(filePath == "../blender_object/Lane2.obj" )
     {
       objTriMesh = new btTriangleMesh();
       btVector3 triArray[3];
@@ -205,6 +207,15 @@ void Object::loadObject()//btTriangleMesh*& t)
       }
       collisionShape = new btBvhTriangleMeshShape(objTriMesh, true);
     }
+		/*if(filePath == "../blender_object/SPin.obj" )
+    {
+			
+			collisionShape = new btConvexHullShape(0,0, sizeof(btVector3));
+			for(int i=0; i < sizeof(vertexes);i ++)
+			{
+				collisionShape->btConvexHullShape->addPoint(vertexes[i]);
+			}
+		}*/
   }
 }
 

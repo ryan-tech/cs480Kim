@@ -74,8 +74,8 @@ void Camera::Update(unsigned int dt, int keyPress)
 											cameraPos + cameraFront, //Focus point
 											cameraUp); //Positive Y is up
 
-	std::cout<<"CameraPos:" << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << std::endl;
-	std::cout<<"CameraFront:" << cameraFront.x << " " << cameraFront.y << " " << cameraFront.z << std::endl;
+	//std::cout<<"CameraPos:" << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << std::endl;
+	//std::cout<<"CameraFront:" << cameraFront.x << " " << cameraFront.y << " " << cameraFront.z << std::endl;
 
 }
 

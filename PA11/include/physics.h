@@ -53,6 +53,8 @@ public:
   Object* cylinder9;
   Object* cylinder10;
 
+	Object* pin[11];
+
 
 	float cubeMove;
 	float cubeMoveVal;

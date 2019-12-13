@@ -14,12 +14,12 @@
 		"PerFragmentFragment": "../shaders/perfragment_fragment.glsl"
   },
   "Board":{
-    "Path": "../blender_object/Lane.obj"
+    "Path": "../blender_object/Lane2.obj"
   },
   "Sphere":{
     "Path": "../blender_object/Ball.obj"
   },
   "Cylinder":{
-    "Path": "../blender_object/Pin.obj"
+    "Path": "../blender_object/SPin.obj"
   }
 }

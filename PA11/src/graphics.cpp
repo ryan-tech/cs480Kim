@@ -1,4 +1,6 @@
 #include "graphics.h"
+#include <math.h> 
+#include <cmath>
 
 Graphics::Graphics(nlohmann::json json_obj)
 {
@@ -15,6 +17,18 @@ Graphics::Graphics(nlohmann::json json_obj)
   specularVal = 0.5f;
   shininess = 96.078431f;
   sl_cutoff = 100.0f;
+
+	for(int i=0; i<10; i++)
+	{
+		score[i] = 0;
+		result[i] = 'n';
+	}
+	frame = 0;
+	roll = 1;
+	pins_remaining = 10;
+	reset_initial_postion = false;
+	updates_passed = 0;
+	
 /*
   sl_ambientVal = 1.0f;
   sl_diffuseVal = 0.64f;
@@ -70,6 +84,7 @@ bool Graphics::Initialize()
 
 	m_world = new Physics(m_config);
   m_world->createObject();
+
   // Set up the shaders
   m_shader = new Shader(fragmentShader, vertexShader);
   if(!m_shader->Initialize())
@@ -198,16 +213,259 @@ bool Graphics::Initialize()
   return true;
 }
 
+void Graphics::Display()
+{
+	cout << "+---+---+---+---+---+---+---+---+---+---+\n";
+	cout << "| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|\n";
+	cout << "+---+---+---+---+---+---+---+---+---+---+\n";
+	cout << "|";
+	
+	for(int i=0; i<10; i++)
+	{
+		if(score[i] < 10)
+		{
+			cout << " " << score[i] << " |";
+		}
+		else if (score[i] < 100)
+		{
+			cout << " " << score[i] << "|";
+		}
+		else
+		{
+			cout << score[i] << "|";
+		}
+	}
+	cout << "\n";
+	cout << "+---+---+---+---+---+---+---+---+---+---+\n\n";
+}
+
+void Graphics::resetPins()
+{
+		//pin 1
+		m_world->pin[1]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(0.0f, 1.0f, 113.0f)
+		));
+
+		//pin 2
+		m_world->pin[2]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(1.0f, 1.0f, 114.5f)
+		));
+
+		//pin 3
+		m_world->pin[3]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-1.0f, 1.0f, 114.5f)
+		));
+
+		//pin 4
+		m_world->pin[4]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(2.25f, 1.0f, 116.0f)
+		));
+		
+		//pin 5
+		m_world->pin[5]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(0.0f, 1.0f, 116.0f)
+		));
+
+		//pin 6
+		m_world->pin[6]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-2.25f, 1.0f, 116.0f)
+		));
+
+		//pin 7
+		m_world->pin[7]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(3.0f, 1.0f, 117.5f)
+		));
+
+		//pin 8
+		m_world->pin[8]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(1.0f, 1.0f, 117.5f)
+		));
+
+		//pin 9
+		m_world->pin[9]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-1.0f, 1.0f, 117.5f)
+		));
+
+		//pin 10
+		m_world->pin[10]->rigidBody->setWorldTransform(btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-3.0f, 1.0f, 117.5f)
+		));
+
+		btTransform trans;
+		float x, y, z;
+
+		for(int i = 1; i <= 10; i++)
+		{
+			x = m_world->pin[i]->intial_postion.getOrigin().getX();
+			y = m_world->pin[i]->intial_postion.getOrigin().getY();
+			z = m_world->pin[i]->intial_postion.getOrigin().getZ();
+			
+			cout << "pin " << i << " start: " << x << " " << y << " " << z << "\n";
+		}
+/*
+	for(int i = 1; i <= 10; i++)
+	{
+		m_world->pin[i]->rigidBody->setWorldTransform(m_world->pin[i]->intial_postion);
+	}*/
+	pins_remaining = 10;
+	roll = 1;
+
+	for(int i = 1; i <= 10; i++)
+		{
+			m_world->pin[i]->rigidBody->getMotionState()->getWorldTransform(trans);
+
+			x = trans.getOrigin().getX();
+			y = trans.getOrigin().getY();
+			z = trans.getOrigin().getZ();
+			
+			cout << "pin " << i << " reset to: " << x << " " << y << " " << z << "\n";
+		}
+
+	cout << "Reset pins\n";
+}
+
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
   btTransform trans;
   float x, y, z;
-  m_world->sphere->rigidBody->getMotionState()->getWorldTransform(trans);
+	float distSqr;
+	glm::vec3 pos,ipos;
+
+	pins_remaining = 10;
+
+	if(updates_passed <=50 )
+	{
+		for(int i = 1; i <= 10; i++)
+		{
+			m_world->pin[i]->rigidBody->getMotionState()->getWorldTransform(trans);
+
+			x = trans.getOrigin().getX();
+			y = trans.getOrigin().getY();
+			z = trans.getOrigin().getZ();
+			
+			m_world->pin[i]->check_postion = btTransform(
+			btQuaternion(0.0f, 0.0f, 0.0f, 1),
+			btVector3(x, y, z)
+			);
+			
+			//cout << "pin " << i << " start: " << x << " " << y << " " << z << "\n";
+		}
+
+	}	
+
+	updates_passed++;	
+
+	m_world->sphere->rigidBody->getMotionState()->getWorldTransform(trans);
   x = trans.getOrigin().getX();
   y = trans.getOrigin().getY();
   z = trans.getOrigin().getZ();
 
-	cout << "got sphere physics \n";
+	if((y < -5))
+	{
+		//cout << "enter reset\n";
+		
+		m_world->sphere->rigidBody->setWorldTransform(m_world->sphere->intial_postion);
+		m_world->sphere->rigidBody->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		m_world->sphere->rigidBody->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+
+		for(int i = 1; i <= 10; i++)
+		{
+			m_world->pin[i]->rigidBody->getMotionState()->getWorldTransform(trans);
+
+			x = trans.getOrigin().getX();
+  		y = trans.getOrigin().getY();
+  		z = trans.getOrigin().getZ();
+
+			pos = glm::vec3(x, y, z);
+
+			x = m_world->pin[i]->check_postion.getOrigin().getX();
+  		y = m_world->pin[i]->check_postion.getOrigin().getY();
+  		z = m_world->pin[i]->check_postion.getOrigin().getZ();
+
+			ipos = glm::vec3(x, y, z);
+
+			glm::vec3 temp = pos - ipos;
+			distSqr = dot(temp, temp);
+	
+
+			if (distSqr > 0.01f)
+			{
+				m_world->pin[i]->rigidBody->setWorldTransform(btTransform(
+					btQuaternion(0.0f, 0.0f, 0.0f, 1),
+					btVector3(20.0f, 2.0f, 100.0f)
+					));
+				pins_remaining-- ;
+			}
+		}
+
+		cout << "frame: " << frame << "\nroll: " << roll << "\n";
+		if(roll == 1)
+		{
+			cout << "pins remaining: " << pins_remaining << "\n";
+		}
+
+		if(pins_remaining == 0)
+		{
+			if(roll == 1)
+			{
+				result[frame] = 'X';
+			}
+			if(roll == 2)
+			{
+				result[frame] = '/';
+			}
+			resetPins();
+			frame++;
+		}
+		else
+		{
+			if(frame > 0)
+			{
+				if(result[frame-1] == '/')
+				{	
+					if(roll == 1)
+					{
+						score[frame-1] = 10 + (10 - pins_remaining);
+					}
+				}
+			}
+			for(int i = frame-1; i >= 0; i--)
+			{
+				if(result[i] == 'X')
+				{
+					if(roll == 2)
+					{
+						score[i] = 10 + (10 - pins_remaining);
+						result[i] = 'n';
+					}
+				}
+			}
+			score[frame] = 10 - pins_remaining;
+			if(frame != 0)
+			{
+				score[frame] += score[frame-1];
+			}
+		}
+		
+		roll++;
+		if(roll > 2)
+		{
+			resetPins();
+			frame++;
+		}
+
+		Display();
+	}
 
   // press f to pay respects and change the shader
   if(keyboardButton == SDLK_f)
@@ -266,7 +524,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   if(keyboardButton == SDLK_RIGHT)// && !plungerReleased)
   {
     //plungerReleased = true;
-    m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,10), btVector3(0,0,0));
+    m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,0), btVector3(0,0,0));
   }
 
   // controls to change the lighting values
@@ -284,10 +542,10 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
   // Update the object
   m_world->Update(dt, keyboardButton);
-	cout << "world updated \n";
+	//cout << "world updated \n";
 
   m_camera->Update(dt, keyboardButton);
-	cout << "camera updated \n";
+	//cout << "camera updated \n";
 
 }
 

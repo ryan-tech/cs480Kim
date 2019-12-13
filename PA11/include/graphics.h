@@ -25,6 +25,8 @@ class Graphics
     bool Initialize();
     void Update(unsigned int dt, int keyboardButton);
     void Render();
+		void Display();
+		void resetPins();
 
   private:
     std::string ErrorString(GLenum error);
@@ -53,12 +55,20 @@ class Graphics
     int width, height;
     int num_balls = 4;
     int num_plunger = 0;
-    int score = 0;
+    //int score = 0;
     //values to be used for lighting variables
     float ambientVal;
     float diffuseVal;
     float specularVal;
     float shininess;
+
+		int score[10];
+		char result[10];
+		int frame;
+		int roll;
+		int pins_remaining;
+
+		int updates_passed;
 
     //spotlight values
 
@@ -75,6 +85,7 @@ class Graphics
     float sl_cutoff;
 */
 
+		bool reset_initial_postion;
 
     string fragmentShader, vertexShader;
 

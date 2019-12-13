@@ -13,7 +13,7 @@ Physics::Physics(nlohmann::json j)
   dynamicsWorld->setGravity(btVector3(0, -10, 0)); // sets gravity
     //std::cout << "go further" << std::endl;
 
-	std:cout << "bullet stuff loaded \n";
+	//std:cout << "bullet stuff loaded \n";
 }
 
 Physics::~Physics()
@@ -32,31 +32,33 @@ Physics::~Physics()
 
 void Physics::createObject()
 {
-	cout << "entered create object \n";
 
   loadBoard();
-	cout << "got through board \n";
 
   loadSphere();
-	cout << "got through sphere \n";
 
   loadCylinder1();
-  	cout << "got through cylinder 1\n";
   loadCylinder2();
   loadCylinder3();
   loadCylinder4();
 	loadCylinder5();
-  	cout << "got through cylinder 5\n";
 	loadCylinder6();
-  	cout << "got through cylinder 6\n";
 	loadCylinder7();
-  	cout << "got through cylinder 7\n";
 	loadCylinder8();
-  	cout << "got through cylinder 8\n";
 	loadCylinder9();
-  	cout << "got through cylinder 9\n";
 	loadCylinder10();
-  	cout << "got through cylinder 10\n";
+
+	pin[1] = cylinder1;
+	pin[2] = cylinder2;
+	pin[3] = cylinder3;
+	pin[4] = cylinder4;
+	pin[5] = cylinder5;
+	pin[6] = cylinder6;
+	pin[7] = cylinder7;
+	pin[8] = cylinder8;
+	pin[9] = cylinder9;
+	pin[10] = cylinder10;
+
 }
 
 void Physics::Update(unsigned int dt, int keyboardButton)
@@ -110,6 +112,12 @@ void Physics::loadSphere()
     btQuaternion(0.0f, 0.0f, 0.0f, 1),
     btVector3(0.0f, 2.0f, 0.0f)
     ));
+	
+	sphere->intial_postion = btTransform(
+    btQuaternion(0.0f, 0.0f, 0.0f, 1),
+    btVector3(0.0f, 2.0f, 0.0f)
+    );
+
   btScalar mass(15);
   btVector3 inertia(1, 1, 1);
   sphere->collisionShape->calculateLocalInertia(mass, inertia);
@@ -132,6 +140,12 @@ void Physics::loadCylinder1()
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(0.0f, 1.0f, 113.0f)
 		));
+
+	cylinder1->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(0.0f, 1.0f, 113.0f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder1->collisionShape->calculateLocalInertia(mass, inertia);
@@ -148,8 +162,14 @@ void Physics::loadCylinder2()
   cylinder2->shapeMotionState = NULL;
   cylinder2->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(0.5f, 1.0f, 114.5f)
+		btVector3(1.0f, 1.0f, 114.5f)
 		));
+
+	cylinder2->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(1.0f, 1.0f, 114.5f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder2->collisionShape->calculateLocalInertia(mass, inertia);
@@ -166,8 +186,14 @@ void Physics::loadCylinder3()
   cylinder3->shapeMotionState = NULL;
   cylinder3->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-0.5f, 1.0f, 114.5f)
+		btVector3(-1.0f, 1.0f, 114.5f)
 		));
+
+	cylinder3->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-1.0f, 1.0f, 114.5f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder3->collisionShape->calculateLocalInertia(mass, inertia);
@@ -184,8 +210,14 @@ void Physics::loadCylinder4()
   cylinder4->shapeMotionState = NULL;
   cylinder4->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.0f, 1.0f, 116.0f)
+		btVector3(2.25f, 1.0f, 116.0f)
 		));
+
+	cylinder4->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(2.25f, 1.0f, 116.0f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder4->collisionShape->calculateLocalInertia(mass, inertia);
@@ -206,6 +238,12 @@ void Physics::loadCylinder5()
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(0.0f, 1.0f, 116.0f)
 		));
+
+	cylinder5->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(0.0f, 1.0f, 116.0f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder5->collisionShape->calculateLocalInertia(mass, inertia);
@@ -223,8 +261,14 @@ void Physics::loadCylinder6()
   cylinder6->shapeMotionState = NULL;
   cylinder6->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.0f, 1.0f, 116.0f)
+		btVector3(-2.25f, 1.0f, 116.0f)
 		));
+
+	cylinder6->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-2.25f, 1.0f, 116.0f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder6->collisionShape->calculateLocalInertia(mass, inertia);
@@ -242,8 +286,14 @@ void Physics::loadCylinder7()
   cylinder7->shapeMotionState = NULL;
   cylinder7->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.5f, 1.0f, 117.5f)
+		btVector3(3.0f, 1.0f, 117.5f)
 		));
+
+	cylinder7->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(3.0f, 1.0f, 117.5f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder7->collisionShape->calculateLocalInertia(mass, inertia);
@@ -261,8 +311,14 @@ void Physics::loadCylinder8()
   cylinder8->shapeMotionState = NULL;
   cylinder8->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(0.5f, 1.0f, 117.5f)
+		btVector3(1.0f, 1.0f, 117.5f)
 		));
+
+	cylinder8->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(1.0f, 1.0f, 117.5f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder8->collisionShape->calculateLocalInertia(mass, inertia);
@@ -280,8 +336,14 @@ void Physics::loadCylinder9()
   cylinder9->shapeMotionState = NULL;
   cylinder9->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-0.5f, 1.0f, 117.5f)
+		btVector3(-1.0f, 1.0f, 117.5f)
 		));
+
+	cylinder9->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-1.0f, 1.0f, 117.5f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder9->collisionShape->calculateLocalInertia(mass, inertia);
@@ -299,8 +361,14 @@ void Physics::loadCylinder10()
   cylinder10->shapeMotionState = NULL;
   cylinder10->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.5f, 1.0f, 117.5f)
+		btVector3(-3.0f, 1.0f, 117.5f)
 		));
+
+	cylinder10->intial_postion = btTransform(
+		btQuaternion(0.0f, 0.0f, 0.0f, 1),
+		btVector3(-3.0f, 1.0f, 117.5f)
+		);
+
   btScalar mass(4);
   btVector3 inertia(1,1,1);
   cylinder10->collisionShape->calculateLocalInertia(mass, inertia);

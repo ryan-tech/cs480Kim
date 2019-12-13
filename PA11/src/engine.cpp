@@ -53,7 +53,7 @@ bool Engine::Initialize()
 
 void Engine::Run()
 {
-	cout << "engine run \n";
+	//cout << "engine run \n";
 
   m_running = true;
 
@@ -70,9 +70,9 @@ void Engine::Run()
 
     // Update and render the graphics
     m_graphics->Update(m_DT, keyboardButton);   //added m_keypress to parameters
-		cout << "graphics updated \n";
+		//cout << "graphics updated \n";
     m_graphics->Render();
-		cout << "graphics rendered \n";
+		//cout << "graphics rendered \n";
 
     // Swap to the Window
     m_window->Swap();
