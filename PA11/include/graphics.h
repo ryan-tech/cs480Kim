@@ -85,7 +85,7 @@ class Graphics
     float sl_cutoff;
 */
 
-		bool reset_initial_postion;
+		bool reset_initial_position;
 
     string fragmentShader, vertexShader;
 

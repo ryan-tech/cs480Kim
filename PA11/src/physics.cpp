@@ -113,7 +113,7 @@ void Physics::loadSphere()
     btVector3(0.0f, 2.0f, 0.0f)
     ));
 
-	sphere->intial_postion = btTransform(
+	sphere->initial_position = btTransform(
     btQuaternion(0.0f, 0.0f, 0.0f, 1),
     btVector3(0.0f, 2.0f, 0.0f)
     );
@@ -142,7 +142,7 @@ void Physics::loadCylinder1()
 		));
 
 
-	cylinder1->intial_postion = btTransform(
+	cylinder1->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(0.00354227f, -0.0635913f, 112.992f)
 		);
@@ -167,7 +167,7 @@ void Physics::loadCylinder2()
 		));
 
 
-	cylinder2->intial_postion = btTransform(
+	cylinder2->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(1.09498f, -0.0635751f, 114.424f)
 		);
@@ -192,7 +192,7 @@ void Physics::loadCylinder3()
 		));
 
 
-	cylinder3->intial_postion = btTransform(
+	cylinder3->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(-1.05537f, -0.063575f, 114.504f)
 		);
@@ -217,7 +217,7 @@ void Physics::loadCylinder4()
 		));
 
 
-	cylinder4->intial_postion = btTransform(
+	cylinder4->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(1.95825f, -0.0635753f, 116.072f)
   	);
@@ -243,7 +243,7 @@ void Physics::loadCylinder5()
 		btVector3(-0.0101327f, -0.0635751f, 115.942f)
 		));
 
-	cylinder5->intial_postion = btTransform(
+	cylinder5->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
     btVector3(-0.0101327f, -0.0635751f, 115.942f)
 		);
@@ -269,7 +269,7 @@ void Physics::loadCylinder6()
 		));
 
 
-	cylinder6->intial_postion = btTransform(
+	cylinder6->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(-2.32198f, -0.0635752f, 115.957f)
 		);
@@ -295,7 +295,7 @@ void Physics::loadCylinder7()
 		));
 
 
-	cylinder7->intial_postion = btTransform(
+	cylinder7->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(3.0601f, -0.0635755f, 117.509f)
 		);
@@ -321,7 +321,7 @@ void Physics::loadCylinder8()
 		));
 
 
-	cylinder8->intial_postion = btTransform(
+	cylinder8->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(.996307f, -0.0635752f, 117.42f)
 		);
@@ -347,7 +347,7 @@ void Physics::loadCylinder9()
 		));
 
 
-	cylinder9->intial_postion = btTransform(
+	cylinder9->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(-1.2551f, -0.0635754f, 117.592f)
 		);
@@ -373,7 +373,7 @@ void Physics::loadCylinder10()
 		));
 
 
-	cylinder10->intial_postion = btTransform(
+	cylinder10->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
 		btVector3(-3.0135f, -0.0635751f, 117.573f)
 		);
