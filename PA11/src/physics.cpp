@@ -163,13 +163,13 @@ void Physics::loadCylinder2()
   cylinder2->shapeMotionState = NULL;
   cylinder2->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.09498f, -0.0635751f, 114.424f)
+		btVector3(1.0f, -0.0635751f, 114.424f)
 		));
 
 
 	cylinder2->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(1.09498f, -0.0635751f, 114.424f)
+		btVector3(1.0f, -0.0635751f, 114.424f)
 		);
 
   btScalar mass(4);
@@ -188,13 +188,13 @@ void Physics::loadCylinder3()
   cylinder3->shapeMotionState = NULL;
   cylinder3->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.05537f, -0.063575f, 114.504f)
+		btVector3(-1.0f, -0.063575f, 114.504f)
 		));
 
 
 	cylinder3->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.05537f, -0.063575f, 114.504f)
+		btVector3(-1.0f, -0.063575f, 114.504f)
 		);
 
   btScalar mass(4);
@@ -240,12 +240,12 @@ void Physics::loadCylinder5()
   cylinder5->shapeMotionState = NULL;
   cylinder5->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-0.0101327f, -0.0635751f, 115.942f)
+		btVector3(0.00354227f, -0.0635751f, 115.942f)
 		));
 
 	cylinder5->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-    btVector3(-0.0101327f, -0.0635751f, 115.942f)
+    btVector3(0.00354227f, -0.0635751f, 115.942f)
 		);
 
   btScalar mass(4);
@@ -265,13 +265,13 @@ void Physics::loadCylinder6()
   cylinder6->shapeMotionState = NULL;
   cylinder6->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-2.32198f, -0.0635752f, 115.957f)
+		btVector3(-2.15f, -0.0635752f, 115.957f)
 		));
 
 
 	cylinder6->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-2.32198f, -0.0635752f, 115.957f)
+		btVector3(-2.15f, -0.0635752f, 115.957f)
 		);
 
   btScalar mass(4);
@@ -317,13 +317,13 @@ void Physics::loadCylinder8()
   cylinder8->shapeMotionState = NULL;
   cylinder8->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(.996307f, -0.0635752f, 117.42f)
+		btVector3(1.0f, -0.0635752f, 117.42f)
 		));
 
 
 	cylinder8->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(.996307f, -0.0635752f, 117.42f)
+		btVector3(1.0f, -0.0635752f, 117.42f)
 		);
 
   btScalar mass(4);
@@ -343,13 +343,13 @@ void Physics::loadCylinder9()
   cylinder9->shapeMotionState = NULL;
   cylinder9->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.2551f, -0.0635754f, 117.592f)
+		btVector3(-1.0f, -0.0635754f, 117.592f)
 		));
 
 
 	cylinder9->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-1.2551f, -0.0635754f, 117.592f)
+		btVector3(-1.0f, -0.0635754f, 117.592f)
 		);
 
   btScalar mass(4);
@@ -369,13 +369,13 @@ void Physics::loadCylinder10()
   cylinder10->shapeMotionState = NULL;
   cylinder10->shapeMotionState = new btDefaultMotionState(btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-3.0135f, -0.0635751f, 117.573f)
+		btVector3(-2.9f, -0.0635751f, 117.573f)
 		));
 
 
 	cylinder10->initial_position = btTransform(
 		btQuaternion(0.0f, 0.0f, 0.0f, 1),
-		btVector3(-3.0135f, -0.0635751f, 117.573f)
+		btVector3(-2.9f, -0.0635751f, 117.573f)
 		);
 
   btScalar mass(4);

@@ -27,6 +27,10 @@ class Graphics
     void Render();
 		void Display();
 		void resetPins();
+    void resetBall();
+    void debug(int keyboardButton);
+    void Controls(int keyboardButton);
+    bool LoadShaders();
 
   private:
     std::string ErrorString(GLenum error);
@@ -34,56 +38,44 @@ class Graphics
     Physics* m_world;
     Camera *m_camera;
     Shader *m_shader;
+    int width, height;
 
+    // Uniform Values
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
     GLint m_modelMatrix;
-
-    //per fragment shader variables
-
+    // Lighting Variables
     GLint m_ambientProd;
     GLint m_diffuseProd;
     GLint m_specularProd;
     GLint m_lightPos;
     GLint m_shininess;
+    //Spotlight values
+    GLint m_sl_position;
+    GLint m_sl_direction;
+    GLint m_sl_cutoff;
 
-    bool flag = true; //flag = true : per vertex lighting
-                      //flag = false: per fragment lighting
-
-    bool plungerReleased = false;
-    bool died = false;
-    int width, height;
-    int num_balls = 4;
-    int num_plunger = 0;
-    //int score = 0;
-    //values to be used for lighting variables
     float ambientVal;
     float diffuseVal;
     float specularVal;
     float shininess;
+    float sl_cutoff;
+
+
+    // Lighting shader switch flag
+    bool flag = true; //flag = true : per vertex lighting
+                      //flag = false: per fragment lighting
+
 
 		int score[10];
 		char result[10];
 		int frame;
 		int roll;
 		int pins_remaining;
-
 		int updates_passed;
 
-    //spotlight values
-
-    GLint m_sl_position;
-    GLint m_sl_direction;
-    GLint m_sl_cutoff;
-
-    float sl_cutoff;
-    /*
-    float sl_ambientVal;
-    float sl_diffuseVal;
-    float sl_specularVal;
-    float sl_shininess;
-    float sl_cutoff;
-*/
+    glm::vec3 pos;
+    glm::vec3 ipos;
 
 		bool reset_initial_position;
 
