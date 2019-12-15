@@ -12,11 +12,11 @@ class Camera
     glm::mat4 GetProjection();
     glm::mat4 GetView();
 	void Update(unsigned int dt, int keyPress);
+	glm::vec3 cameraPos;
 
   private:
     glm::mat4 projection;
     glm::mat4 view;
-    glm::vec3 cameraPos;
     glm::vec3 cameraFront;
     glm::vec3 cameraUp;
 };
