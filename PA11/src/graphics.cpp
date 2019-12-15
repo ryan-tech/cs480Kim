@@ -234,11 +234,10 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   y = trans.getOrigin().getY();
   z = trans.getOrigin().getZ();
 
-	if(z < 100)
+	if (z < 100)
 	{
 		m_camera->cameraPos   = glm::vec3(0.0f, 19.0f, -21.0f + z);
 	}
-
 
   //cout << "got sphere physics \n";
   if((y < -5) && (frame < 10))
