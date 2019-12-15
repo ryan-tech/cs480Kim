@@ -258,7 +258,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
       {
         m_world->pin[i]->rigidBody->setWorldTransform(btTransform(
           btQuaternion(0.0f, 0.0f, 0.0f, 1),
-          btVector3(20.0f, 2.0f, 100.0f)
+          btVector3(200.0f, 0.0f, 100.0f)
           ));
         pins_remaining-- ;
       }
