@@ -12,22 +12,7 @@ Graphics::Graphics(nlohmann::json json_obj)
   vertexShader =  m_config["Shader"]["PerVertexVertex"];
   width = m_config["Window"]["Width"];
   height = m_config["Window"]["Height"];
-  ambientVal = 1.0f;
-  diffuseVal = 0.64f;
-  specularVal = 0.5f;
-  shininess = 96.078431f;
-  sl_cutoff = 100.0f;
 
-	for(int i=0; i<10; i++)
-	{
-		score[i] = 0;
-		result[i] = 'n';
-	}
-	frame = 0;
-	roll = 1;
-	pins_remaining = 10;
-	reset_initial_position = false;
-	updates_passed = 0;
 
 }
 
@@ -84,6 +69,25 @@ bool Graphics::Initialize()
   }
 
 	cout << "graphics initialized \n";
+
+  ambientVal = 1.0f;
+  diffuseVal = 0.64f;
+  specularVal = 0.5f;
+  shininess = 96.078431f;
+  sl_cutoff = 100.0f;
+
+	for(int i=0; i<10; i++)
+	{
+		score[i] = 0;
+		result[i] = 'n';
+	}
+	frame = 0;
+	roll = 1;
+	pins_remaining = 10;
+	reset_initial_position = false;
+	updates_passed = 0;
+
+
 
   return true;
 }
@@ -264,7 +268,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
       {
         m_world->pin[i]->rigidBody->setWorldTransform(btTransform(
           btQuaternion(0.0f, 0.0f, 0.0f, 1),
-          btVector3(20.0f, 2.0f, 100.0f)
+          btVector3(200.0f, 0.0f, 100.0f)
           ));
         pins_remaining-- ;
       }
