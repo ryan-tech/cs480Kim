@@ -31,6 +31,7 @@ class Graphics
     void debug(int keyboardButton);
     void Controls(int keyboardButton);
     bool LoadShaders();
+		void ShowForce();
 
   private:
     std::string ErrorString(GLenum error);
@@ -66,6 +67,10 @@ class Graphics
     bool flag = true; //flag = true : per vertex lighting
                       //flag = false: per fragment lighting
 
+		Object* arrow;
+		int force;
+		bool can_throw;
+		int can_change_force;
 
 		int score[10];
 		char result[10];

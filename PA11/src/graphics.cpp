@@ -87,7 +87,11 @@ bool Graphics::Initialize()
 	reset_initial_position = false;
 	updates_passed = 0;
 
+	force = 60;
+	can_throw = true;
+	can_change_force = 3;
 
+	ShowForce();
 
   return true;
 }
@@ -131,11 +135,23 @@ void Graphics::resetPins()
 	roll = 1;
 }
 
+void Graphics::ShowForce()
+{
+	cout << "force:" ;
+	for(int i = 1; i < (force/5); i++)
+	{
+		cout << "#";
+	}
+	cout << "\n";
+}
+
 void Graphics::resetBall()
 {
   m_world->sphere->rigidBody->setWorldTransform(m_world->sphere->initial_position);
   m_world->sphere->rigidBody->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
   m_world->sphere->rigidBody->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+	force = 60;
+	ShowForce();
 }
 
 // debug controls
@@ -144,7 +160,7 @@ void Graphics::debug(int keyboardButton)
   if(keyboardButton == SDLK_1) resetPins();
   if(keyboardButton == SDLK_2) resetBall();
   //if(keyboardButton == SDLK_UP) m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,60), btVector3(0,0,0));
-  if(keyboardButton == SDLK_DOWN) m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,-5), btVector3(0,0,0));
+  //if(keyboardButton == SDLK_DOWN) m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,-5), btVector3(0,0,0));
   if(keyboardButton == SDLK_LEFT) m_world->sphere->rigidBody->applyImpulse(btVector3(5,0,0), btVector3(0,0,0));
   if(keyboardButton == SDLK_RIGHT) m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,0), btVector3(0,0,0));
 }
@@ -180,7 +196,24 @@ void Graphics::Controls(int keyboardButton)
     LoadShaders();
     SDL_Delay(300);
   }
-  if(keyboardButton == SDLK_UP) m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,60), btVector3(0,0,0));
+  if((keyboardButton == SDLK_UP) && (can_change_force >= 3))
+	{
+		force += 5;
+		ShowForce();
+		can_change_force = 0;
+	}
+	if((keyboardButton == SDLK_UP) && (can_throw == false))
+	{
+		m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,60), btVector3(0,0,0));
+	}
+
+	if((keyboardButton == SDLK_DOWN) && (can_change_force >= 3))
+	{
+		force -= 5;
+		ShowForce();
+		can_change_force = 0;
+	}	
+	if((keyboardButton == SDLK_SPACE) && (can_throw == true))	m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,force), btVector3(0,0,0));
   if(keyboardButton == SDLK_SLASH) Initialize();
   if(keyboardButton == SDLK_y) ambientVal += 0.05f;
   if(keyboardButton == SDLK_h) ambientVal -= 0.05f;
@@ -202,10 +235,11 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
   // Game Logic:
   // 10 frames.
-  float x, y, z;
+  float x, y, z, qx, qy, qz;
   btTransform trans;
   // Tracking the ball:
   pins_remaining = 10;
+	can_change_force++;
 
   if(updates_passed <=50 )
   {
@@ -239,10 +273,28 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 		m_camera->cameraPos   = glm::vec3(0.0f, 19.0f, -21.0f + z);
 	}
 
+	if(z < 1)
+	{
+		can_throw = true;
+	}
+	else
+	{
+		can_throw = false;
+	}
+
+	if(y < -5)
+	{
+		m_world->sphere->rigidBody->setWorldTransform(btTransform(
+			btQuaternion(0.0f, 0.0f, 0.0f, 1),
+			btVector3(0.0f, -5, z - .5f)
+			));
+	}
+
   //cout << "got sphere physics \n";
-  if((y < -5) && (frame < 10))
+  if((z < 0) && (frame < 10))
   {
     resetBall();
+		btQuaternion rotation;
     for(int i = 1; i <= 10; i++)
     {
       m_world->pin[i]->rigidBody->getMotionState()->getWorldTransform(trans);
@@ -262,8 +314,12 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
       glm::vec3 temp = pos - ipos;
       float distSqr = dot(temp, temp);
 
+			rotation = trans.getRotation();
+			qx = trans.getRotation().getX();
+      qy = trans.getRotation().getY();
+      qz = trans.getRotation().getZ();
 
-      if (distSqr > 0.01f)
+      if ((distSqr > 0.25f) || (qx > 10) || (qz > 10))
       {
         m_world->pin[i]->rigidBody->setWorldTransform(btTransform(
           btQuaternion(0.0f, 0.0f, 0.0f, 1),

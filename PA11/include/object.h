@@ -34,6 +34,14 @@ class Object
 		btTransform initial_position;
 		btTransform check_position;
 
+		btCollisionShape* pBase;
+		btCollisionShape* pBodyBase;
+		btCollisionShape* pBody;
+		btCollisionShape* pNeck;
+		btCollisionShape* pHead;
+		btTransform trans;
+		btCompoundShape* pCompound;
+
   //protected:
 		vector<glm::vec3> vertexes;
 

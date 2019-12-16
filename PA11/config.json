@@ -21,5 +21,8 @@
   },
   "Cylinder":{
     "Path": "../blender_object/SPin.obj"
+  },
+	"Arrow":{
+    "Path": "../blender_object/Arrow.obj"
   }
 }
