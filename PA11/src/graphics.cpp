@@ -507,7 +507,7 @@ void Graphics::Render()
   y = trans.getOrigin().getY();
   z = trans.getOrigin().getZ();
 
-  glUniform4f(m_lightPos, 0, 10, 0, 1.0f);
+  glUniform4f(m_lightPos, x, y+1, z, 1.0f);
 
   //glUniform4fv(m_lightPos, 1, glm::value_ptr(m_world->sphere->GetModel()));
   glUniform4f(m_ambientProd, ambientVal, ambientVal, ambientVal, 1.0f);
@@ -515,9 +515,9 @@ void Graphics::Render()
   glUniform4f(m_specularProd, specularVal, specularVal, specularVal, 1.0f);
   glUniform1f(m_shininess, shininess);
 
-  glUniform3f(m_sl_direction, 0.0f, -1.0f, 0.0f);
+  glUniform3f(m_sl_direction, x, y, z);
   glUniform1f(m_sl_cutoff, glm::cos(glm::radians(sl_cutoff)));
-
+  cout << sl_cutoff << endl;
 
   //board
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));

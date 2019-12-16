@@ -15,7 +15,7 @@
 
 
   smooth out vec2 texture;
-  //out vec3 lightdir;
+  out vec3 lightdir;
 
 
   uniform mat4 Model, View, Projection;
@@ -32,7 +32,7 @@
   	    fL = LightPosition.xyz - vPosition.xyz;
       }
 
-      //lightdir = normalize( LightPosition.xyz - vec3(Model * vec4(v_position, 1.0f)));
+      lightdir = normalize( LightPosition.xyz - vec3(Model * vec4(v_position, 1.0f)));
 
 
       gl_Position = Projection * View * Model * vPosition;

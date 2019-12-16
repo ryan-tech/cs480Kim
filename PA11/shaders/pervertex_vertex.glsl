@@ -44,13 +44,28 @@
       gl_Position = Projection*View*Model*vPosition;
 
 
-      //vec3 lightdir = normalize( LightPosition.xyz - vec3(Model * vec4(v_position, 1.0f)));
+
+      //SPOTLIGHT
+      vec3 lightdir = normalize( LightPosition.xyz - vec3(Model * vec4(v_position, 1.0f)));
+
+      float theta = dot(lightdir, normalize(-slDirection));
+
+      if(theta < slCutoff)
+      {
+        color = ambient + diffuse + specular;
+      }
+      else
+      {
+        color = ambient;
+      }
+
+
 
       //float theta = dot(lightdir, normalize(-slDirection));
 
       //if(theta > slCutoff)
       //{
-      color = ambient + diffuse + specular;
+      //color = ambient + diffuse + specular;
       //}
       //else  // else, use ambient light so scene isn't completely dark outside the spotlight.
       //  color = ambient;
