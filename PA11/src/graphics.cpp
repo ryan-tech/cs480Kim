@@ -360,7 +360,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 	}
 
   //cout << "got sphere physics \n";
-  if(y < -5 && frame < 10)
+  if(y < -5 && frame < 11)
   {
 
     resetBall();
@@ -474,7 +474,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
     Display();
   }
-  else if(y < -5 && frame == 10)
+  else if(y < -5 && frame == 11)
   {
     cout << "Game over! Press '/' to restart." << endl;
     resetPins();
