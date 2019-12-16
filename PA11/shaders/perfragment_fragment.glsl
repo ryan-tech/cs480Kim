@@ -54,7 +54,7 @@
       }
       else  // else, use ambient light so scene isn't completely dark outside the spotlight.
       {
-        gl_FragColor = texture2D(gSampler, texture.xy) * (ambient);
+        gl_FragColor = texture2D(gSampler, texture.xy) * (ambient + diffuse + specular);
         gl_FragColor.a = 1.0;
       }
   }

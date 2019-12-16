@@ -46,7 +46,7 @@
 
 
       //SPOTLIGHT
-      vec3 lightdir = normalize( LightPosition.xyz - vec3(Model * vec4(v_position, 1.0f)));
+      vec3 lightdir = normalize( LightPosition.xyz - vPosition.xyz);
 
       float theta = dot(lightdir, normalize(-slDirection));
 
@@ -56,7 +56,7 @@
       }
       else
       {
-        color = ambient;
+        color = ambient + diffuse + specular;
       }
 
 
