@@ -159,10 +159,7 @@ void Graphics::debug(int keyboardButton)
 {
   if(keyboardButton == SDLK_1) resetPins();
   if(keyboardButton == SDLK_2) resetBall();
-  //if(keyboardButton == SDLK_UP) m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,60), btVector3(0,0,0));
-  //if(keyboardButton == SDLK_DOWN) m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,-5), btVector3(0,0,0));
-  if(keyboardButton == SDLK_LEFT) m_world->sphere->rigidBody->applyImpulse(btVector3(5,0,0), btVector3(0,0,0));
-  if(keyboardButton == SDLK_RIGHT) m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,0), btVector3(0,0,0));
+  
 }
 
 // ingame controls
@@ -289,7 +286,23 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 			btVector3(0.0f, -5, z - .5f)
 			));
 	}
-
+	if (z < 1)
+	{
+		if(keyboardButton == SDLK_LEFT) m_world->sphere->rigidBody->applyImpulse(btVector3(5,0,0), btVector3(0,0,0));
+  	if(keyboardButton == SDLK_RIGHT) m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,0), btVector3(0,0,0));	
+	}
+	else
+	{
+		if(keyboardButton == SDLK_LEFT) m_world->sphere->rigidBody->setWorldTransform(btTransform(
+          btQuaternion(0.0f, 0.0f, 0.0f, 1),
+          btVector3(x - .1f, y, z)
+          ));
+  	if(keyboardButton == SDLK_RIGHT) m_world->sphere->rigidBody->setWorldTransform(btTransform(
+          btQuaternion(0.0f, 0.0f, 0.0f, 1),
+          btVector3(x + .1f, y, z)
+          ));
+	}
+	
   //cout << "got sphere physics \n";
   if((z < 0) && (frame < 10))
   {
