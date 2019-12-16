@@ -38,10 +38,11 @@ Spotlight size: N makes spotlight bigger, M makes spotlight smaller.
 
 f switches between per vertex and per fragment (per vertex is the default)
 
-up - shoots ball forward
-
-
-
+Space - shoots ball forward
+Up - Increase power
+Down - Decrease power
+Left - shift left
+Right - shift right
 
 Code Documentation:
 Required Libraries: sudo apt-get install g++ freeglut3-dev glew1.5-dev libmagick++-dev libassimp-dev libglfw3-dev libbullet-dev
