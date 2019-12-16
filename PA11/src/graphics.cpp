@@ -2,6 +2,7 @@
 #include <math.h>
 #include <cmath>
 
+
 Graphics::Graphics(nlohmann::json json_obj)
 {
   m_config = json_obj;
@@ -79,9 +80,10 @@ bool Graphics::Initialize()
 	for(int i=0; i<10; i++)
 	{
 		score[i] = 0;
-		result[i] = 'n';
+		result[i].firstRoll = 0;
+    result[i].secondRoll = 0;
 	}
-	frame = 0;
+	frame = 1;
 	roll = 1;
 	pins_remaining = 10;
 	reset_initial_position = false;
@@ -89,7 +91,6 @@ bool Graphics::Initialize()
 
 	force = 60;
 	can_throw = true;
-	can_change_force = 3;
 
 	ShowForce();
 
@@ -98,10 +99,29 @@ bool Graphics::Initialize()
 
 void Graphics::Display()
 {
-	cout << "+---+---+---+---+---+---+---+---+---+---+\n";
-	cout << "| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|\n";
-	cout << "+---+---+---+---+---+---+---+---+---+---+\n";
-	cout << "|";
+	cout << "       \t+---+---+---+---+---+---+---+---+---+---+\n";
+	cout << "Frame: \t| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|\n";
+	cout << "       \t+---+---+---+---+---+---+---+---+---+---+\n";
+  cout << "Result:\t|";
+
+  for(int i=0; i<10; i++)
+  {
+    if(result[i].firstRoll + result[i].secondRoll < 10)
+    {
+      cout << " " << result[i].firstRoll + result[i].secondRoll << " |";
+    }
+    else if (result[i].firstRoll + result[i].secondRoll < 100)
+    {
+      cout << " " << result[i].firstRoll + result[i].secondRoll << "|";
+    }
+    else
+    {
+      cout << result[i].firstRoll + result[i].secondRoll << "|";
+    }
+  }
+  cout << "\n";
+  cout << "       \t+---+---+---+---+---+---+---+---+---+---+\n";
+	cout << "Score: \t|";
 
 	for(int i=0; i<10; i++)
 	{
@@ -119,7 +139,7 @@ void Graphics::Display()
 		}
 	}
 	cout << "\n";
-	cout << "+---+---+---+---+---+---+---+---+---+---+\n\n";
+	cout << "       \t+---+---+---+---+---+---+---+---+---+---+\n\n";
 }
 
 void Graphics::resetPins()
@@ -151,7 +171,8 @@ void Graphics::resetBall()
   m_world->sphere->rigidBody->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
   m_world->sphere->rigidBody->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
 	force = 60;
-	ShowForce();
+
+	//ShowForce();
 }
 
 // debug controls
@@ -159,7 +180,7 @@ void Graphics::debug(int keyboardButton)
 {
   if(keyboardButton == SDLK_1) resetPins();
   if(keyboardButton == SDLK_2) resetBall();
-  
+
 }
 
 // ingame controls
@@ -193,23 +214,52 @@ void Graphics::Controls(int keyboardButton)
     LoadShaders();
     SDL_Delay(300);
   }
-  if((keyboardButton == SDLK_UP) && (can_change_force >= 3))
+  if((keyboardButton == SDLK_UP) && can_throw)
 	{
-		force += 5;
-		ShowForce();
-		can_change_force = 0;
+    if(force <= 100)
+    {
+      force += 5;
+  		ShowForce();
+    }
 	}
-	if((keyboardButton == SDLK_UP) && (can_throw == false))
+	//if((keyboardButton == SDLK_UP) && (can_throw == false))
+	//{
+	//	m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,60), btVector3(0,0,0));
+	//}
+
+	if((keyboardButton == SDLK_DOWN) && can_throw)
 	{
-		m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,60), btVector3(0,0,0));
+    if(force >= 20)
+    {
+      force -= 5;
+  		ShowForce();
+    }
 	}
 
-	if((keyboardButton == SDLK_DOWN) && (can_change_force >= 3))
-	{
-		force -= 5;
-		ShowForce();
-		can_change_force = 0;
-	}	
+  if(keyboardButton == SDLK_LEFT && can_throw)
+  {
+    if(dx < 5)
+    {
+      dx += 0.25;
+      m_world->sphere->rigidBody->setWorldTransform(btTransform(
+  			btQuaternion(0.0f, 0.0f, 0.0f, 1),
+  			btVector3(dx, 1.0f, 0.0f)
+  			));
+    }
+  }
+  if(keyboardButton == SDLK_RIGHT && can_throw)
+  {
+    if(dx > -4)
+    {
+      dx -= 0.25f;
+      m_world->sphere->rigidBody->setWorldTransform(btTransform(
+  			btQuaternion(0.0f, 0.0f, 0.0f, 1),
+  			btVector3(dx, 1.0f, 0.0f)
+  			));
+    }
+  }
+
+
 	if((keyboardButton == SDLK_SPACE) && (can_throw == true))	m_world->sphere->rigidBody->applyImpulse(btVector3(0,0,force), btVector3(0,0,0));
   if(keyboardButton == SDLK_SLASH) Initialize();
   if(keyboardButton == SDLK_y) ambientVal += 0.05f;
@@ -224,6 +274,31 @@ void Graphics::Controls(int keyboardButton)
   if(keyboardButton == SDLK_m) sl_cutoff -= 1.0f;
 }
 
+void Graphics::CalculateStrike()
+{
+  //doing calculations for strikes
+  if(result[frame-3].firstRoll == 10)
+  {
+    cout << "Last frame was a strike" << endl;
+    if(result[frame-2].firstRoll != 10) //next shot is not a strike
+    {
+      score[frame-3] += (result[frame-3].firstRoll + result[frame-2].firstRoll + result[frame-2].secondRoll);
+    }
+    else if(result[frame-2].firstRoll == 10) //next shot is a strike
+    {
+      score[frame-3] += (result[frame-3].firstRoll + result[frame-2].firstRoll + result[frame-1].firstRoll);
+    }
+  }
+}
+
+void Graphics::CalculateSpare()
+{
+  if(result[frame-2].secondRoll + result[frame-2].firstRoll == 10)
+  {
+    score[frame-2] += (result[frame-2].firstRoll+result[frame-2].secondRoll+result[frame-1].firstRoll);
+  }
+}
+
 void Graphics::Update(unsigned int dt, int keyboardButton)
 {
   // debug controls
@@ -236,7 +311,6 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
   btTransform trans;
   // Tracking the ball:
   pins_remaining = 10;
-	can_change_force++;
 
   if(updates_passed <=50 )
   {
@@ -267,45 +341,28 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
 
 	if (z < 100)
 	{
-		m_camera->cameraPos   = glm::vec3(0.0f, 19.0f, -21.0f + z);
+		m_camera->cameraPos = glm::vec3(0.0f, 19.0f, -21.0f + z);
 	}
 
 	if(z < 1)
 	{
 		can_throw = true;
+    for(int i = 1; i <= 10; i++)
+    {
+      m_world->pin[i]->rigidBody->setActivationState( DISABLE_DEACTIVATION );
+      m_world->pin[i]->rigidBody->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+      m_world->pin[i]->rigidBody->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+    }
 	}
 	else
 	{
 		can_throw = false;
 	}
 
-	if(y < -5)
-	{
-		m_world->sphere->rigidBody->setWorldTransform(btTransform(
-			btQuaternion(0.0f, 0.0f, 0.0f, 1),
-			btVector3(0.0f, -5, z - .5f)
-			));
-	}
-	if (z < 1)
-	{
-		if(keyboardButton == SDLK_LEFT) m_world->sphere->rigidBody->applyImpulse(btVector3(5,0,0), btVector3(0,0,0));
-  	if(keyboardButton == SDLK_RIGHT) m_world->sphere->rigidBody->applyImpulse(btVector3(-5,0,0), btVector3(0,0,0));	
-	}
-	else
-	{
-		if(keyboardButton == SDLK_LEFT) m_world->sphere->rigidBody->setWorldTransform(btTransform(
-          btQuaternion(0.0f, 0.0f, 0.0f, 1),
-          btVector3(x - .1f, y, z)
-          ));
-  	if(keyboardButton == SDLK_RIGHT) m_world->sphere->rigidBody->setWorldTransform(btTransform(
-          btQuaternion(0.0f, 0.0f, 0.0f, 1),
-          btVector3(x + .1f, y, z)
-          ));
-	}
-	
   //cout << "got sphere physics \n";
-  if((z < 0) && (frame < 10))
+  if(y < -5 && frame < 10)
   {
+
     resetBall();
 		btQuaternion rotation;
     for(int i = 1; i <= 10; i++)
@@ -332,7 +389,7 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
       qy = trans.getRotation().getY();
       qz = trans.getRotation().getZ();
 
-      if ((distSqr > 0.25f) || (qx > 10) || (qz > 10))
+      if ((distSqr > 0.1f) || (qx > 10) || (qz > 10))
       {
         m_world->pin[i]->rigidBody->setWorldTransform(btTransform(
           btQuaternion(0.0f, 0.0f, 0.0f, 1),
@@ -345,61 +402,85 @@ void Graphics::Update(unsigned int dt, int keyboardButton)
     cout << "frame: " << frame << "\nroll: " << roll << "\n";
     if(roll == 1)
     {
-      cout << "pins remaining: " << pins_remaining << "\n";
-    }
 
-    if(pins_remaining == 0)
-    {
-      if(roll == 1)
+      if(pins_remaining > 0)
       {
-        result[frame] = 'X';
+        result[frame-1].firstRoll = 10 - pins_remaining;
+        roll++;
+        cout << "First roll: " << result[frame-1].firstRoll << "\n";
+        cout << "pins remaining: " << pins_remaining << "\n";
       }
-      if(roll == 2)
+      else
       {
-        result[frame] = '/';
-      }
-      resetPins();
-      frame++;
-    }
-    else
-    {
-      if(frame > 0)
-      {
-        if(result[frame-1] == '/')
+        result[frame-1].firstRoll = 10;
+        cout << "First roll: " << result[frame-1].firstRoll << "\n";
+        cout << "pins remaining: " << pins_remaining << "\n";
+        cout << "Strike!" << endl;
+        resetPins();
+        if(frame != 1)
         {
-          if(roll == 1)
-          {
-            score[frame-1] = 10 + (10 - pins_remaining);
-          }
+          score[frame-1] += score[frame-2];
         }
+        frame++;
       }
-      for(int i = frame-1; i >= 0; i--)
+      if(frame > 1)
       {
-        if(result[i] == 'X')
-        {
-          if(roll == 2)
-          {
-            score[i] = 10 + (10 - pins_remaining);
-            result[i] = 'n';
-          }
-        }
+        CalculateSpare();
       }
-      score[frame] = 10 - pins_remaining;
-      if(frame != 0)
-      {
-        score[frame] += score[frame-1];
-      }
-    }
 
-    roll++;
+    }
+    else if(roll == 2)
+    {
+      if(pins_remaining > 0)
+      {
+        result[frame-1].secondRoll = 10 - result[frame-1].firstRoll - pins_remaining;
+        score[frame-1] = result[frame-1].firstRoll + result[frame-1].secondRoll;
+        roll++;
+        cout << "Second Roll: " << result[frame-1].secondRoll << "\n";
+        cout << "pins remaining: " << pins_remaining << "\n";
+      }
+      else
+      {
+        result[frame-1].secondRoll = 10 - result[frame-1].firstRoll;
+        cout << "Second Roll: " << result[frame-1].secondRoll << "\n";
+        cout << "pins remaining: " << pins_remaining << "\n";
+        cout << "Spare!" << endl;
+        resetPins();
+        if(frame != 1)
+        {
+          score[frame-1] += score[frame-2];
+        }
+        frame++;
+      }
+      if(frame > 2)
+      {
+        CalculateStrike();
+      }
+
+
+    }
     if(roll > 2)
     {
-      resetPins();
+      //cout << "This shouldn't show up if you get a spare" << endl;
+      if(frame != 1)
+      {
+        score[frame-1] += score[frame-2];
+      }
       frame++;
+      resetPins();
+      resetBall();
     }
+
 
     Display();
   }
+  else if(y < -5 && frame == 10)
+  {
+    cout << "Game over! Press '/' to restart." << endl;
+    resetPins();
+    resetBall();
+  }
+
 
   // Update the object
   m_world->Update(dt, keyboardButton);

@@ -12,9 +12,11 @@ using namespace std;
 #include "object.h"
 #include "physics.h"
 
-
-
-
+struct Roll
+{
+  int firstRoll;
+  int secondRoll;
+};
 
 class Graphics
 {
@@ -32,6 +34,8 @@ class Graphics
     void Controls(int keyboardButton);
     bool LoadShaders();
 		void ShowForce();
+    void CalculateStrike();
+    void CalculateSpare();
 
   private:
     std::string ErrorString(GLenum error);
@@ -71,21 +75,21 @@ class Graphics
 		int force;
 		bool can_throw;
 		int can_change_force;
-
 		int score[10];
-		char result[10];
+		Roll result[10]; //10 is spare, 11 is strike
 		int frame;
 		int roll;
 		int pins_remaining;
 		int updates_passed;
-
+    float dx = 0;
     glm::vec3 pos;
     glm::vec3 ipos;
-
 		bool reset_initial_position;
-
     string fragmentShader, vertexShader;
 
 };
+
+
+
 
 #endif /* GRAPHICS_H */

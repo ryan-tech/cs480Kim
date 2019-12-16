@@ -140,14 +140,14 @@ void Physics::loadCylinder1()
 	cylinder1->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder1->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder1->trans.setIdentity();	
+	cylinder1->trans.setIdentity();
 	cylinder1->pCompound = new btCompoundShape();
 	//add base
 	cylinder1->pCompound->addChildShape(cylinder1->trans, cylinder1->pBase);
 	// add body base
 	cylinder1->trans.setOrigin(btVector3(0.00354227f, -0.0635913f +0.367653, 112.992f));
 	cylinder1->pCompound->addChildShape(cylinder1->trans, cylinder1->pBodyBase);
-	// add body 
+	// add body
 	cylinder1->trans.setOrigin(btVector3(0.00354227f, -0.0635913f +1.16031, 112.992f));
 	cylinder1->pCompound->addChildShape(cylinder1->trans, cylinder1->pBody);
 	// add neck
@@ -189,14 +189,14 @@ void Physics::loadCylinder2()
 	cylinder2->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder2->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder2->trans.setIdentity();	
+	cylinder2->trans.setIdentity();
 	cylinder2->pCompound = new btCompoundShape();
 	//add base
 	cylinder2->pCompound->addChildShape(cylinder2->trans, cylinder2->pBase);
 	// add body base
 	cylinder2->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder2->pCompound->addChildShape(cylinder2->trans, cylinder2->pBodyBase);
-	// add body 
+	// add body
 	cylinder2->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder2->pCompound->addChildShape(cylinder2->trans, cylinder2->pBody);
 	// add neck
@@ -239,14 +239,14 @@ void Physics::loadCylinder3()
 	cylinder3->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder3->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder3->trans.setIdentity();	
+	cylinder3->trans.setIdentity();
 	cylinder3->pCompound = new btCompoundShape();
 	//add base
 	cylinder3->pCompound->addChildShape(cylinder3->trans, cylinder3->pBase);
 	// add body base
 	cylinder3->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder3->pCompound->addChildShape(cylinder3->trans, cylinder3->pBodyBase);
-	// add body 
+	// add body
 	cylinder3->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder3->pCompound->addChildShape(cylinder3->trans, cylinder3->pBody);
 	// add neck
@@ -289,14 +289,14 @@ void Physics::loadCylinder4()
 	cylinder4->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder4->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder4->trans.setIdentity();	
+	cylinder4->trans.setIdentity();
 	cylinder4->pCompound = new btCompoundShape();
 	//add base
 	cylinder4->pCompound->addChildShape(cylinder4->trans, cylinder4->pBase);
 	// add body base
 	cylinder4->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder4->pCompound->addChildShape(cylinder4->trans, cylinder4->pBodyBase);
-	// add body 
+	// add body
 	cylinder4->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder4->pCompound->addChildShape(cylinder4->trans, cylinder4->pBody);
 	// add neck
@@ -341,14 +341,14 @@ void Physics::loadCylinder5()
 	cylinder5->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder5->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder5->trans.setIdentity();	
+	cylinder5->trans.setIdentity();
 	cylinder5->pCompound = new btCompoundShape();
 	//add base
 	cylinder5->pCompound->addChildShape(cylinder5->trans, cylinder5->pBase);
 	// add body base
 	cylinder5->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder5->pCompound->addChildShape(cylinder5->trans, cylinder5->pBodyBase);
-	// add body 
+	// add body
 	cylinder5->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder5->pCompound->addChildShape(cylinder5->trans, cylinder5->pBody);
 	// add neck
@@ -391,14 +391,14 @@ void Physics::loadCylinder6()
 	cylinder6->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder6->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder6->trans.setIdentity();	
+	cylinder6->trans.setIdentity();
 	cylinder6->pCompound = new btCompoundShape();
 	//add base
 	cylinder6->pCompound->addChildShape(cylinder6->trans, cylinder6->pBase);
 	// add body base
 	cylinder6->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder6->pCompound->addChildShape(cylinder6->trans, cylinder6->pBodyBase);
-	// add body 
+	// add body
 	cylinder6->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder6->pCompound->addChildShape(cylinder6->trans, cylinder6->pBody);
 	// add neck
@@ -442,14 +442,14 @@ void Physics::loadCylinder7()
 	cylinder7->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder7->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder7->trans.setIdentity();	
+	cylinder7->trans.setIdentity();
 	cylinder7->pCompound = new btCompoundShape();
 	//add base
 	cylinder7->pCompound->addChildShape(cylinder7->trans, cylinder7->pBase);
 	// add body base
 	cylinder7->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder7->pCompound->addChildShape(cylinder7->trans, cylinder7->pBodyBase);
-	// add body 
+	// add body
 	cylinder7->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder7->pCompound->addChildShape(cylinder7->trans, cylinder7->pBody);
 	// add neck
@@ -493,14 +493,14 @@ void Physics::loadCylinder8()
 	cylinder8->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder8->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder8->trans.setIdentity();	
+	cylinder8->trans.setIdentity();
 	cylinder8->pCompound = new btCompoundShape();
 	//add base
 	cylinder8->pCompound->addChildShape(cylinder8->trans, cylinder8->pBase);
 	// add body base
 	cylinder8->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder8->pCompound->addChildShape(cylinder8->trans, cylinder8->pBodyBase);
-	// add body 
+	// add body
 	cylinder8->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder8->pCompound->addChildShape(cylinder8->trans, cylinder8->pBody);
 	// add neck
@@ -544,14 +544,14 @@ void Physics::loadCylinder9()
 	cylinder9->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
 
-	cylinder9->trans.setIdentity();	
+	cylinder9->trans.setIdentity();
 	cylinder9->pCompound = new btCompoundShape();
 	//add base
 	cylinder9->pCompound->addChildShape(cylinder9->trans, cylinder9->pBase);
 	// add body base
 	cylinder9->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder9->pCompound->addChildShape(cylinder9->trans, cylinder9->pBodyBase);
-	// add body 
+	// add body
 	cylinder9->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder9->pCompound->addChildShape(cylinder9->trans, cylinder9->pBody);
 	// add neck
@@ -593,14 +593,14 @@ void Physics::loadCylinder10()
 	cylinder10->pHead = new btCylinderShape(btVector3(.2f, .9f, .2f));
 	cylinder10->pNeck = new btCylinderShape(btVector3(.26f, .7f, .26f));
 
-	cylinder10->trans.setIdentity();	
+	cylinder10->trans.setIdentity();
 	cylinder10->pCompound = new btCompoundShape();
 	//add base
 	cylinder10->pCompound->addChildShape(cylinder10->trans, cylinder10->pBase);
 	// add body base
 	cylinder10->trans.setOrigin(btVector3(0, 0 +0.367653, 0));
 	cylinder10->pCompound->addChildShape(cylinder10->trans, cylinder10->pBodyBase);
-	// add body 
+	// add body
 	cylinder10->trans.setOrigin(btVector3(0, 0 +1.16031, 0));
 	cylinder10->pCompound->addChildShape(cylinder10->trans, cylinder10->pBody);
 	// add neck
