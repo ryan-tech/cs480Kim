@@ -517,7 +517,6 @@ void Graphics::Render()
 
   glUniform3f(m_sl_direction, x, y, z);
   glUniform1f(m_sl_cutoff, glm::cos(glm::radians(sl_cutoff)));
-  cout << sl_cutoff << endl;
 
   //board
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->board->GetModel()));
